@@ -122,6 +122,7 @@ JSON 형식으로만 답변하세요:
 
         # High-precision ingredient-aware heuristic fallback engine
         q = (query or "").lower()
+        q_compact = q.replace(" ", "")
         user_ings = [i.strip().lower() for i in context_ingredients]
         has_pork = any("돼지" in i or "삼겹" in i or "목살" in i or "고기" in i for i in user_ings)
         has_egg = any("계란" in i or "달걀" in i for i in user_ings)
@@ -130,6 +131,87 @@ JSON 형식으로만 답변하세요:
         has_tofu = any("두부" in i for i in user_ings)
         has_doenjang = any("된장" in i for i in user_ings)
         has_rice = any("밥" in i for i in user_ings)
+
+        # 0. Direct Dish Request / Keyword Priority Matching
+        # Tofu Jorim (매콤 두부조림)
+        if "두부조림" in q_compact or ("두부" in q_compact and "조림" in q_compact) or ("두부" in q and any(k in q for k in ["조림", "매콤", "양념"])) or (has_tofu and "조림" in q):
+            return {
+                "intent_summary": "매콤달콤한 황금 양념장으로 자작하게 조려내는 밥도둑 두부조림",
+                "mood": "매콤 밥도둑 조림",
+                "extracted_ingredients": ["두부", "대파", "양파"],
+                "best_recipe_id": "spicy-braised-tofu",
+                "reasoning": "🍲 요청하신 매콤한 두부조림입니다! 백종원 셰프의 520만 검증 양념 황금비율로 밥 두 공기 비우는 맛을 완성합니다."
+            }
+
+        # Doenjang Jjigae (된장찌개)
+        if "된장찌개" in q_compact or ("된장" in q_compact and "찌개" in q_compact):
+            return {
+                "intent_summary": "구수하고 속이 편안한 전통 집밥 뚝배기 찌개",
+                "mood": "구수하고 편안함",
+                "extracted_ingredients": ["된장", "두부"],
+                "best_recipe_id": "soybean-paste-stew",
+                "reasoning": "🥘 요청하신 구수한 뚝배기 된장찌개로 든든하고 따뜻한 집밥 한 끼를 즐겨보세요!"
+            }
+
+        # Kimchi Jjigae (김치찌개)
+        if "김치찌개" in q_compact or ("김치" in q_compact and "찌개" in q_compact):
+            return {
+                "intent_summary": "얼큰하고 칼칼하게 끓여낸 진국 김치찌개",
+                "mood": "얼큰하고 진한 국물",
+                "extracted_ingredients": ["김치"] + (["돼지고기"] if has_pork else []),
+                "best_recipe_id": "pork-kimchi-jjigae",
+                "reasoning": "🌧️ 요청하신 얼큰하고 깊은 국물 맛의 김치찌개로 속 든든한 식사를 완성해보세요!"
+            }
+
+        # Kimchi Fried Rice (김치볶음밥)
+        if "김치볶음밥" in q_compact or ("김치" in q_compact and "볶음밥" in q_compact):
+            return {
+                "intent_summary": "파기름과 진간장 불맛으로 감칠맛을 극대화한 황금 김치볶음밥",
+                "mood": "실패 없는 불맛",
+                "extracted_ingredients": ["김치", "스팸"],
+                "best_recipe_id": "spam-kimchi-fried-rice",
+                "reasoning": "🍳 요청하신 파기름 불맛 가득한 15분 완성 황금 김치볶음밥입니다!"
+            }
+
+        # Egg Fried Rice (계란볶음밥)
+        if "계란볶음밥" in q_compact or "달걀볶음밥" in q_compact or (("계란" in q_compact or "달걀" in q_compact) and "볶음밥" in q_compact):
+            return {
+                "intent_summary": "바쁜 시간에 파기름 향을 살려 고슬고슬 볶아낸 황금 계란 볶음밥",
+                "mood": "중화풍 초스피드",
+                "extracted_ingredients": ["계란", "대파"],
+                "best_recipe_id": "egg-fried-rice",
+                "reasoning": "🍚 요청하신 10분 초스피드 중화풍 파기름 향 가득 황금 계란 볶음밥입니다!"
+            }
+
+        # Egg Roll (계란말이)
+        if "계란말이" in q_compact or "달걀말이" in q_compact:
+            return {
+                "intent_summary": "부드럽고 폭신하게 말아낸 영양 만점 호텔식 계란말이",
+                "mood": "부드러운 영양 반찬",
+                "extracted_ingredients": ["계란"],
+                "best_recipe_id": "rolled-omelet",
+                "reasoning": "🍳 요청하신 카스텔라처럼 부드러운 호텔식 계란말이입니다!"
+            }
+
+        # Tofu Kimchi (두부김치)
+        if "두부김치" in q_compact or ("두부" in q_compact and "김치" in q_compact and "찌개" not in q_compact):
+            return {
+                "intent_summary": "노릇한 스팸과 신김치 볶음에 담백한 두부를 곁들인 10분 두부김치",
+                "mood": "감칠맛 10분 안주",
+                "extracted_ingredients": ["두부", "김치"],
+                "best_recipe_id": "spam-tofu-kimchi",
+                "reasoning": "🥓 요청하신 담백한 두부와 새콤달콤 볶음김치의 환상 조합, 스팸 두부김치입니다!"
+            }
+
+        # Kimchi Pancake (김치전)
+        if "김치전" in q_compact or "김치부침개" in q_compact:
+            return {
+                "intent_summary": "바삭하고 짭조름하게 부쳐내는 겉바속촉 10분 김치전",
+                "mood": "바삭하고 짭조름한 안주",
+                "extracted_ingredients": ["김치"],
+                "best_recipe_id": "kimchi-pancake",
+                "reasoning": "🍺 요청하신 겉은 바삭하고 속은 촉촉한 10분 김치전입니다!"
+            }
 
         # 1. Beer snack / Late night quick snack
         if any(k in q for k in ["맥주", "안주", "야식", "술안주", "초간단 안주", "간단한 안주"]):
@@ -220,6 +302,14 @@ JSON 형식으로만 답변하세요:
                 }
 
         # 5. Fallback strictly based on available ingredients
+        if has_tofu and not has_kimchi:
+            return {
+                "intent_summary": "보유 식재료 두부와 채소로 매콤달콤하게 조려내는 밥도둑 두부조림",
+                "mood": "밥도둑 조림",
+                "extracted_ingredients": ["두부", "대파", "양파"],
+                "best_recipe_id": "spicy-braised-tofu",
+                "reasoning": "🍲 보유하신 두부와 채소로 백종원 셰프의 520만 검증 양념 황금비율로 조려내는 밥도둑 두부조림입니다!"
+            }
         if has_tofu and has_kimchi:
             highlight = "신김치와 두부" + (", 스팸" if has_spam else "")
             return {
@@ -245,15 +335,31 @@ JSON 형식으로만 답변하세요:
                 "best_recipe_id": "rolled-omelet",
                 "reasoning": "🥚 보유하신 계란으로 폭신폭신하고 부드럽게 즐길 수 있는 요리입니다!"
             }
+        if has_doenjang:
+            return {
+                "intent_summary": "구수한 된장과 애호박, 두부로 끓여내는 뚝배기 된장찌개",
+                "mood": "구수한 한 끼",
+                "extracted_ingredients": ["된장"],
+                "best_recipe_id": "soybean-paste-stew",
+                "reasoning": "🥘 보유하신 된장으로 구수하고 깊은 맛의 뚝배기 된장찌개를 추천합니다!"
+            }
 
-        # Default fallback
-        first_recipe = recipe_catalogue[0] if recipe_catalogue else {"id": "spam-kimchi-fried-rice"}
+        # Smart Overlap Fallback across full catalogue
+        best_fallback = recipe_catalogue[0] if recipe_catalogue else {"id": "spam-kimchi-fried-rice", "title": "스팸 김치볶음밥"}
+        best_overlap = -1
+        for r in recipe_catalogue:
+            all_ings = [i.lower() for i in r.get("primary_ingredients", []) + r.get("optional_ingredients", [])]
+            overlap = sum(1 for u in user_ings if any(u in ing or ing in u for ing in all_ings))
+            if overlap > best_overlap:
+                best_overlap = overlap
+                best_fallback = r
+
         return {
-            "intent_summary": "보유 재료를 가장 맛있게 활용하는 맞춤 큐레이션 요리",
+            "intent_summary": f"보유 재료를 가장 맛있게 활용하는 맞춤 {best_fallback['title']}",
             "mood": "맞춤 요리",
             "extracted_ingredients": context_ingredients[:2],
-            "best_recipe_id": first_recipe["id"],
-            "reasoning": "🍳 보유하신 재료를 최대한 활용하여 맛있게 완성할 수 있는 추천 요리입니다!"
+            "best_recipe_id": best_fallback["id"],
+            "reasoning": f"🍳 보유하신 재료를 최대한 활용하여 맛있게 완성할 수 있는 추천 요리 {best_fallback['title']}입니다!"
         }
 
     async def generate_script_enhancement(self, prompt: str) -> Optional[str]:

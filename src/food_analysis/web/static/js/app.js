@@ -575,63 +575,18 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function renderCookingMeta(candidate, recipe) {
-        if (heroEmoji) heroEmoji.textContent = candidate.thumbnail_emoji || '🍳';
-        if (heroTitle) heroTitle.textContent = recipe.title;
-        if (heroSubtitle) heroSubtitle.textContent = recipe.subtitle;
-        if (heroMatchRate) heroMatchRate.textContent = `${recipe.match_percentage}%`;
-        if (heroTotalTime) heroTotalTime.textContent = `${recipe.prep_time_min + recipe.cook_time_min}분`;
-        if (heroServings) heroServings.textContent = recipe.servings || '1~2인분';
+        const recipeTitleEl = document.getElementById('procedureRecipeTitle');
+        if (recipeTitleEl) recipeTitleEl.textContent = recipe.title;
 
-        // Required Ingredients with Substitutes
-        if (requiredIngList) {
-            requiredIngList.innerHTML = '';
-            (recipe.required_ingredients || []).forEach(ing => {
-                const li = document.createElement('li');
-                li.className = 'spec-list-item';
-                const subText = ing.substitute_hint ? `<span style="font-size: 0.72rem; color: #F59E0B; display: block;">(${ing.substitute_hint})</span>` : '';
-                li.innerHTML = `
-                    <div>
-                        <span>${ing.name}</span>
-                        ${subText}
-                    </div>
-                    <span>${ing.amount}</span>
-                `;
-                requiredIngList.appendChild(li);
-            });
-        }
-
-        // Seasoning Ratios
-        if (seasoningRatioList) {
-            seasoningRatioList.innerHTML = '';
-            (recipe.seasoning_ratios || []).forEach(s => {
-                const li = document.createElement('li');
-                li.className = 'spec-list-item';
-                li.innerHTML = `
-                    <div>
-                        <span>${s.name}</span>
-                        ${s.tip ? `<span style="font-size: 0.72rem; color: #94A3B8; display: block;">${s.tip}</span>` : ''}
-                    </div>
-                    <span style="color: var(--neon-blue);">${s.ratio}</span>
-                `;
-                seasoningRatioList.appendChild(li);
-            });
-        }
-
-        // Chef Secrets
-        if (chefSecretList) {
-            chefSecretList.innerHTML = '';
-            (recipe.chef_secrets || []).forEach((tip) => {
-                const li = document.createElement('li');
-                li.style.padding = '0.35rem 0';
-                li.style.borderBottom = '1px solid rgba(255, 255, 255, 0.04)';
-                li.innerHTML = `<i class="fa-solid fa-check" style="color: var(--neon-emerald); margin-right: 6px;"></i> ${tip}`;
-                chefSecretList.appendChild(li);
-            });
+        const timeEl = document.getElementById('procedureEstimatedTime');
+        if (timeEl) {
+            const totalMin = (recipe.prep_time_min || 0) + (recipe.cook_time_min || 0);
+            timeEl.textContent = `${totalMin > 0 ? totalMin + '분 소요' : '15분 소요'}`;
         }
     }
 
-    // Initialize Default Sample Ingredients (Matching user refrigerator context from screenshot)
-    addIngredient("계란", "단백질", "4개");
-    addIngredient("돼지고기", "육류", "적당량");
+    // Initialize Default Sample Ingredients (Matching user refrigerator context: 두부, 대파, 양파)
+    addIngredient("두부", "가공식품", "1모");
     addIngredient("대파", "채소", "1대");
+    addIngredient("양파", "채소", "반 개");
 });

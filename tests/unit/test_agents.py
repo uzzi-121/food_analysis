@@ -52,6 +52,17 @@ async def test_agent2_intent_discovery():
     assert dual_candidates[0].id == "pork-kimchi-jjigae"
     assert "돼지고기" in dual_candidates[0].ai_reasoning
 
+    # User scenario: '매콤한 두부 조림 알려줘' with ingredients ['두부', '대파', '양파']
+    tofu_candidates = await agent.recommend_by_intent(
+        query="매콤한 두부 조림 알려줘",
+        context_ingredients=["두부", "대파", "양파"]
+    )
+    assert len(tofu_candidates) >= 1
+    assert tofu_candidates[0].id == "spicy-braised-tofu"
+    assert "두부조림" in tofu_candidates[0].title
+    assert tofu_candidates[0].intent_score >= 90
+    assert tofu_candidates[0].match_rate >= 85
+
 
 @pytest.mark.asyncio
 async def test_agent3_synthesizer():
@@ -61,6 +72,14 @@ async def test_agent3_synthesizer():
     assert len(recipe.steps) >= 3
     assert len(recipe.seasoning_ratios) > 0
     assert len(recipe.substitutions) > 0
+    assert recipe.video_id is not None
+    assert recipe.steps[0].image_url is not None
+
+    tofu_recipe = await agent.synthesize("spicy-braised-tofu", ["두부", "대파", "양파"])
+    assert "두부조림" in tofu_recipe.title
+    assert tofu_recipe.video_id == "w2X3P78C7n4"
+    assert len(tofu_recipe.steps) == 4
+    assert tofu_recipe.steps[0].image_url == "/static/images/steps/spicy-braised-tofu_step1.svg"
 
 
 def test_agent4_script_ssml_crafter():

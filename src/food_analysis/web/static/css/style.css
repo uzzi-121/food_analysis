@@ -1293,7 +1293,522 @@ body::before {
     transition: background-color 0.3s;
 }
 
+/* ==========================================================================
+   2-Panel Interactive Audio Stage: Left Controls / Right Synchronized Visual
+   ========================================================================== */
+.stage-inner-split {
+    display: grid;
+    grid-template-columns: 1.25fr 1fr;
+    gap: 1.75rem;
+    align-items: center;
+}
+
+.stage-left-content {
+    display: flex;
+    flex-direction: column;
+}
+
+.stage-right-visual {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.active-step-card-frame {
+    background: rgba(14, 16, 25, 0.75);
+    border: 1px solid rgba(139, 92, 246, 0.35);
+    border-radius: var(--radius-lg);
+    padding: 1rem;
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45), 0 0 24px rgba(139, 92, 246, 0.15);
+    transition: var(--transition);
+}
+
+.active-step-card-frame:hover {
+    border-color: rgba(56, 189, 248, 0.5);
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6), 0 0 30px rgba(56, 189, 248, 0.25);
+}
+
+.active-step-badge-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.75rem;
+}
+
+.active-step-pill {
+    padding: 0.25rem 0.75rem;
+    background: linear-gradient(135deg, rgba(139, 92, 246, 0.3), rgba(56, 189, 248, 0.2));
+    border: 1px solid rgba(139, 92, 246, 0.5);
+    border-radius: var(--radius-full);
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #F8FAFC;
+    letter-spacing: 0.05em;
+}
+
+.active-step-pill-sub {
+    font-size: 0.72rem;
+    color: var(--text-muted);
+}
+
+.active-step-img-box {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    background: #090B12;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.stage-zoom-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.35s ease;
+}
+
+.active-step-card-frame:hover .stage-zoom-img {
+    transform: scale(1.03);
+}
+
+.active-step-caption {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 0.75rem;
+    padding: 0.45rem 0.75rem;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: var(--radius-sm);
+    font-size: 0.8rem;
+    color: #CBD5E1;
+}
+
+/* ==========================================================================
+   Section 3-B: Step-by-Step Procedural Walkthrough (Text Left / Image Right)
+   ========================================================================== */
+.procedure-walkthrough-section {
+    margin-top: 3rem;
+    background: var(--bg-card);
+    backdrop-filter: blur(28px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: var(--radius-prompt);
+    padding: 2.25rem;
+    box-shadow: var(--shadow-prompt);
+}
+
+.section-sub-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+    padding-bottom: 1.25rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.sub-header-left {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.sub-header-icon-circle {
+    width: 46px;
+    height: 46px;
+    border-radius: 14px;
+    background: linear-gradient(135deg, rgba(139, 92, 246, 0.25), rgba(56, 189, 248, 0.15));
+    border: 1px solid rgba(139, 92, 246, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--neon-violet);
+    font-size: 1.2rem;
+}
+
+.section-sub-title {
+    font-family: var(--font-heading);
+    font-size: 1.45rem;
+    font-weight: 700;
+    color: var(--text-pure);
+    letter-spacing: -0.02em;
+}
+
+.section-sub-hint {
+    font-size: 0.84rem;
+    color: var(--text-secondary);
+    margin-top: 0.2rem;
+}
+
+.procedure-steps-count-badge {
+    padding: 0.35rem 0.9rem;
+    background: rgba(139, 92, 246, 0.15);
+    border: 1px solid rgba(139, 92, 246, 0.35);
+    border-radius: var(--radius-full);
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #DDD6FE;
+}
+
+/* Procedure Cards List */
+.procedure-cards-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+/* Individual Procedure Step Card: 2 Columns (Text Left, Image Right) */
+.procedure-step-card {
+    display: grid;
+    grid-template-columns: 1.35fr 1fr;
+    gap: 2rem;
+    align-items: center;
+    background: rgba(14, 16, 25, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: var(--radius-lg);
+    padding: 1.6rem 1.8rem;
+    transition: var(--transition);
+    cursor: pointer;
+    position: relative;
+}
+
+.procedure-step-card:hover {
+    border-color: rgba(139, 92, 246, 0.4);
+    background: rgba(20, 23, 37, 0.85);
+    transform: translateY(-2px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5), 0 0 20px rgba(139, 92, 246, 0.15);
+}
+
+.procedure-step-card.active-step {
+    border-color: var(--neon-violet);
+    background: rgba(24, 28, 48, 0.92);
+    box-shadow: 0 0 30px rgba(139, 92, 246, 0.25);
+}
+
+/* Left Column: Text & Guide */
+.procedure-text-col {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.procedure-step-top {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    flex-wrap: wrap;
+}
+
+.step-num-pill {
+    padding: 0.25rem 0.65rem;
+    background: rgba(139, 92, 246, 0.2);
+    border: 1px solid rgba(139, 92, 246, 0.4);
+    border-radius: var(--radius-full);
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #EDE9FE;
+    letter-spacing: 0.04em;
+}
+
+.step-title-text {
+    font-family: var(--font-heading);
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--text-pure);
+}
+
+.procedure-guide-desc {
+    font-size: 0.96rem;
+    line-height: 1.65;
+    color: #E2E8F0;
+}
+
+.procedure-script-preview {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.65rem;
+    padding: 0.85rem 1rem;
+    background: rgba(0, 0, 0, 0.35);
+    border-left: 3px solid var(--neon-violet);
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    font-size: 0.88rem;
+    line-height: 1.55;
+    color: #CBD5E1;
+    font-style: italic;
+}
+
+.procedure-script-preview i {
+    color: var(--neon-violet);
+    margin-top: 3px;
+}
+
+.procedure-meta-row {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    flex-wrap: wrap;
+    margin-top: 0.25rem;
+}
+
+.step-timer-badge {
+    padding: 0.2rem 0.6rem;
+    background: rgba(56, 189, 248, 0.12);
+    border: 1px solid rgba(56, 189, 248, 0.3);
+    border-radius: var(--radius-full);
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #7DD3FC;
+}
+
+.step-tip-badge-item {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.2rem 0.65rem;
+    background: rgba(245, 158, 11, 0.12);
+    border: 1px solid rgba(245, 158, 11, 0.25);
+    border-radius: var(--radius-full);
+    font-size: 0.75rem;
+    color: #FCD34D;
+}
+
+/* Right Column: Step Image */
+.procedure-image-col {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    background: #090B12;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+}
+
+.procedure-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+}
+
+.procedure-step-card:hover .procedure-img {
+    transform: scale(1.05);
+}
+
+.procedure-play-hover-btn {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.8);
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: rgba(139, 92, 246, 0.9);
+    color: #FFFFFF;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    opacity: 0;
+    transition: var(--transition);
+    box-shadow: 0 0 20px rgba(139, 92, 246, 0.6);
+}
+
+.procedure-step-card:hover .procedure-play-hover-btn {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+}
+
+/* ==========================================================================
+   Section 3-C: Official Chef YouTube Video Player
+   ========================================================================== */
+.video-player-section {
+    margin-top: 3rem;
+}
+
+.video-player-card {
+    background: var(--bg-card);
+    backdrop-filter: blur(28px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: var(--radius-prompt);
+    padding: 2.25rem;
+    box-shadow: var(--shadow-prompt);
+}
+
+.video-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.video-header-left {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.youtube-brand-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 14px;
+    background: rgba(239, 68, 68, 0.15);
+    border: 1px solid rgba(239, 68, 68, 0.35);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #EF4444;
+    font-size: 1.6rem;
+    box-shadow: 0 0 20px rgba(239, 68, 68, 0.2);
+}
+
+.video-channel-row {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-bottom: 0.25rem;
+    flex-wrap: wrap;
+}
+
+.video-channel-name {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #F8FAFC;
+}
+
+.video-verified-badge {
+    font-size: 0.72rem;
+    color: #38BDF8;
+    display: flex;
+    align-items: center;
+    gap: 3px;
+}
+
+.video-views-badge {
+    padding: 0.15rem 0.55rem;
+    background: rgba(245, 158, 11, 0.15);
+    border: 1px solid rgba(245, 158, 11, 0.3);
+    border-radius: var(--radius-full);
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: #FCD34D;
+}
+
+.video-player-title {
+    font-family: var(--font-heading);
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: var(--text-pure);
+}
+
+.btn-open-youtube {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.6rem 1.15rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: var(--radius-full);
+    color: #F3F4F6;
+    font-size: 0.82rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: var(--transition);
+}
+
+.btn-open-youtube:hover {
+    background: rgba(239, 68, 68, 0.15);
+    border-color: rgba(239, 68, 68, 0.4);
+    color: #FFFFFF;
+    box-shadow: 0 0 15px rgba(239, 68, 68, 0.25);
+}
+
+/* 16:9 Responsive Video Iframe */
+.video-frame-container {
+    position: relative;
+    width: 100%;
+    padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+    height: 0;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    background: #000000;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.7);
+}
+
+.video-frame-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+/* Video Timeline Chapters */
+.video-timeline-wrapper {
+    margin-top: 1.5rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.timeline-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.84rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    margin-bottom: 0.85rem;
+}
+
+.timeline-pills-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+}
+
+.timeline-chapter-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.4rem 0.85rem;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: var(--radius-full);
+    color: #E2E8F0;
+    font-size: 0.78rem;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.timeline-chapter-btn:hover {
+    background: rgba(56, 189, 248, 0.15);
+    border-color: rgba(56, 189, 248, 0.4);
+    color: #FFFFFF;
+    transform: translateY(-1px);
+}
+
+.timeline-time-badge {
+    font-weight: 700;
+    color: var(--neon-blue);
+}
+
 /* Responsive Breakpoints */
+@media (max-width: 900px) {
+    .stage-inner-split {
+        grid-template-columns: 1fr;
+    }
+    .procedure-step-card {
+        grid-template-columns: 1fr;
+        gap: 1.25rem;
+    }
+    .procedure-image-col {
+        order: -1; /* Show image above text on small screens */
+    }
+}
+
 @media (max-width: 768px) {
     .hero-main-title {
         font-size: 2.5rem;
@@ -1308,4 +1823,517 @@ body::before {
         flex-wrap: wrap;
         gap: 0.75rem;
     }
+    .procedure-walkthrough-section,
+    .video-player-card {
+        padding: 1.25rem;
+    }
 }
+
+/* ==========================================================================
+   Section 3: Single-Step Sequential Procedure Guide (Focused View)
+   ========================================================================== */
+
+.procedure-header-row {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.procedure-header-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+}
+
+.procedure-kicker {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--neon-violet);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+}
+
+.procedure-recipe-title {
+    font-family: var(--font-heading);
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--text-pure);
+    letter-spacing: -0.02em;
+    margin: 0;
+}
+
+.procedure-recipe-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.88rem;
+    color: var(--text-secondary);
+}
+
+.meta-dot {
+    color: var(--text-muted);
+}
+
+/* Stepper Progress Bar & Navigation */
+.stepper-progress-wrapper {
+    position: relative;
+    margin-bottom: 2rem;
+}
+
+.stepper-progress-bar-bg {
+    position: relative;
+    width: 100%;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: var(--radius-full);
+    overflow: hidden;
+    margin-bottom: 1.25rem;
+}
+
+.stepper-progress-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--neon-violet), var(--neon-blue));
+    border-radius: var(--radius-full);
+    transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 0 12px rgba(139, 92, 246, 0.8);
+}
+
+.stepper-pills-row {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    flex-wrap: wrap;
+}
+
+.stepper-pill-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.45rem 0.95rem;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.09);
+    border-radius: var(--radius-full);
+    color: var(--text-secondary);
+    font-size: 0.82rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.stepper-pill-btn .pill-num {
+    font-weight: 700;
+    font-family: var(--font-heading);
+    color: var(--text-muted);
+    font-size: 0.78rem;
+}
+
+.stepper-pill-btn:hover {
+    background: rgba(255, 255, 255, 0.08);
+    color: #FFFFFF;
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+.stepper-pill-btn.active {
+    background: rgba(139, 92, 246, 0.22);
+    border-color: var(--neon-violet);
+    color: #FFFFFF;
+    box-shadow: 0 0 18px rgba(139, 92, 246, 0.35);
+}
+
+.stepper-pill-btn.active .pill-num {
+    color: #DDD6FE;
+}
+
+.stepper-pill-btn.completed {
+    border-color: rgba(16, 185, 129, 0.4);
+    color: #A7F3D0;
+}
+
+.stepper-pill-btn.completed .pill-num {
+    color: var(--neon-emerald);
+}
+
+/* Single Step Stage Card */
+.single-step-stage-card {
+    background: rgba(15, 18, 30, 0.88);
+    backdrop-filter: blur(28px);
+    border: 1px solid rgba(139, 92, 246, 0.25);
+    border-radius: 28px;
+    padding: 2.25rem;
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.65), 0 0 45px rgba(139, 92, 246, 0.1);
+    position: relative;
+    overflow: hidden;
+    transition: var(--transition);
+}
+
+.single-step-stage-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--neon-violet), var(--neon-blue), transparent);
+}
+
+.single-step-layout {
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: 2.5rem;
+    align-items: center;
+}
+
+/* Left Column: Text & Guide */
+.single-step-text-col {
+    display: flex;
+    flex-direction: column;
+    gap: 1.1rem;
+}
+
+.single-step-top-row {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    flex-wrap: wrap;
+}
+
+.single-step-title {
+    font-family: var(--font-heading);
+    font-size: 1.75rem;
+    font-weight: 800;
+    color: var(--text-pure);
+    letter-spacing: -0.02em;
+    line-height: 1.3;
+    margin: 0;
+}
+
+.single-step-desc {
+    font-size: 1.05rem;
+    line-height: 1.7;
+    color: #E2E8F0;
+    margin: 0;
+}
+
+/* Spoken Audio Script Bubble */
+.single-step-script-box {
+    background: rgba(8, 10, 18, 0.7);
+    border: 1px solid rgba(139, 92, 246, 0.3);
+    border-left: 4px solid var(--neon-violet);
+    border-radius: 0 var(--radius-md) var(--radius-md) 0;
+    padding: 1.15rem 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35);
+}
+
+.script-header-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.script-label {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    font-size: 0.76rem;
+    font-weight: 700;
+    color: var(--neon-violet);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+.single-step-script-text {
+    font-size: 0.98rem;
+    line-height: 1.6;
+    color: #F1F5F9;
+    font-style: italic;
+    margin: 0;
+}
+
+/* Chef Secret Tip Box */
+.single-step-tip-box {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.6rem 1rem;
+    background: rgba(245, 158, 11, 0.1);
+    border: 1px solid rgba(245, 158, 11, 0.28);
+    border-radius: var(--radius-md);
+    font-size: 0.85rem;
+    color: #FCD34D;
+    line-height: 1.45;
+}
+
+.single-step-tip-box i {
+    font-size: 0.95rem;
+    color: #F59E0B;
+}
+
+/* Inline Timer Widget */
+.step-inline-timer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.65rem 1rem;
+    background: rgba(56, 189, 248, 0.08);
+    border: 1px solid rgba(56, 189, 248, 0.25);
+    border-radius: var(--radius-md);
+}
+
+.inline-timer-info {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    font-size: 0.85rem;
+    color: #BAE6FD;
+}
+
+.inline-timer-info .timer-digits {
+    font-family: var(--font-heading);
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: #FFFFFF;
+    letter-spacing: 0.05em;
+}
+
+.btn-inline-timer {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.35rem 0.85rem;
+    background: rgba(56, 189, 248, 0.2);
+    border: 1px solid rgba(56, 189, 248, 0.4);
+    border-radius: var(--radius-full);
+    color: #FFFFFF;
+    font-size: 0.78rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.btn-inline-timer:hover {
+    background: rgba(56, 189, 248, 0.35);
+    transform: scale(1.02);
+}
+
+/* Right Column: Step Visual Image */
+.single-step-image-col {
+    width: 100%;
+}
+
+.single-step-image-frame {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    background: #090B12;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
+}
+
+.single-step-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: opacity 0.25s ease, transform 0.4s ease;
+}
+
+.single-step-image-frame:hover .single-step-img {
+    transform: scale(1.03);
+}
+
+.single-step-image-tag {
+    position: absolute;
+    bottom: 12px;
+    right: 14px;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.35rem 0.85rem;
+    background: rgba(14, 18, 32, 0.85);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: var(--radius-full);
+    font-size: 0.76rem;
+    font-weight: 600;
+    color: #FFFFFF;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.5);
+}
+
+/* Bottom Controller Bar */
+.single-step-bottom-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.btn-step-nav {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.75rem 1.6rem;
+    border-radius: var(--radius-full);
+    font-size: 0.95rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.btn-step-prev {
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    color: #E2E8F0;
+}
+
+.btn-step-prev:hover:not(:disabled) {
+    background: rgba(255, 255, 255, 0.12);
+    border-color: rgba(255, 255, 255, 0.25);
+    color: #FFFFFF;
+    transform: translateX(-2px);
+}
+
+.btn-step-prev:disabled,
+.btn-step-prev.disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+.btn-step-next {
+    background: linear-gradient(135deg, var(--neon-violet), #6366F1);
+    border: 1px solid rgba(139, 92, 246, 0.5);
+    color: #FFFFFF;
+    box-shadow: 0 0 20px rgba(139, 92, 246, 0.4);
+}
+
+.btn-step-next:hover {
+    background: linear-gradient(135deg, #9333EA, #4F46E5);
+    box-shadow: 0 0 28px rgba(139, 92, 246, 0.6);
+    transform: translateX(2px);
+}
+
+.btn-finish-cooking {
+    background: linear-gradient(135deg, #10B981, #059669) !important;
+    border-color: rgba(16, 185, 129, 0.6) !important;
+    box-shadow: 0 0 25px rgba(16, 185, 129, 0.45) !important;
+}
+
+.btn-finish-cooking:hover {
+    background: linear-gradient(135deg, #059669, #047857) !important;
+    box-shadow: 0 0 35px rgba(16, 185, 129, 0.6) !important;
+}
+
+.step-audio-controls {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+}
+
+.btn-audio-action {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.55rem 1rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: var(--radius-full);
+    color: #CBD5E1;
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.btn-audio-action:hover {
+    background: rgba(255, 255, 255, 0.12);
+    color: #FFFFFF;
+}
+
+.btn-audio-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.55rem 1.25rem;
+    background: rgba(139, 92, 246, 0.2);
+    border: 1px solid rgba(139, 92, 246, 0.45);
+    border-radius: var(--radius-full);
+    color: #FFFFFF;
+    font-size: 0.85rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: var(--transition);
+    box-shadow: 0 0 16px rgba(139, 92, 246, 0.3);
+}
+
+.btn-audio-primary:hover {
+    background: rgba(139, 92, 246, 0.35);
+    box-shadow: 0 0 22px rgba(139, 92, 246, 0.5);
+}
+
+.voice-hint-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.74rem;
+    color: var(--text-muted);
+    padding: 0.3rem 0.65rem;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: var(--radius-full);
+}
+
+.voice-hint-badge i {
+    color: var(--neon-violet);
+}
+
+/* Heat Badge Enhancements */
+.heat-high {
+    background: rgba(239, 68, 68, 0.18) !important;
+    border-color: rgba(239, 68, 68, 0.45) !important;
+    color: #FCA5A5 !important;
+}
+
+.heat-med {
+    background: rgba(245, 158, 11, 0.18) !important;
+    border-color: rgba(245, 158, 11, 0.45) !important;
+    color: #FCD34D !important;
+}
+
+.heat-low {
+    background: rgba(56, 189, 248, 0.18) !important;
+    border-color: rgba(56, 189, 248, 0.45) !important;
+    color: #7DD3FC !important;
+}
+
+/* Responsive Single Step Card */
+@media (max-width: 960px) {
+    .single-step-layout {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    .single-step-image-col {
+        order: -1;
+    }
+    .single-step-bottom-bar {
+        justify-content: center;
+    }
+    .btn-step-prev, .btn-step-next {
+        flex: 1;
+        justify-content: center;
+    }
+}
+

@@ -34,6 +34,8 @@ class CookingStep(BaseModel):
     timer_seconds: Optional[int] = Field(None, description="타이머가 필요한 경우 소요시간(초)")
     heat_level: str = Field("없음", description="불 세기 (강불, 중불, 약불, 불끄기, 없음)")
     tips: Optional[str] = Field(None, description="셰프 꿀팁")
+    image_url: Optional[str] = Field(None, description="단계별 조리 이미지 URL")
+    image_alt: Optional[str] = Field(None, description="이미지 설명 및 대체 텍스트")
 
 
 class RecipeSynthesizerRequest(BaseModel):
@@ -69,3 +71,10 @@ class SynthesizedRecipe(BaseModel):
     steps: List[CookingStep] = Field(default_factory=list)
     chef_secrets: List[str] = Field(default_factory=list)
     sources: List[Dict[str, str]] = Field(default_factory=list)
+    # Video Player Integration
+    video_id: Optional[str] = Field(None, description="YouTube 비디오 ID")
+    video_url: Optional[str] = Field(None, description="관련 공식 영상 링크")
+    video_title: Optional[str] = Field(None, description="영상 제목")
+    video_channel: Optional[str] = Field(None, description="영상 채널명")
+    video_views: Optional[str] = Field(None, description="누적 조회수")
+    video_timeline: List[Dict[str, str]] = Field(default_factory=list, description="영상 챕터 타임라인")

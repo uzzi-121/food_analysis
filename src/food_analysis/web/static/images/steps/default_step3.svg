@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 380" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0E111C"/>
+      <stop offset="50%" stop-color="#141826"/>
+      <stop offset="100%" stop-color="#0B0D15"/>
+    </linearGradient>
+    <radialGradient id="glowGrad" cx="50%" cy="50%" r="60%">
+      <stop offset="0%" stop-color="#10B981" stop-opacity="0.25"/>
+      <stop offset="100%" stop-color="#10B981" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="borderGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#10B981" stop-opacity="0.8"/>
+      <stop offset="100%" stop-color="#38BDF8" stop-opacity="0.3"/>
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#000000" flood-opacity="0.6"/>
+    </filter>
+  </defs>
+
+  <!-- Background Base -->
+  <rect width="640" height="380" rx="20" fill="url(#bgGrad)"/>
+  <circle cx="320" cy="190" r="180" fill="url(#glowGrad)"/>
+  
+  <!-- Outer Glow Border -->
+  <rect x="3" y="3" width="634" height="374" rx="18" fill="none" stroke="url(#borderGrad)" stroke-width="1.5" opacity="0.9"/>
+
+  <!-- Top Badge: STEP NUMBER -->
+  <g transform="translate(32, 28)">
+    <rect width="88" height="28" rx="14" fill="#10B981" fill-opacity="0.18" stroke="#10B981" stroke-opacity="0.6" stroke-width="1.2"/>
+    <text x="44" y="19" font-family="'Outfit', -apple-system, sans-serif" font-size="13" font-weight="700" fill="#F8FAFC" text-anchor="middle" letter-spacing="0.06em">STEP 03</text>
+  </g>
+
+  <!-- Top Right Badge: HEAT / STATUS -->
+  <g transform="translate(488, 28)">
+    <rect width="120" height="28" rx="14" fill="#1E2235" stroke="#334155" stroke-width="1.2"/>
+    <text x="60" y="18" font-family="'Pretendard', sans-serif" font-size="12" font-weight="600" fill="#38BDF8" text-anchor="middle">🍽️ 완성</text>
+  </g>
+
+  <!-- Central Visual Illustration -->
+  <g filter="url(#shadow)">
+    
+        <!-- Completed Dish Platter / Serving -->
+        <ellipse cx="320" cy="215" rx="120" ry="35" fill="#1A1F33" stroke="#10B981" stroke-width="3"/>
+        <ellipse cx="320" cy="205" rx="90" ry="24" fill="#242B45"/>
+        <!-- Golden Rice / Food Dome -->
+        <ellipse cx="320" cy="190" rx="65" ry="25" fill="#F59E0B" opacity="0.9"/>
+        <!-- Fried Egg on top -->
+        <ellipse cx="320" cy="178" rx="35" ry="14" fill="#F8FAFC"/>
+        <circle cx="320" cy="176" r="10" fill="#F97316"/>
+        <circle cx="305" cy="190" r="2" fill="#1E293B"/>
+        <circle cx="335" cy="188" r="2" fill="#1E293B"/>
+        <!-- Fresh herbs sparkle -->
+        <circle cx="355" cy="155" r="4" fill="#10B981"/>
+        <circle cx="285" cy="158" r="3" fill="#38BDF8"/>
+        
+  </g>
+
+  <!-- Bottom Title & Guide Card -->
+  <g transform="translate(24, 280)">
+    <rect width="592" height="76" rx="14" fill="#121624" fill-opacity="0.92" stroke="#262D42" stroke-width="1"/>
+    <text x="24" y="32" font-family="'Pretendard', -apple-system, sans-serif" font-size="17" font-weight="700" fill="#FFFFFF">완성 및 플레이팅</text>
+    <text x="24" y="56" font-family="'Pretendard', sans-serif" font-size="13" font-weight="400" fill="#94A3B8">간을 맞추고 그릇에 담아 완성합니다.</text>
+    <!-- Accent Dot -->
+    <circle cx="560" cy="38" r="5" fill="#10B981"/>
+  </g>
+</svg>

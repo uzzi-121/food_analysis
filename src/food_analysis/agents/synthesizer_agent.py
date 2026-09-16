@@ -36,7 +36,9 @@ class GoldenRecipeSynthesizerAgent(BaseAgent):
                     pause_seconds=4,
                     timer_seconds=None,
                     heat_level="없음",
-                    tips="스팸 크기를 작게 썰수록 밥알과 고르게 씹혀 맛이 살아납니다."
+                    tips="스팸 크기를 작게 썰수록 밥알과 고르게 씹혀 맛이 살아납니다.",
+                    image_url="/static/images/steps/spam-kimchi-fried-rice_step1.svg",
+                    image_alt="스팸 김치볶음밥 1단계: 대파 송송 썰기 및 스팸 깍둑썰기"
                 ),
                 CookingStep(
                     step_number=2,
@@ -46,7 +48,9 @@ class GoldenRecipeSynthesizerAgent(BaseAgent):
                     pause_seconds=3,
                     timer_seconds=90,
                     heat_level="중불",
-                    tips="스팸의 자체 기름이 충분히 빠져나올 때까지 노릇하게 구워주세요."
+                    tips="스팸의 자체 기름이 충분히 빠져나올 때까지 노릇하게 구워주세요.",
+                    image_url="/static/images/steps/spam-kimchi-fried-rice_step2.svg",
+                    image_alt="스팸 김치볶음밥 2단계: 파기름과 스팸 노릇하게 볶기"
                 ),
                 CookingStep(
                     step_number=3,
@@ -56,7 +60,9 @@ class GoldenRecipeSynthesizerAgent(BaseAgent):
                     pause_seconds=3,
                     timer_seconds=120,
                     heat_level="중강불",
-                    tips="간장을 살짝 태우듯 끓여 섞어주면 식당에서 먹는 불맛이 납니다."
+                    tips="간장을 살짝 태우듯 끓여 섞어주면 식당에서 먹는 불맛이 납니다.",
+                    image_url="/static/images/steps/spam-kimchi-fried-rice_step3.svg",
+                    image_alt="스팸 김치볶음밥 3단계: 눌은 간장 불맛 입히기 및 김치 볶기"
                 ),
                 CookingStep(
                     step_number=4,
@@ -66,7 +72,9 @@ class GoldenRecipeSynthesizerAgent(BaseAgent):
                     pause_seconds=2,
                     timer_seconds=60,
                     heat_level="약불 ➡️ 센불",
-                    tips="마지막에 계란후라이를 얹어 노른자를 터뜨려 비벼 드시면 환상적입니다."
+                    tips="마지막에 계란후라이를 얹어 노른자를 터뜨려 비벼 드시면 환상적입니다.",
+                    image_url="/static/images/steps/spam-kimchi-fried-rice_step4.svg",
+                    image_alt="스팸 김치볶음밥 4단계: 밥 비비기 및 바삭하게 눋혀 완성"
                 )
             ],
             "pork-kimchi-jjigae": [
@@ -78,7 +86,9 @@ class GoldenRecipeSynthesizerAgent(BaseAgent):
                     pause_seconds=3,
                     timer_seconds=120,
                     heat_level="중불",
-                    tips="고기를 먼저 바짝 볶아야 찌개 국물에 깊은 풍미가 우러납니다."
+                    tips="고기를 먼저 바짝 볶아야 찌개 국물에 깊은 풍미가 우러납니다.",
+                    image_url="/static/images/steps/pork-kimchi-jjigae_step1.svg",
+                    image_alt="돼지고기 김치찌개 1단계: 돼지고기 볶아 기름 내기"
                 ),
                 CookingStep(
                     step_number=2,
@@ -88,7 +98,9 @@ class GoldenRecipeSynthesizerAgent(BaseAgent):
                     pause_seconds=3,
                     timer_seconds=120,
                     heat_level="중불",
-                    tips="김치가 투명해질 때까지 충분히 볶아주어야 시원한 국물이 됩니다."
+                    tips="김치가 투명해질 때까지 충분히 볶아주어야 시원한 국물이 됩니다.",
+                    image_url="/static/images/steps/pork-kimchi-jjigae_step2.svg",
+                    image_alt="돼지고기 김치찌개 2단계: 신김치와 고춧가루 달달 볶기"
                 ),
                 CookingStep(
                     step_number=3,
@@ -98,7 +110,9 @@ class GoldenRecipeSynthesizerAgent(BaseAgent):
                     pause_seconds=4,
                     timer_seconds=420,
                     heat_level="강불",
-                    tips="된장 반 스푼이 군내를 잡고 진한 감칠맛을 폭발시키는 비법입니다."
+                    tips="된장 반 스푼이 군내를 잡고 진한 감칠맛을 폭발시키는 비법입니다.",
+                    image_url="/static/images/steps/pork-kimchi-jjigae_step3.svg",
+                    image_alt="돼지고기 김치찌개 3단계: 물 붓고 된장 풀어 푹 끓이기"
                 ),
                 CookingStep(
                     step_number=4,
@@ -108,7 +122,9 @@ class GoldenRecipeSynthesizerAgent(BaseAgent):
                     pause_seconds=2,
                     timer_seconds=120,
                     heat_level="중불",
-                    tips="마지막에 후춧가루를 톡톡 뿌려주면 칼칼한 향이 배가됩니다."
+                    tips="마지막에 후춧가루를 톡톡 뿌려주면 칼칼한 향이 배가됩니다.",
+                    image_url="/static/images/steps/pork-kimchi-jjigae_step4.svg",
+                    image_alt="돼지고기 김치찌개 4단계: 두부와 대파 넣고 완성"
                 )
             ],
             "rolled-omelet": [
@@ -120,7 +136,9 @@ class GoldenRecipeSynthesizerAgent(BaseAgent):
                     pause_seconds=3,
                     timer_seconds=None,
                     heat_level="없음",
-                    tips="체에 한 번 걸러주면 카스테라처럼 결이 매끄러워집니다."
+                    tips="체에 한 번 걸러주면 카스테라처럼 결이 매끄러워집니다.",
+                    image_url="/static/images/steps/rolled-omelet_step1.svg",
+                    image_alt="계란말이 1단계: 계란물 풀기 및 간 맞추기"
                 ),
                 CookingStep(
                     step_number=2,
@@ -130,7 +148,9 @@ class GoldenRecipeSynthesizerAgent(BaseAgent):
                     pause_seconds=3,
                     timer_seconds=60,
                     heat_level="약불",
-                    tips="불이 세면 계란이 부풀어 찢어지니 꼭 약불을 유지하세요."
+                    tips="불이 세면 계란이 부풀어 찢어지니 꼭 약불을 유지하세요.",
+                    image_url="/static/images/steps/rolled-omelet_step2.svg",
+                    image_alt="계란말이 2단계: 팬 코팅 및 1차 계란물 붓기"
                 ),
                 CookingStep(
                     step_number=3,
@@ -140,7 +160,9 @@ class GoldenRecipeSynthesizerAgent(BaseAgent):
                     pause_seconds=3,
                     timer_seconds=120,
                     heat_level="약불",
-                    tips="완전히 다 익기 전에 말아야 층과 층 사이가 풀리지 않고 잘 붙습니다."
+                    tips="완전히 다 익기 전에 말아야 층과 층 사이가 풀리지 않고 잘 붙습니다.",
+                    image_url="/static/images/steps/rolled-omelet_step3.svg",
+                    image_alt="계란말이 3단계: 도톰하게 돌돌 말아가며 계란물 잇기"
                 ),
                 CookingStep(
                     step_number=4,
@@ -150,7 +172,9 @@ class GoldenRecipeSynthesizerAgent(BaseAgent):
                     pause_seconds=2,
                     timer_seconds=120,
                     heat_level="불끄기",
-                    tips="뜨거울 때 바로 썰면 모양이 찌그러지므로 꼭 식힌 후 썰어주세요."
+                    tips="뜨거울 때 바로 썰면 모양이 찌그러지므로 꼭 식힌 후 썰어주세요.",
+                    image_url="/static/images/steps/rolled-omelet_step4.svg",
+                    image_alt="계란말이 4단계: 한 김 식혀 예쁘게 썰기"
                 )
             ],
             "spam-tofu-kimchi": [
@@ -162,7 +186,9 @@ class GoldenRecipeSynthesizerAgent(BaseAgent):
                     pause_seconds=3,
                     timer_seconds=60,
                     heat_level="강불",
-                    tips="두부를 따뜻하게 데쳐내야 스팸, 볶음김치와 어우러질 때 부드러운 식감이 극대화됩니다."
+                    tips="두부를 따뜻하게 데쳐내야 스팸, 볶음김치와 어우러질 때 부드러운 식감이 극대화됩니다.",
+                    image_url="/static/images/steps/spam-tofu-kimchi_step1.svg",
+                    image_alt="스팸 두부김치 1단계: 두부 데치기 및 스팸 썰기"
                 ),
                 CookingStep(
                     step_number=2,
@@ -172,7 +198,9 @@ class GoldenRecipeSynthesizerAgent(BaseAgent):
                     pause_seconds=3,
                     timer_seconds=120,
                     heat_level="중불",
-                    tips="스팸을 굽고 남은 고소한 기름에 그대로 김치를 볶을 거예요!"
+                    tips="스팸을 굽고 남은 고소한 기름에 그대로 김치를 볶을 거예요!",
+                    image_url="/static/images/steps/spam-tofu-kimchi_step2.svg",
+                    image_alt="스팸 두부김치 2단계: 스팸 앞뒤 노릇하게 굽기"
                 ),
                 CookingStep(
                     step_number=3,
@@ -182,7 +210,9 @@ class GoldenRecipeSynthesizerAgent(BaseAgent):
                     pause_seconds=3,
                     timer_seconds=180,
                     heat_level="중불",
-                    tips="설탕이 신김치의 톡 쏘는 신맛을 잡아주고 감칠맛을 폭발시킵니다."
+                    tips="설탕이 신김치의 톡 쏘는 신맛을 잡아주고 감칠맛을 폭발시킵니다.",
+                    image_url="/static/images/steps/spam-tofu-kimchi_step3.svg",
+                    image_alt="스팸 두부김치 3단계: 스팸 기름에 신김치 볶기"
                 ),
                 CookingStep(
                     step_number=4,
@@ -191,7 +221,9 @@ class GoldenRecipeSynthesizerAgent(BaseAgent):
                     audio_script="마지막 단계, 플레이팅입니다. 따뜻한 두부를 먹기 좋게 썰어 접시 가장자리에 빙 둘러 담고, 가운데에 볶음김치와 노릇한 스팸을 담아주세요. 통깨를 솔솔 뿌려주면 완벽한 10분 완성 맥주 안주 두부김치 완성입니다!",
                     pause_seconds=2,
                     heat_level="불끄기",
-                    tips="두부 한 조각에 스팸, 김치를 삼합으로 얹어 드시면 기가 막힙니다."
+                    tips="두부 한 조각에 스팸, 김치를 삼합으로 얹어 드시면 기가 막힙니다.",
+                    image_url="/static/images/steps/spam-tofu-kimchi_step4.svg",
+                    image_alt="스팸 두부김치 4단계: 두부김치 삼합 플레이팅 완성"
                 )
             ],
             "kimchi-pancake": [
@@ -201,7 +233,9 @@ class GoldenRecipeSynthesizerAgent(BaseAgent):
                     guide_text="신김치와 스팸을 가위나 칼로 잘게 깍둑썰기해 볼에 담습니다.",
                     audio_script="첫 번째 단계, 재료 썰기입니다. 신김치와 스팸을 씹는 맛이 살아있도록 잘게 썰어 큰 볼에 담아주세요.",
                     pause_seconds=3,
-                    heat_level="없음"
+                    heat_level="없음",
+                    image_url="/static/images/steps/kimchi-pancake_step1.svg",
+                    image_alt="김치전 1단계: 김치와 스팸 잘게 썰기"
                 ),
                 CookingStep(
                     step_number=2,
@@ -210,7 +244,9 @@ class GoldenRecipeSynthesizerAgent(BaseAgent):
                     audio_script="두 번째 단계, 바삭한 반죽 만들기입니다. 부침가루 한 컵과 차가운 물 한 컵, 고춧가루 한 스푼을 넣고 가볍게 섞어주세요. 너무 많이 저으면 바삭함이 줄어드니 날가루만 없애주세요.",
                     pause_seconds=3,
                     heat_level="없음",
-                    tips="차가운 얼음물이나 탄산수를 쓰면 훨씬 바삭해집니다."
+                    tips="차가운 얼음물이나 탄산수를 쓰면 훨씬 바삭해집니다.",
+                    image_url="/static/images/steps/kimchi-pancake_step2.svg",
+                    image_alt="김치전 2단계: 바삭한 황금비율 반죽 만들기"
                 ),
                 CookingStep(
                     step_number=3,
@@ -219,7 +255,59 @@ class GoldenRecipeSynthesizerAgent(BaseAgent):
                     audio_script="마지막 단계, 부치기입니다! 팬에 기름을 넉넉히 두르고 센 불에서 반죽을 얇게 펴주세요. 가장자리가 바삭하게 튀겨지듯 익으면 뒤집어 3분간 노릇하게 부쳐내면 완성입니다!",
                     pause_seconds=2,
                     timer_seconds=180,
-                    heat_level="중강불"
+                    heat_level="중강불",
+                    image_url="/static/images/steps/kimchi-pancake_step3.svg",
+                    image_alt="김치전 3단계: 센 불에서 바삭하게 튀기듯 부치기"
+                )
+            ],
+            "spicy-braised-tofu": [
+                CookingStep(
+                    step_number=1,
+                    title="두부와 야채 손질하기",
+                    guide_text="두부는 부서지지 않게 1cm 두께로 도톰하게 썰고, 양파는 얇게 채 썰고 대파는 송송 썰어 준비합니다.",
+                    audio_script="첫 번째 단계, 재료 손질입니다. 두부는 너무 얇으면 조릴 때 부서지니 1센티미터 두께로 도톰하게 썰어주세요. 양파는 얇게 채 썰어주시고 대파도 송송 썰어둡니다.",
+                    pause_seconds=3,
+                    timer_seconds=None,
+                    heat_level="없음",
+                    tips="두부를 도톰하게 썰어야 조려졌을 때 겉은 짭조름하고 속은 촉촉하고 부드럽습니다.",
+                    image_url="/static/images/steps/spicy-braised-tofu_step1.svg",
+                    image_alt="두부조림 1단계: 두부와 야채 손질하기"
+                ),
+                CookingStep(
+                    step_number=2,
+                    title="냄비 바닥에 양파 깔고 두부 올리기",
+                    guide_text="냄비나 깊은 팬 바닥에 채 썬 양파를 골고루 깔고, 그 위에 썰어둔 두부를 가지런히 얹어줍니다.",
+                    audio_script="두 번째 단계입니다. 냄비 바닥에 채 썬 양파를 넉넉하게 깔아주세요. 양파가 바닥에서 타는 것을 막아주고 달큰한 감칠맛 채수를 내줍니다. 그 위에 썰어둔 두부를 가지런히 펼쳐 얹어줍니다.",
+                    pause_seconds=3,
+                    timer_seconds=None,
+                    heat_level="없음",
+                    tips="양파를 바닥에 깔아주면 두부가 팬 바닥에 전혀 눌어붙지 않습니다.",
+                    image_url="/static/images/steps/spicy-braised-tofu_step2.svg",
+                    image_alt="두부조림 2단계: 양파 깔고 두부 가지런히 올리기"
+                ),
+                CookingStep(
+                    step_number=3,
+                    title="양념장 붓고 자작하게 끓이기",
+                    guide_text="진간장 3스푼, 고춧가루 1.5스푼, 설탕 반 스푼, 다진 마늘 1스푼, 물 100ml를 두부 위에 골고루 붓고 중불에서 끓입니다.",
+                    audio_script="세 번째 단계, 양념장 붓기입니다. 진간장 세 스푼, 고춧가루 한 스푼 반, 설탕 반 스푼, 다진 마늘 한 스푼을 넣고 물 반 컵을 두부 위에 골고루 끼얹어주세요. 불을 중불로 켜고 보글보글 끓기 시작할 때까지 3분간 기다립니다.",
+                    pause_seconds=3,
+                    timer_seconds=180,
+                    heat_level="중불",
+                    tips="양념장을 물에 미리 풀어 부어주어야 두부 전체에 균일하게 스며듭니다.",
+                    image_url="/static/images/steps/spicy-braised-tofu_step3.svg",
+                    image_alt="두부조림 3단계: 양념장 붓고 중불에 끓이기"
+                ),
+                CookingStep(
+                    step_number=4,
+                    title="국물 끼얹으며 졸여 완성하기",
+                    guide_text="약불로 줄이고 숟가락으로 국물을 두부 위에 끼얹어가며 5분간 자작하게 조린 뒤 참기름을 둘러 완성합니다.",
+                    audio_script="마지막 졸이기 단계입니다. 불을 약불로 줄여주세요. 숟가락으로 양념 국물을 두부 위에 촉촉하게 끼얹어가며 5분 동안 조려줍니다. 국물이 자작하게 졸아들면 불을 끄고 참기름 한 스푼과 통깨를 둘러주면 밥도둑 두부조림 완성입니다!",
+                    pause_seconds=2,
+                    timer_seconds=300,
+                    heat_level="약불 ➡️ 불끄기",
+                    tips="마지막에 참기름이나 들기름을 둘러주면 고소한 풍미가 배가됩니다.",
+                    image_url="/static/images/steps/spicy-braised-tofu_step4.svg",
+                    image_alt="두부조림 4단계: 국물 끼얹으며 자작하게 졸여 완성"
                 )
             ]
         }
@@ -271,7 +359,9 @@ class GoldenRecipeSynthesizerAgent(BaseAgent):
                     guide_text="준비된 재료들을 먹기 좋은 크기로 다듬어주세요.",
                     audio_script="첫 번째 단계, 재료 준비와 손질입니다. 식재료를 깨끗이 씻고 먹기 좋은 크기로 썰어주세요.",
                     pause_seconds=3,
-                    heat_level="없음"
+                    heat_level="없음",
+                    image_url="/static/images/steps/default_step1.svg",
+                    image_alt="식재료 손질하기"
                 ),
                 CookingStep(
                     step_number=2,
@@ -280,7 +370,9 @@ class GoldenRecipeSynthesizerAgent(BaseAgent):
                     audio_script="두 번째 단계, 조리 시작입니다. 중불에서 재료를 달달 볶아주세요.",
                     pause_seconds=3,
                     timer_seconds=180,
-                    heat_level="중불"
+                    heat_level="중불",
+                    image_url="/static/images/steps/default_step2.svg",
+                    image_alt="중불에서 조리 진행"
                 ),
                 CookingStep(
                     step_number=3,
@@ -288,7 +380,9 @@ class GoldenRecipeSynthesizerAgent(BaseAgent):
                     guide_text="간을 맞추고 그릇에 담아 완성합니다.",
                     audio_script="마지막 단계입니다. 접시에 예쁘게 담아 따뜻할 때 맛있게 드세요!",
                     pause_seconds=2,
-                    heat_level="불끄기"
+                    heat_level="불끄기",
+                    image_url="/static/images/steps/default_step3.svg",
+                    image_alt="완성 및 플레이팅"
                 )
             ]
 
@@ -310,7 +404,7 @@ class GoldenRecipeSynthesizerAgent(BaseAgent):
         if yt_data and yt_data.get("channel"):
             synthesized_sources.append({
                 "title": f"👑 {yt_data.get('channel')} - {yt_data.get('video_title')} (조회수 {yt_data.get('views', '100만회 이상')})",
-                "url": "https://youtube.com"
+                "url": yt_data.get("video_url", "https://youtube.com")
             })
         for s in recipe_data.get("sources", []):
             synthesized_sources.append({
@@ -331,5 +425,11 @@ class GoldenRecipeSynthesizerAgent(BaseAgent):
             substitutions=substitutions,
             steps=steps,
             chef_secrets=chef_secrets[:4],
-            sources=synthesized_sources
+            sources=synthesized_sources,
+            video_id=yt_data.get("video_id") if yt_data else None,
+            video_url=yt_data.get("video_url") if yt_data else None,
+            video_title=yt_data.get("video_title") if yt_data else None,
+            video_channel=yt_data.get("channel") if yt_data else None,
+            video_views=yt_data.get("views") if yt_data else None,
+            video_timeline=yt_data.get("timeline", []) if yt_data else []
         )

@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 380" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0E111C"/>
+      <stop offset="50%" stop-color="#141826"/>
+      <stop offset="100%" stop-color="#0B0D15"/>
+    </linearGradient>
+    <radialGradient id="glowGrad" cx="50%" cy="50%" r="60%">
+      <stop offset="0%" stop-color="#EF4444" stop-opacity="0.25"/>
+      <stop offset="100%" stop-color="#EF4444" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="borderGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#EF4444" stop-opacity="0.8"/>
+      <stop offset="100%" stop-color="#F59E0B" stop-opacity="0.3"/>
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#000000" flood-opacity="0.6"/>
+    </filter>
+  </defs>
+
+  <!-- Background Base -->
+  <rect width="640" height="380" rx="20" fill="url(#bgGrad)"/>
+  <circle cx="320" cy="190" r="180" fill="url(#glowGrad)"/>
+  
+  <!-- Outer Glow Border -->
+  <rect x="3" y="3" width="634" height="374" rx="18" fill="none" stroke="url(#borderGrad)" stroke-width="1.5" opacity="0.9"/>
+
+  <!-- Top Badge: STEP NUMBER -->
+  <g transform="translate(32, 28)">
+    <rect width="88" height="28" rx="14" fill="#EF4444" fill-opacity="0.18" stroke="#EF4444" stroke-opacity="0.6" stroke-width="1.2"/>
+    <text x="44" y="19" font-family="'Outfit', -apple-system, sans-serif" font-size="13" font-weight="700" fill="#F8FAFC" text-anchor="middle" letter-spacing="0.06em">STEP 03</text>
+  </g>
+
+  <!-- Top Right Badge: HEAT / STATUS -->
+  <g transform="translate(488, 28)">
+    <rect width="120" height="28" rx="14" fill="#1E2235" stroke="#334155" stroke-width="1.2"/>
+    <text x="60" y="18" font-family="'Pretendard', sans-serif" font-size="12" font-weight="600" fill="#F59E0B" text-anchor="middle">🔥 중불 180초</text>
+  </g>
+
+  <!-- Central Visual Illustration -->
+  <g filter="url(#shadow)">
+    
+        <!-- Sauce Caramelization / Stirring -->
+        <ellipse cx="320" cy="210" rx="105" ry="34" fill="#18131E" stroke="#EF4444" stroke-width="3"/>
+        <path d="M260 205 Q320 230 380 205 Q320 220 260 205" fill="#78350F" opacity="0.85"/>
+        <!-- Kimchi & Ingredients -->
+        <circle cx="290" cy="200" r="14" fill="#EF4444" opacity="0.9"/>
+        <circle cx="340" cy="202" r="15" fill="#DC2626" opacity="0.9"/>
+        <circle cx="315" cy="212" r="12" fill="#F87171" opacity="0.8"/>
+        <!-- Spatula Stirring -->
+        <path d="M360 130 L325 195 L345 200 L380 135 Z" fill="#CBD5E1"/>
+        <line x1="380" y1="135" x2="430" y2="90" stroke="#94A3B8" stroke-width="7" stroke-linecap="round"/>
+        <!-- Fire / Flavor Sparks -->
+        <path d="M250 170 Q255 155 250 145" stroke="#F59E0B" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+        <circle cx="385" cy="165" r="3" fill="#F59E0B"/>
+        <circle cx="375" cy="180" r="2" fill="#EF4444"/>
+        
+  </g>
+
+  <!-- Bottom Title & Guide Card -->
+  <g transform="translate(24, 280)">
+    <rect width="592" height="76" rx="14" fill="#121624" fill-opacity="0.92" stroke="#262D42" stroke-width="1"/>
+    <text x="24" y="32" font-family="'Pretendard', -apple-system, sans-serif" font-size="17" font-weight="700" fill="#FFFFFF">스팸 기름에 신김치 볶기</text>
+    <text x="24" y="56" font-family="'Pretendard', sans-serif" font-size="13" font-weight="400" fill="#94A3B8">스팸 향이 밴 팬에 신김치와 참기름, 설탕 넣고 볶기</text>
+    <!-- Accent Dot -->
+    <circle cx="560" cy="38" r="5" fill="#EF4444"/>
+  </g>
+</svg>

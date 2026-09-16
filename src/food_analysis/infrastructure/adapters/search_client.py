@@ -211,6 +211,39 @@ class SearchClient:
                 "substitutions": [
                     {"target": "스팸", "substitute": "참치캔, 오징어, 돼지고기 다짐육"}
                 ]
+            },
+            {
+                "id": "spicy-braised-tofu",
+                "title": "백종원식 매콤 두부조림",
+                "subtitle": "자작한 양념장에 푹 조려 밥도둑으로 완성하는 15분 완성 황금 두부조림",
+                "primary_ingredients": ["두부", "대파", "양파"],
+                "optional_ingredients": ["청양고추", "다진마늘", "진간장", "고춧가루", "설탕", "참기름", "통깨"],
+                "prep_time_min": 5,
+                "cook_time_min": 10,
+                "difficulty": "쉬움",
+                "tags": ["#밥도둑", "#두부조림", "#15분완성", "#매콤칼칼", "#백종원레시피", "#초간단", "#두부요리"],
+                "thumbnail_emoji": "🍲",
+                "chef_secrets": [
+                    "냄비 바닥에 얇게 썬 양파를 먼저 깔아주면 두부가 바닥에 눌어붙지 않고 양파의 단맛이 은은하게 배어듭니다.",
+                    "양념장(진간장, 고춧가루, 다진 마늘, 설탕)을 물 반 컵에 미리 풀어서 부어주어야 두부 속까지 양념이 골고루 뱁니다.",
+                    "뚜껑을 덮고 중약불에서 국물이 자작해질 때까지 숟가락으로 국물을 끼얹어가며 조려주세요."
+                ],
+                "sources": [
+                    {"title": "백종원 PAIK JONG WON - 밥 두 공기 순삭! 초간단 매콤 두부조림의 정석", "url": "https://www.youtube.com/watch?v=w2X3P78C7n4"},
+                    {"title": "만개의 레시피 - 실패 없는 매콤 달콤 두부조림 황금비율", "url": "https://10000recipe.com/recipe/tofu_jorim"}
+                ],
+                "default_seasoning": [
+                    {"name": "진간장", "ratio": "3 큰술", "tip": "짭조름하고 깊은 간"},
+                    {"name": "고춧가루", "ratio": "1.5 큰술", "tip": "칼칼한 매콤함"},
+                    {"name": "설탕", "ratio": "0.5 큰술", "tip": "감칠맛과 은은한 단맛"},
+                    {"name": "다진 마늘", "ratio": "1 큰술", "tip": "알싸한 감칠맛 풍미"},
+                    {"name": "참기름", "ratio": "1 큰술", "tip": "마지막 고소한 마무리"},
+                    {"name": "물", "ratio": "0.5 컵(100ml)", "tip": "자작한 국물 조림 베이스"}
+                ],
+                "substitutions": [
+                    {"target": "두부", "substitute": "순두부 또는 어묵"},
+                    {"target": "양파", "substitute": "대파 듬뿍 또는 양배추"}
+                ]
             }
         ]
 

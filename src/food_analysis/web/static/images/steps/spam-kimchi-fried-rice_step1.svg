@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 380" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0E111C"/>
+      <stop offset="50%" stop-color="#141826"/>
+      <stop offset="100%" stop-color="#0B0D15"/>
+    </linearGradient>
+    <radialGradient id="glowGrad" cx="50%" cy="50%" r="60%">
+      <stop offset="0%" stop-color="#8B5CF6" stop-opacity="0.25"/>
+      <stop offset="100%" stop-color="#8B5CF6" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="borderGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#8B5CF6" stop-opacity="0.8"/>
+      <stop offset="100%" stop-color="#38BDF8" stop-opacity="0.3"/>
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#000000" flood-opacity="0.6"/>
+    </filter>
+  </defs>
+
+  <!-- Background Base -->
+  <rect width="640" height="380" rx="20" fill="url(#bgGrad)"/>
+  <circle cx="320" cy="190" r="180" fill="url(#glowGrad)"/>
+  
+  <!-- Outer Glow Border -->
+  <rect x="3" y="3" width="634" height="374" rx="18" fill="none" stroke="url(#borderGrad)" stroke-width="1.5" opacity="0.9"/>
+
+  <!-- Top Badge: STEP NUMBER -->
+  <g transform="translate(32, 28)">
+    <rect width="88" height="28" rx="14" fill="#8B5CF6" fill-opacity="0.18" stroke="#8B5CF6" stroke-opacity="0.6" stroke-width="1.2"/>
+    <text x="44" y="19" font-family="'Outfit', -apple-system, sans-serif" font-size="13" font-weight="700" fill="#F8FAFC" text-anchor="middle" letter-spacing="0.06em">STEP 01</text>
+  </g>
+
+  <!-- Top Right Badge: HEAT / STATUS -->
+  <g transform="translate(488, 28)">
+    <rect width="120" height="28" rx="14" fill="#1E2235" stroke="#334155" stroke-width="1.2"/>
+    <text x="60" y="18" font-family="'Pretendard', sans-serif" font-size="12" font-weight="600" fill="#38BDF8" text-anchor="middle">🔪 재료 손질</text>
+  </g>
+
+  <!-- Central Visual Illustration -->
+  <g filter="url(#shadow)">
+    
+        <!-- Cutting board and knife & ingredients -->
+        <rect x="230" y="140" width="180" height="110" rx="14" fill="#1E2438" stroke="#8B5CF6" stroke-width="2.5" opacity="0.85"/>
+        <line x1="250" y1="165" x2="330" y2="165" stroke="#94A3B8" stroke-width="4" stroke-linecap="round"/>
+        <line x1="250" y1="185" x2="310" y2="185" stroke="#94A3B8" stroke-width="4" stroke-linecap="round"/>
+        <circle cx="365" cy="180" r="16" fill="#F97316" opacity="0.9"/>
+        <circle cx="385" cy="205" r="12" fill="#10B981" opacity="0.9"/>
+        <!-- Knife -->
+        <path d="M210 130 L275 195 L260 210 L195 145 Z" fill="#E2E8F0"/>
+        <path d="M195 145 L175 125 L185 115 L205 135 Z" fill="#64748B"/>
+        
+  </g>
+
+  <!-- Bottom Title & Guide Card -->
+  <g transform="translate(24, 280)">
+    <rect width="592" height="76" rx="14" fill="#121624" fill-opacity="0.92" stroke="#262D42" stroke-width="1"/>
+    <text x="24" y="32" font-family="'Pretendard', -apple-system, sans-serif" font-size="17" font-weight="700" fill="#FFFFFF">재료 손질하기</text>
+    <text x="24" y="56" font-family="'Pretendard', sans-serif" font-size="13" font-weight="400" fill="#94A3B8">대파 송송 썰기 & 스팸 옥수수알 크기 깍둑썰기</text>
+    <!-- Accent Dot -->
+    <circle cx="560" cy="38" r="5" fill="#8B5CF6"/>
+  </g>
+</svg>

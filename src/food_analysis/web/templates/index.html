@@ -38,7 +38,6 @@
         <span id="stepTipText"></span>
         <div id="stepBulletsContainer"></div>
         <div id="dropzoneContent"></div>
-        <span id="playStatusText">재생</span>
         <div id="stepBadge"></div>
         <div id="stepTitle"></div>
         <div id="stepAudioScript"></div>
@@ -247,144 +246,140 @@
             </section>
 
             <!-- ============================================================
-                 SECTION 3: HANDS-FREE AUDIO CHEF MODE
+                 SECTION 3: STEP-BY-STEP PROCEDURAL GUIDE (SINGLE STEP SEQUENTIAL)
                  ============================================================ -->
             <section id="sectionCooking" class="section-view">
-                <div class="section-heading-row">
-                    <div>
-                        <h2 class="section-title">Hands-Free Audio Chef</h2>
-                        <p style="font-size: 0.9rem; color: var(--text-secondary); margin-top: 0.25rem;">
-                            양념이 묻은 손은 그대로 두세요. AI 셰프가 단계별로 친절하게 읽어드립니다.
-                        </p>
+                <!-- Clean Procedure Header -->
+                <div class="procedure-header-row">
+                    <div class="procedure-header-info">
+                        <div class="procedure-kicker">
+                            <i class="fa-solid fa-utensils"></i> AI 실전 조리 단계별 가이드
+                        </div>
+                        <h2 class="procedure-recipe-title" id="procedureRecipeTitle">백종원식 매콤 두부조림</h2>
+                        <div class="procedure-recipe-meta" id="procedureRecipeMeta">
+                            <span id="procedureStepProgressText">총 4단계 중 1단계 진행 중</span>
+                            <span class="meta-dot">•</span>
+                            <span id="procedureEstimatedTime">15분 소요</span>
+                        </div>
                     </div>
                     <button type="button" class="btn-back-link" id="btnBackToRecipes">
                         <i class="fa-solid fa-arrow-left"></i> 레시피 목록으로
                     </button>
                 </div>
 
-                <!-- 2-Column Audio Layout -->
-                <div class="cooking-view-layout">
-                    <!-- Main Audio Stage -->
-                    <div class="audio-stage-card">
-                        <!-- Step Pills Navigation -->
-                        <div style="display: flex; flex-wrap: wrap; gap: 0.45rem; margin-bottom: 1.25rem;" id="stepPillsContainer">
-                            <!-- Populated by audio_player.js -->
-                        </div>
-
-                        <div class="stage-step-indicator">
-                            <span class="heat-badge" id="currentHeatBadge">중불</span>
-                            <div id="currentStepTipBox" style="display: none; align-items: center; gap: 0.4rem; font-size: 0.8rem; color: #FCD34D;">
-                                <i class="fa-solid fa-lightbulb"></i>
-                                <span id="currentStepTipText"></span>
-                            </div>
-                        </div>
-
-                        <h3 class="stage-step-title" id="currentStepTitle">1단계: 재료 손질하기</h3>
-
-                        <!-- Teleprompter Box -->
-                        <div class="script-teleprompter-box">
-                            <p class="script-speech-text" id="currentSpokenScript">
-                                "첫 번째 단계, 재료 썰기입니다. 대파는 얇게 송송 썰어주시고, 스팸은 옥수수알 크기로 잘게 깍둑썰기 해주세요."
-                            </p>
-                        </div>
-
-                        <!-- Waveform Audio Visualizer -->
-                        <div class="waveform-container" id="waveformVisualizer">
-                            <div class="waveform-bar"></div>
-                            <div class="waveform-bar"></div>
-                            <div class="waveform-bar"></div>
-                            <div class="waveform-bar"></div>
-                            <div class="waveform-bar"></div>
-                            <div class="waveform-bar"></div>
-                            <div class="waveform-bar"></div>
-                            <div class="waveform-bar"></div>
-                            <div class="waveform-bar"></div>
-                            <div class="waveform-bar"></div>
-                            <div class="waveform-bar"></div>
-                            <div class="waveform-bar"></div>
-                            <div class="waveform-bar"></div>
-                            <div class="waveform-bar"></div>
-                            <div class="waveform-bar"></div>
-                        </div>
-
-                        <!-- Big Hands-Free Controls -->
-                        <div class="player-controls-row">
-                            <button type="button" class="btn-ctrl btn-ctrl-secondary" id="btnPrevStep" title="이전 단계" onclick="window.audioPlayer.prevStep()">
-                                <i class="fa-solid fa-backward-step"></i>
-                            </button>
-                            <button type="button" class="btn-ctrl btn-ctrl-secondary" id="btnReplayStep" title="다시 듣기" onclick="window.audioPlayer.replayStep()">
-                                <i class="fa-solid fa-rotate-right"></i>
-                            </button>
-                            <button type="button" class="btn-ctrl btn-ctrl-primary" id="btnPlayPause" title="재생 / 일시정지" onclick="window.audioPlayer.togglePlay()">
-                                <i class="fa-solid fa-play" id="playIcon"></i>
-                            </button>
-                            <button type="button" class="btn-ctrl btn-ctrl-secondary" id="btnNextStep" title="다음 단계" onclick="window.audioPlayer.nextStep()">
-                                <i class="fa-solid fa-forward-step"></i>
-                            </button>
-                        </div>
-
-                        <!-- Voice Command Status Banner -->
-                        <div class="voice-banner" id="voiceFeedbackBanner">
-                            <i class="fa-solid fa-microphone-lines" style="color: var(--neon-violet);"></i>
-                            <span id="voiceCommandStatus">음성 명령 대기 중 ("다음", "이전", "다시", "정지")</span>
-                        </div>
+                <!-- Stepper Progress Bar & Pills Navigation -->
+                <div class="stepper-progress-wrapper">
+                    <div class="stepper-progress-bar-bg">
+                        <div class="stepper-progress-bar-fill" id="stepperProgressBarFill" style="width: 25%;"></div>
                     </div>
+                    <div class="stepper-pills-row" id="stepPillsContainer">
+                        <!-- Populated by audio_player.js -->
+                    </div>
+                </div>
 
-                    <!-- Sidebar: Timer & Recipe Info & Seasoning Ratios -->
-                    <div class="cooking-sidebar">
-                        <!-- Step Timer Card -->
-                        <div class="sidebar-card">
-                            <h4><i class="fa-regular fa-clock" style="color: var(--neon-blue);"></i> 조리 타이머</h4>
-                            <div class="timer-box">
-                                <div class="timer-digits" id="timerDisplay">--:--</div>
-                                <button type="button" class="btn-timer-action" id="btnTimerStartPause" onclick="window.audioPlayer.toggleTimer()">
-                                    타이머 시작
+                <!-- Single Focused Step Card (Left: Text & Script & Timer / Right: Step Image) -->
+                <div class="single-step-stage-card" id="singleStepCard">
+                    <div class="single-step-layout">
+                        <!-- Left Column: Step Guide & Spoken Script -->
+                        <div class="single-step-text-col">
+                            <!-- Top Badge Row -->
+                            <div class="single-step-top-row">
+                                <span class="step-num-pill" id="currentStepNumPill">STEP 01</span>
+                                <span class="heat-badge" id="currentHeatBadge">중불</span>
+                                <span class="step-timer-badge" id="currentStepTimerBadge" style="display: none;">
+                                    <i class="fa-regular fa-clock"></i> <span id="currentStepTimerText">2분</span>
+                                </span>
+                            </div>
+
+                            <!-- Step Title -->
+                            <h3 class="single-step-title" id="currentStepTitle">두부와 야채 손질하기</h3>
+
+                            <!-- Guide Description -->
+                            <p class="single-step-desc" id="currentStepGuideText">
+                                두부는 부서지지 않게 1cm 두께로 도톰하게 썰고, 양파는 얇게 채 썰고 대파는 송송 썰어 준비합니다.
+                            </p>
+
+                            <!-- Spoken Audio Script Bubble (With Voice Visualizer) -->
+                            <div class="single-step-script-box" id="scriptBox">
+                                <div class="script-header-row">
+                                    <div class="script-label">
+                                        <i class="fa-solid fa-volume-high" id="speechVolumeIcon"></i>
+                                        <span>AI 셰프 음성 안내</span>
+                                    </div>
+                                    <div class="waveform-container" id="waveformVisualizer">
+                                        <div class="waveform-bar"></div>
+                                        <div class="waveform-bar"></div>
+                                        <div class="waveform-bar"></div>
+                                        <div class="waveform-bar"></div>
+                                        <div class="waveform-bar"></div>
+                                        <div class="waveform-bar"></div>
+                                        <div class="waveform-bar"></div>
+                                        <div class="waveform-bar"></div>
+                                        <div class="waveform-bar"></div>
+                                    </div>
+                                </div>
+                                <p class="single-step-script-text" id="currentSpokenScript">
+                                    "첫 번째 단계, 재료 손질입니다. 두부는 너무 얇으면 조릴 때 부서지니 1센티미터 두께로 도톰하게 썰어주세요..."
+                                </p>
+                            </div>
+
+                            <!-- Chef Secret Tip Box -->
+                            <div class="single-step-tip-box" id="currentStepTipBox" style="display: none;">
+                                <i class="fa-solid fa-lightbulb"></i>
+                                <span id="currentStepTipText">두부를 도톰하게 썰어야 조려졌을 때 속은 촉촉하고 부드럽습니다.</span>
+                            </div>
+
+                            <!-- Step Inline Timer Widget -->
+                            <div class="step-inline-timer" id="stepInlineTimer" style="display: none;">
+                                <div class="inline-timer-info">
+                                    <i class="fa-solid fa-stopwatch" style="color: var(--neon-blue);"></i>
+                                    <span>단계 타이머</span>
+                                    <strong class="timer-digits" id="timerDisplay">02:00</strong>
+                                </div>
+                                <button type="button" class="btn-inline-timer" id="btnTimerStartPause" onclick="window.audioPlayer.toggleTimer()">
+                                    <i class="fa-solid fa-play"></i> 타이머 시작
                                 </button>
                                 <svg style="display: none;"><circle id="timerProgressCircle"></circle></svg>
                             </div>
                         </div>
 
-                        <!-- Summary Card -->
-                        <div class="sidebar-card">
-                            <div style="display: flex; align-items: center; gap: 0.65rem; margin-bottom: 0.75rem;">
-                                <span style="font-size: 1.8rem;" id="heroEmoji">🍳</span>
-                                <div>
-                                    <h4 style="margin: 0;" id="heroTitle">스팸 김치볶음밥</h4>
-                                    <span style="font-size: 0.75rem; color: var(--text-muted);" id="heroSubtitle">15분 완성 황금 레시피</span>
+                        <!-- Right Column: Step Image (Visual Guide) -->
+                        <div class="single-step-image-col">
+                            <div class="single-step-image-frame">
+                                <img id="activeStepImg" src="/static/images/steps/spicy-braised-tofu_step1.svg" alt="조리 단계 이미지" class="single-step-img">
+                                <div class="single-step-image-tag" id="activeStepImgCaption">
+                                    <i class="fa-solid fa-circle-check" style="color: var(--neon-emerald);"></i>
+                                    <span id="activeStepCaptionText">1단계: 두부와 야채 손질하기</span>
                                 </div>
                             </div>
-                            <div style="display: flex; gap: 0.5rem; font-size: 0.75rem; color: var(--text-secondary); margin-bottom: 0.75rem;">
-                                <span>매칭 <strong id="heroMatchRate" style="color: var(--neon-emerald);">70%</strong></span>
-                                <span>•</span>
-                                <span id="heroTotalTime">15분</span>
-                                <span>•</span>
-                                <span id="heroServings">1~2인분</span>
-                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Integrated Bottom Controller (Navigation & Voice Sync) -->
+                    <div class="single-step-bottom-bar">
+                        <!-- Prev Step Button -->
+                        <button type="button" class="btn-step-nav btn-step-prev" id="btnPrevStep" onclick="window.audioPlayer.prevStep()">
+                            <i class="fa-solid fa-arrow-left"></i> 이전 단계
+                        </button>
+
+                        <!-- Audio & Voice Controls -->
+                        <div class="step-audio-controls">
+                            <button type="button" class="btn-audio-action" id="btnReplayStep" title="다시 듣기" onclick="window.audioPlayer.replayStep()">
+                                <i class="fa-solid fa-rotate-right"></i> 다시 듣기
+                            </button>
+                            <button type="button" class="btn-audio-primary" id="btnPlayPause" title="음성 재생 / 일시정지" onclick="window.audioPlayer.togglePlay()">
+                                <i class="fa-solid fa-pause" id="playIcon"></i>
+                                <span id="playStatusText">일시정지</span>
+                            </button>
+                            <span class="voice-hint-badge" id="voiceCommandStatus">
+                                <i class="fa-solid fa-microphone"></i> 음성 명령 가능 ("다음", "이전", "다시")
+                            </span>
                         </div>
 
-                        <!-- Seasoning Ratios -->
-                        <div class="sidebar-card">
-                            <h4><i class="fa-solid fa-scale-balanced" style="color: var(--neon-violet);"></i> 양념 황금비율</h4>
-                            <ul class="spec-list" id="seasoningRatioList">
-                                <!-- Populated by JS -->
-                            </ul>
-                        </div>
-
-                        <!-- Required Ingredients with Substitutes -->
-                        <div class="sidebar-card">
-                            <h4><i class="fa-solid fa-basket-shopping" style="color: var(--neon-pink);"></i> 재료 & 대체재</h4>
-                            <ul class="spec-list" id="requiredIngList">
-                                <!-- Populated by JS -->
-                            </ul>
-                        </div>
-
-                        <!-- Chef Secret Tips -->
-                        <div class="sidebar-card">
-                            <h4><i class="fa-solid fa-wand-magic-sparkles" style="color: var(--neon-amber);"></i> 셰프 시크릿 팁</h4>
-                            <ul class="spec-list" id="chefSecretList">
-                                <!-- Populated by JS -->
-                            </ul>
-                        </div>
+                        <!-- Next Step Button -->
+                        <button type="button" class="btn-step-nav btn-step-next" id="btnNextStep" onclick="window.audioPlayer.nextStep()">
+                            다음 단계 <i class="fa-solid fa-arrow-right"></i>
+                        </button>
                     </div>
                 </div>
             </section>
