@@ -58,11 +58,71 @@ class YouTubeClient:
                     {"time": "02:00", "action": "팬 코팅 후 약불에 계란물 1차 붓기"},
                     {"time": "04:30", "action": "2~3차례 계란물 이어 부으며 도톰하게 말기"}
                 ]
+            },
+            "egg-fried-rice": {
+                "channel": "백종원 PAIK JONG WON",
+                "subscriber_count": "550만",
+                "video_title": "중국집 볶음밥보다 맛있는 황금 계란볶음밥의 비밀",
+                "views": "540만회",
+                "key_tips": [
+                    "파기름을 먼저 충분히 내고 스크램블 에그를 만들어 밥알 코팅을 극대화합니다.",
+                    "굴소스와 간장을 팬 가장자리에 살짝 눌려 불맛을 입혀주는 것이 중국집 맛의 비결입니다."
+                ],
+                "timeline": [
+                    {"time": "00:40", "action": "대파 송송 썰기 및 계란 풀기"},
+                    {"time": "01:30", "action": "파기름 내고 스크램블 에그 완성"},
+                    {"time": "03:00", "action": "밥 넣고 주걱을 세워 비빈 뒤 센 불에 볶기"}
+                ]
+            },
+            "spam-tofu-kimchi": {
+                "channel": "백종원의 요리비책",
+                "subscriber_count": "550만",
+                "video_title": "술이 술술 들어가는 초간단 스팸 두부김치 황금레시피",
+                "views": "280만회",
+                "key_tips": [
+                    "스팸을 도톰하게 썰어 노릇하게 구워내면 자체 기름이 배어 나와 김치와 환상의 궁합입니다.",
+                    "신김치는 들기름이나 참기름에 설탕 반 스푼을 넣고 센 불에서 수분을 날리며 볶아주세요."
+                ],
+                "timeline": [
+                    {"time": "00:30", "action": "두부 데치기 및 스팸 깍둑썰기"},
+                    {"time": "02:00", "action": "스팸 노릇하게 굽기"},
+                    {"time": "03:30", "action": "김치와 설탕, 들기름 넣고 달달 볶기"}
+                ]
+            },
+            "kimchi-pancake": {
+                "channel": "백종원의 요리비책",
+                "subscriber_count": "550만",
+                "video_title": "전집보다 바삭한 김치전 겉바속촉 황금비율",
+                "views": "340만회",
+                "key_tips": [
+                    "차가운 얼음물이나 탄산수로 반죽해야 글루텐이 생기지 않아 극강의 바삭함이 유지됩니다.",
+                    "기름을 넉넉히 두르고 센 불에서 가장자리부터 튀기듯 부쳐내는 것이 핵심입니다."
+                ],
+                "timeline": [
+                    {"time": "00:45", "action": "김치와 스팸 잘게 썰기"},
+                    {"time": "02:00", "action": "부침가루와 찬물 1:1로 멍울 없이 반죽하기"},
+                    {"time": "03:30", "action": "팬에 기름 넉넉히 두르고 바삭하게 부쳐내기"}
+                ]
+            },
+            "soybean-paste-stew": {
+                "channel": "백종원 집밥 백선생",
+                "subscriber_count": "550만",
+                "video_title": "식당보다 맛있는 정통 된장찌개 끓이는 법",
+                "views": "290만회",
+                "key_tips": [
+                    "쌀뜨물에 된장을 채에 걸러 풀어주면 텁텁하지 않고 맑고 구수한 국물이 됩니다.",
+                    "고춧가루 반 스푼과 다진 마늘로 칼칼한 끝맛을 더해 질리지 않는 국물을 완성합니다."
+                ],
+                "timeline": [
+                    {"time": "01:00", "action": "야채와 두부 먹기 좋은 크기로 썰기"},
+                    {"time": "02:30", "action": "쌀뜨물에 된장 풀어 끓이기"},
+                    {"time": "06:00", "action": "두부, 대파 넣고 한소끔 더 끓여 마무리"}
+                ]
             }
         }
 
     def fetch_chef_insights(self, recipe_id: str) -> Dict[str, Any]:
-        """Fetch verified YouTube chef insights."""
+        """Fetch verified YouTube chef insights with view counts and channel credibility."""
         return self.channel_knowledge.get(recipe_id, {
             "channel": "황금 레시피 연구소",
             "subscriber_count": "100만",

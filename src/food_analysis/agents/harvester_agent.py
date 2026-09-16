@@ -31,7 +31,8 @@ class RecipeHarvesterAgent(BaseAgent):
         for item in raw_matches[:3]:
             recipe = item["recipe"]
             yt_data = self.youtube_client.fetch_chef_insights(recipe["id"])
-            source_ref = f"{yt_data.get('channel', '요리 연구소')} & 상위 블로그 종합"
+            views_str = f" (조회수 {yt_data.get('views')})" if yt_data.get('views') else ""
+            source_ref = f"{yt_data.get('channel', '요리 연구소')}{views_str} & 상위 인기 레시피 종합"
 
             candidates.append(RecipeCandidate(
                 id=recipe["id"],
@@ -88,7 +89,8 @@ class RecipeHarvesterAgent(BaseAgent):
             }
 
         yt_data = self.youtube_client.fetch_chef_insights(best_item["recipe"]["id"])
-        source_ref = f"{yt_data.get('channel', '요리 연구소')} & 상위 블로그 종합"
+        views_str = f" (조회수 {yt_data.get('views')})" if yt_data.get('views') else ""
+        source_ref = f"{yt_data.get('channel', '요리 연구소')}{views_str} & 상위 인기 레시피 종합"
 
         # Add top intent match
         candidates.append(RecipeCandidate(
@@ -116,7 +118,8 @@ class RecipeHarvesterAgent(BaseAgent):
 
             recipe = item["recipe"]
             yt_info = self.youtube_client.fetch_chef_insights(recipe["id"])
-            source = f"{yt_info.get('channel', '요리 연구소')} & 상위 블로그 종합"
+            views_info = f" (조회수 {yt_info.get('views')})" if yt_info.get('views') else ""
+            source = f"{yt_info.get('channel', '요리 연구소')}{views_info} & 상위 인기 레시피 종합"
 
             candidates.append(RecipeCandidate(
                 id=recipe["id"],

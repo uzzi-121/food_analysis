@@ -161,6 +161,15 @@ JSON 형식으로만 답변하세요:
                     "best_recipe_id": "rolled-omelet",
                     "reasoning": "🍺 보유하신 신선한 계란으로 부담 없는 칼로리와 맥주 한잔의 꿀조합, 호텔식 계란말이를 추천합니다!"
                 }
+            # Case D: Default light snack -> Rolled Omelet
+            else:
+                return {
+                    "intent_summary": "야식이나 맥주 한잔에 부담 없이 곁들이는 10분 완성 계란 안주",
+                    "mood": "폭신하고 고소한 10분 안주",
+                    "extracted_ingredients": ["계란"],
+                    "best_recipe_id": "rolled-omelet",
+                    "reasoning": "🍺 맥주 한잔과 부담 없이 가볍게 즐길 수 있는 10분 완성 호텔식 계란말이를 추천합니다!"
+                }
 
         # 2. Hot spicy soup / stew intent
         if any(k in q for k in ["국물", "찌개", "얼큰", "비", "쌀쌀", "칼칼", "탕", "뜨끈", "소주", "시원한"]):

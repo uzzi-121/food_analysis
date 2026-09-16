@@ -189,8 +189,8 @@ class SearchClient:
                 "id": "kimchi-pancake",
                 "title": "바삭한 스팸 김치전",
                 "subtitle": "신김치와 스팸을 쫑쫑 썰어 겉바속촉으로 부쳐내는 실패 없는 야식 안주",
-                "primary_ingredients": ["김치", "신김치", "스팸"],
-                "optional_ingredients": ["대파", "양파", "부침가루", "고춧가루", "설탕"],
+                "primary_ingredients": ["김치", "신김치", "부침가루", "스팸"],
+                "optional_ingredients": ["대파", "양파", "고춧가루", "설탕"],
                 "prep_time_min": 5,
                 "cook_time_min": 8,
                 "difficulty": "쉬움",
@@ -256,8 +256,8 @@ class SearchClient:
                 "primary_matched_count": len(primary_matched)
             })
 
-        # Sort by highest match rate
-        results.sort(key=lambda x: x["match_rate"], reverse=True)
+        # Sort by highest match rate, then by primary matched count and total matched ingredients
+        results.sort(key=lambda x: (x["match_rate"], x["primary_matched_count"], len(x["matched_ingredients"])), reverse=True)
         return results
 
     def get_recipe_by_id(self, recipe_id: str) -> Optional[Dict[str, Any]]:
