@@ -43,8 +43,12 @@ class CookCastOrchestrator:
         )
 
     async def step2_recommend_recipes(self, ingredients: List[str]) -> List[RecipeCandidate]:
-        """Execute Agent 2: Recipe Harvester."""
+        """Execute Agent 2: Recipe Harvester (traditional ingredient match)."""
         return await self.harvester_agent.recommend_recipes(ingredients)
+
+    async def step2_discover_by_intent(self, query: str, context_ingredients: List[str] = []) -> List[RecipeCandidate]:
+        """Execute Agent 2: Recipe Harvester (Natural language intent discovery)."""
+        return await self.harvester_agent.recommend_by_intent(query, context_ingredients)
 
     async def step3_synthesize_recipe(self, recipe_id: str, available_ingredients: List[str]) -> SynthesizedRecipe:
         """Execute Agent 3: Golden Recipe Synthesizer."""

@@ -1,16 +1,11 @@
 /**
- * CookCast AI — Stitch Inspired AI-Native Frontend Logic
+ * CookCast AI — Stitch Inspired AI-Native Natural Intent Frontend Logic
  */
 
 document.addEventListener('DOMContentLoaded', () => {
     // Application State
     const state = {
-        ingredients: [
-            { name: "신김치", category: "채소", quantity_estimate: "반 포기", freshness: "보통" },
-            { name: "스팸", category: "가공식품", quantity_estimate: "1캔", freshness: "신선함" },
-            { name: "대파", category: "채소", quantity_estimate: "1대", freshness: "신선함" },
-            { name: "계란", category: "유제품", quantity_estimate: "4개", freshness: "신선함" }
-        ],
+        ingredients: [],
         uploadedPhotoFile: null,
         candidateRecipes: [],
         currentRecipe: null,
@@ -21,11 +16,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const sectionInput = document.getElementById('sectionInput');
     const sectionRecipes = document.getElementById('sectionRecipes');
     const sectionCooking = document.getElementById('sectionCooking');
-
-    // Stepper elements (compatibility)
-    const stepIndicator1 = document.getElementById('stepIndicator1');
-    const stepIndicator2 = document.getElementById('stepIndicator2');
-    const stepIndicator3 = document.getElementById('stepIndicator3');
 
     // DOM Elements: Inputs & Prompt
     const photoInput = document.getElementById('photoInput');
@@ -138,7 +128,7 @@ document.addEventListener('DOMContentLoaded', () => {
             toast.style.opacity = '0';
             toast.style.transform = 'translateY(8px)';
             setTimeout(() => toast.remove(), 300);
-        }, 3200);
+        }, 3500);
     };
 
     // ----------------------------------------------------
@@ -169,15 +159,6 @@ document.addEventListener('DOMContentLoaded', () => {
         ingredientTagContainer.innerHTML = '';
         if (tagCount) tagCount.textContent = state.ingredients.length;
 
-        if (state.ingredients.length === 0) {
-            btnFindRecipes.disabled = true;
-            btnFindRecipes.style.opacity = '0.5';
-            return;
-        }
-
-        btnFindRecipes.disabled = false;
-        btnFindRecipes.style.opacity = '1';
-
         state.ingredients.forEach((item, idx) => {
             const chip = document.createElement('div');
             chip.className = 'ingredient-chip';
@@ -197,10 +178,8 @@ document.addEventListener('DOMContentLoaded', () => {
     function addIngredient(name, category = "기타", quantity = "적당량") {
         const trimmed = name.trim();
         if (!trimmed) return;
-        if (state.ingredients.some(i => i.name === trimmed)) {
-            window.showToast(`'${trimmed}'(은)는 이미 등록되어 있습니다.`);
-            return;
-        }
+        if (state.ingredients.some(i => i.name === trimmed)) return;
+
         state.ingredients.push({
             name: trimmed,
             category: category,
@@ -215,40 +194,24 @@ document.addEventListener('DOMContentLoaded', () => {
         renderTags();
     }
 
-    // Global quick preset handler
-    window.addQuickPreset = function(name) {
-        addIngredient(name);
+    // Global quick intent preset handler (One-click natural language execution)
+    window.applyIntentPreset = function(queryText) {
+        if (textIngredientInput) {
+            textIngredientInput.value = queryText;
+        }
+        if (btnFindRecipes) {
+            btnFindRecipes.click();
+        }
     };
 
     // ----------------------------------------------------
     // Input Event Listeners
     // ----------------------------------------------------
-    if (btnAddTextIngredient) {
-        btnAddTextIngredient.addEventListener('click', () => {
-            const text = textIngredientInput.value.trim();
-            if (!text) return;
-            const items = text.split(/[,/]+/);
-            items.forEach(it => {
-                if (it.trim()) addIngredient(it.trim());
-            });
-            textIngredientInput.value = '';
-        });
-    }
-
     if (textIngredientInput) {
         textIngredientInput.addEventListener('keydown', (e) => {
             if (e.key === 'Enter' && !e.shiftKey) {
                 e.preventDefault();
-                const text = textIngredientInput.value.trim();
-                if (text) {
-                    const items = text.split(/[,/]+/);
-                    items.forEach(it => {
-                        if (it.trim()) addIngredient(it.trim());
-                    });
-                    textIngredientInput.value = '';
-                } else if (state.ingredients.length > 0) {
-                    btnFindRecipes.click();
-                }
+                btnFindRecipes.click();
             }
         });
     }
@@ -257,6 +220,7 @@ document.addEventListener('DOMContentLoaded', () => {
         btnClearAllTags.addEventListener('click', () => {
             state.ingredients = [];
             renderTags();
+            if (textIngredientInput) textIngredientInput.value = '';
         });
     }
 
@@ -347,48 +311,57 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         } catch (err) {
             console.error("Vision extract error:", err);
-            window.showToast("사진 분석 중 오류가 발생했습니다. 텍스트로 직접 추가해주세요.");
+            window.showToast("사진 분석 중 오류가 발생했습니다. 자연어로 요리를 요청해보세요!");
         }
     }
 
     // ----------------------------------------------------
-    // Step 1 ➡️ Step 2: Recipe Recommendations
+    // Step 1 ➡️ Step 2: Natural Language Intent Discovery
     // ----------------------------------------------------
     if (btnFindRecipes) {
         btnFindRecipes.addEventListener('click', async () => {
-            // Also append current textarea content if user typed without pressing enter
-            const pendingText = textIngredientInput.value.trim();
-            if (pendingText) {
-                const items = pendingText.split(/[,/]+/);
-                items.forEach(it => {
-                    if (it.trim()) addIngredient(it.trim());
-                });
-                textIngredientInput.value = '';
-            }
+            const query = textIngredientInput ? textIngredientInput.value.trim() : '';
+            const hasIngredients = state.ingredients.length > 0;
 
-            if (state.ingredients.length === 0) {
-                window.showToast("식재료를 1개 이상 등록해주세요.");
-                textIngredientInput.focus();
+            if (!query && !hasIngredients) {
+                window.showToast("만들고 싶은 요리나 식재료를 입력해 주세요 (예: 비 오는 날 얼큰한 국물)");
+                if (textIngredientInput) textIngredientInput.focus();
                 return;
             }
 
             btnFindRecipes.disabled = true;
             btnFindRecipes.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i>`;
 
+            const contextIngs = state.ingredients.map(i => i.name);
+
             try {
-                const ingNames = state.ingredients.map(i => i.name);
-                const res = await fetch('/api/v1/recipes/recommend', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ ingredients: ingNames })
-                });
-                const candidates = await res.json();
+                let candidates = [];
+                if (query) {
+                    window.showToast("🧠 AI가 사용자의 요리 의도와 취향을 분석하고 있습니다...");
+                    const res = await fetch('/api/v1/recipes/discover', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            query: query,
+                            context_ingredients: contextIngs
+                        })
+                    });
+                    candidates = await res.json();
+                } else {
+                    const res = await fetch('/api/v1/recipes/recommend', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ ingredients: contextIngs })
+                    });
+                    candidates = await res.json();
+                }
+
                 state.candidateRecipes = candidates;
-                renderRecipeCards(candidates);
+                renderRecipeCards(candidates, query);
                 goToStep(2);
             } catch (err) {
-                console.error("Recommend error:", err);
-                window.showToast("레시피 탐색 중 오류가 발생했습니다.");
+                console.error("Discovery error:", err);
+                window.showToast("레시피 분석 중 오류가 발생했습니다.");
             } finally {
                 btnFindRecipes.disabled = false;
                 btnFindRecipes.innerHTML = `<i class="fa-solid fa-arrow-up"></i>`;
@@ -403,29 +376,40 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ----------------------------------------------------
-    // Render Recipe Cards (Stitch Neon Tech Cards)
+    // Render Recipe Cards (Stitch Style with AI Reasoning)
     // ----------------------------------------------------
-    function renderRecipeCards(candidates) {
+    function renderRecipeCards(candidates, userQuery = '') {
         if (!recipeCardsContainer) return;
         recipeCardsContainer.innerHTML = '';
 
-        candidates.forEach(c => {
+        candidates.forEach((c, idx) => {
             const card = document.createElement('div');
             card.className = 'recipe-card';
 
             const tagsHtml = c.tags.map(t => `<span style="font-size: 0.72rem; color: #A78BFA; background: rgba(139, 92, 246, 0.12); padding: 2px 8px; border-radius: 9999px;">${t}</span>`).join(' ');
+
+            const reasoningHtml = c.ai_reasoning ? `
+                <div style="background: rgba(139, 92, 246, 0.1); border: 1px solid rgba(139, 92, 246, 0.25); border-radius: 10px; padding: 10px 12px; margin-bottom: 1rem; font-size: 0.84rem; color: #DDD6FE; line-height: 1.45;">
+                    <div style="display: flex; align-items: center; gap: 6px; font-weight: 600; font-size: 0.76rem; color: #A78BFA; margin-bottom: 3px;">
+                        <i class="fa-solid fa-sparkles"></i> AI 맞춤 추천 이유
+                    </div>
+                    ${c.ai_reasoning}
+                </div>
+            ` : '';
 
             card.innerHTML = `
                 <div>
                     <div class="recipe-card-header">
                         <div class="recipe-emoji-badge">${c.thumbnail_emoji}</div>
                         <span class="match-gauge-pill">
-                            <i class="fa-solid fa-sparkles"></i> 매칭률 ${c.match_rate}%
+                            <i class="fa-solid fa-fire"></i> 적합도 ${c.intent_score || c.match_rate}%
                         </span>
                     </div>
                     <h3 class="recipe-title">${c.title}</h3>
                     <p class="recipe-desc">${c.description}</p>
                     
+                    ${reasoningHtml}
+
                     <div class="recipe-meta-row">
                         <span class="recipe-meta-item">
                             <i class="fa-regular fa-clock"></i> ${c.estimated_time_minutes}분 소요
@@ -446,7 +430,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 </div>
 
                 <button type="button" class="btn-select-recipe">
-                    <span>핸즈프리 조리 시작</span>
+                    <span>이 요리로 핸즈프리 조리 시작</span>
                     <i class="fa-solid fa-arrow-right" style="margin-left: 6px;"></i>
                 </button>
             `;
@@ -561,7 +545,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Chef Secrets
         if (chefSecretList) {
             chefSecretList.innerHTML = '';
-            (recipe.chef_secrets || []).forEach((tip, idx) => {
+            (recipe.chef_secrets || []).forEach((tip) => {
                 const li = document.createElement('li');
                 li.style.padding = '0.35rem 0';
                 li.style.borderBottom = '1px solid rgba(255, 255, 255, 0.04)';
@@ -571,6 +555,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Initialize Default Tags
+    // Initialize Default Tags (Empty by default for natural prompt first experience)
     renderTags();
 });

@@ -14,6 +14,15 @@ class RecipeCandidate(BaseModel):
     tags: List[str] = Field(default_factory=list, description="키워드 태그 (#초간단, #밥도둑 등)")
     thumbnail_emoji: str = Field("🍳", description="대표 이모지")
     source_reference: Optional[str] = Field("유튜브 & 인기 블로그 종합", description="참조 출처")
+    # Natural Language Intent Extension
+    ai_reasoning: Optional[str] = Field(None, description="사용자 의도에 맞춘 AI 추천 이유")
+    intent_score: int = Field(85, description="사용자 의도 부합 점수 (0~100)")
+
+
+class NaturalRecipeQueryRequest(BaseModel):
+    """Request payload for natural language cooking intent discovery."""
+    query: str = Field(..., description="자연어 요리 요청 (예: '오늘 비 오는데 얼큰한 국물 요리 먹고 싶어')")
+    context_ingredients: List[str] = Field(default_factory=list, description="이미 감지되거나 보유 중인 추가 재료 리스트")
 
 
 class CookingStep(BaseModel):

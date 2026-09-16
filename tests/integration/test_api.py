@@ -28,6 +28,24 @@ def test_recommend_recipes_endpoint(client):
     assert any("김치" in c["title"] for c in candidates)
 
 
+def test_discover_recipes_by_intent_endpoint(client):
+    """Test natural language intent discovery endpoint."""
+    response = client.post(
+        "/api/v1/recipes/discover",
+        json={
+            "query": "오늘 비 오는데 얼큰한 국물 요리 먹고 싶어",
+            "context_ingredients": ["김치", "돼지고기"]
+        }
+    )
+    assert response.status_code == 200
+    candidates = response.json()
+    assert len(candidates) >= 1
+    # Check that best match is soup and has AI reasoning
+    assert candidates[0]["id"] == "pork-kimchi-jjigae"
+    assert candidates[0]["ai_reasoning"] is not None
+    assert candidates[0]["intent_score"] >= 80
+
+
 def test_synthesize_recipe_endpoint(client):
     response = client.post(
         "/api/v1/recipes/synthesize",

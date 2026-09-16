@@ -101,7 +101,7 @@
                                 <textarea 
                                     id="textIngredientInput" 
                                     class="prompt-textarea" 
-                                    placeholder="어떤 재료로 요리해 볼까요? (예: 신김치, 스팸, 계란, 대파)" 
+                                    placeholder="어떤 요리를 만들고 싶으신가요? (예: 비 오는 날 얼큰한 국물 요리, 맥주랑 먹을 10분 간단 안주)" 
                                     rows="1"
                                 ></textarea>
                                 <button id="btnAddTextIngredient" style="display: none;"></button>
@@ -123,16 +123,16 @@
                                 
                                 <!-- Mode Selector Pills (Stitch: 📱 앱 / 🖥️ 웹) -->
                                 <div class="mode-pill-group">
-                                    <button type="button" class="mode-pill active" id="modePhotoBtn">
-                                        <i class="fa-solid fa-camera"></i> 사진 인식
+                                    <button type="button" class="mode-pill active" id="modeTextBtn">
+                                        <i class="fa-solid fa-wand-magic-sparkles"></i> AI 의도 분석
                                     </button>
-                                    <button type="button" class="mode-pill" id="modeTextBtn">
-                                        <i class="fa-solid fa-pen-nib"></i> 텍스트
+                                    <button type="button" class="mode-pill" id="modePhotoBtn">
+                                        <i class="fa-solid fa-camera"></i> 사진 인식
                                     </button>
                                 </div>
 
                                 <span style="font-size: 0.76rem; color: var(--text-muted); margin-left: 0.25rem;">
-                                    재료 <strong id="tagCount" style="color: var(--neon-violet);">4</strong>개 감지됨
+                                    보유 재료 <strong id="tagCount" style="color: var(--neon-violet);">0</strong>개
                                 </span>
                             </div>
 
@@ -162,17 +162,17 @@
                         </div>
                     </div>
 
-                    <!-- Quick Preset Ingredient Suggestions -->
+                    <!-- Quick Natural Intent Suggestions (Stitch Style) -->
                     <div class="quick-presets-row">
-                        <span style="font-size: 0.75rem; color: var(--text-muted); margin-right: 0.2rem;">인기 재료 추가:</span>
-                        <button type="button" class="preset-chip" onclick="window.addQuickPreset('신김치')">🥬 신김치</button>
-                        <button type="button" class="preset-chip" onclick="window.addQuickPreset('스팸')">🥓 스팸</button>
-                        <button type="button" class="preset-chip" onclick="window.addQuickPreset('계란')">🥚 계란</button>
-                        <button type="button" class="preset-chip" onclick="window.addQuickPreset('대파')">🧅 대파</button>
-                        <button type="button" class="preset-chip" onclick="window.addQuickPreset('돼지고기')">🥩 돼지고기</button>
-                        <button type="button" class="preset-chip" onclick="window.addQuickPreset('두부')">🧊 두부</button>
-                        <button type="button" class="preset-chip" onclick="window.addQuickPreset('양파')">🧅 양파</button>
+                        <span style="font-size: 0.75rem; color: var(--text-muted); margin-right: 0.2rem;">빠른 추천 질문:</span>
+                        <button type="button" class="preset-chip" onclick="window.applyIntentPreset('오늘 비도 오고 쌀쌀한데 얼큰한 국물 요리 먹고 싶어')">🌧️ 쌀쌀할 때 얼큰한 국물</button>
+                        <button type="button" class="preset-chip" onclick="window.applyIntentPreset('야식으로 맥주랑 먹기 좋은 10분 초간단 안주 만들어줘')">🍺 10분 맥주 안주</button>
+                        <button type="button" class="preset-chip" onclick="window.applyIntentPreset('다이어트 중인데 단백질 위주로 가볍게 먹을 계란 요리 추천해줘')">🥗 다이어트 고단백 계란</button>
+                        <button type="button" class="preset-chip" onclick="window.applyIntentPreset('주말 점심에 아이들이랑 같이 먹을 맵지 않은 달콤짭짤한 볶음밥')">👶 아이들 점심 볶음밥</button>
+                        <button type="button" class="preset-chip" onclick="window.applyIntentPreset('속 편안하고 구수한 전통 뚝배기 된장찌개 끓이고 싶어')">🥘 구수한 뚝배기 된장찌개</button>
                     </div>
+                </div>
+            </section>
                 </div>
             </section>
 

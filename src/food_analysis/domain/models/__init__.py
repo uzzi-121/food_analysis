@@ -5,6 +5,7 @@ from .ingredient import (
 )
 from .recipe import (
     RecipeCandidate,
+    NaturalRecipeQueryRequest,
     RecipeSynthesizerRequest,
     RequiredIngredient,
     SeasoningRatio,
@@ -22,6 +23,7 @@ __all__ = [
     "VisionExtractRequest",
     "VisionExtractResponse",
     "RecipeCandidate",
+    "NaturalRecipeQueryRequest",
     "RecipeSynthesizerRequest",
     "RequiredIngredient",
     "SeasoningRatio",

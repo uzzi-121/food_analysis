@@ -2,7 +2,12 @@ from typing import List
 from pydantic import BaseModel, Field
 from fastapi import APIRouter, Depends
 from ...core.logger import setup_logger
-from ...domain.models.recipe import RecipeCandidate, SynthesizedRecipe, RecipeSynthesizerRequest
+from ...domain.models.recipe import (
+    RecipeCandidate,
+    SynthesizedRecipe,
+    RecipeSynthesizerRequest,
+    NaturalRecipeQueryRequest
+)
 from ...workflows.orchestrator import CookCastOrchestrator
 from ..dependencies import get_orchestrator
 
@@ -21,6 +26,19 @@ async def recommend_recipes(
 ):
     """Agent 2: Harvest top recipe recommendations based on available ingredients."""
     candidates = await orchestrator.step2_recommend_recipes(payload.ingredients)
+    return candidates
+
+
+@router.post("/discover", response_model=List[RecipeCandidate])
+async def discover_recipes_by_intent(
+    payload: NaturalRecipeQueryRequest,
+    orchestrator: CookCastOrchestrator = Depends(get_orchestrator)
+):
+    """Agent 2: Discover and curate recipes based on user natural language cooking intent."""
+    candidates = await orchestrator.step2_discover_by_intent(
+        query=payload.query,
+        context_ingredients=payload.context_ingredients
+    )
     return candidates
 
 

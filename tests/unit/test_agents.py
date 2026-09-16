@@ -28,6 +28,23 @@ async def test_agent2_harvester_recommendation():
 
 
 @pytest.mark.asyncio
+async def test_agent2_intent_discovery():
+    agent = RecipeHarvesterAgent()
+    # Query: Rainy day & spicy hot soup
+    candidates = await agent.recommend_by_intent("오늘 비 오는데 얼큰한 국물 요리 먹고 싶어")
+    assert len(candidates) >= 1
+    assert candidates[0].id == "pork-kimchi-jjigae"
+    assert candidates[0].ai_reasoning is not None
+    assert "국물" in candidates[0].ai_reasoning or "얼큰" in candidates[0].ai_reasoning
+
+    # Query: Late-night beer snack
+    snack_candidates = await agent.recommend_by_intent("맥주랑 먹을 10분 간단 안주")
+    assert len(snack_candidates) >= 1
+    assert snack_candidates[0].id == "rolled-omelet"
+    assert snack_candidates[0].ai_reasoning is not None
+
+
+@pytest.mark.asyncio
 async def test_agent3_synthesizer():
     agent = GoldenRecipeSynthesizerAgent()
     recipe = await agent.synthesize("spam-kimchi-fried-rice", ["김치", "스팸", "대파"])
