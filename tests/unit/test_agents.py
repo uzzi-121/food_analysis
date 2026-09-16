@@ -43,6 +43,15 @@ async def test_agent2_intent_discovery():
     assert snack_candidates[0].id == "rolled-omelet"
     assert snack_candidates[0].ai_reasoning is not None
 
+    # Dual input: Ingredients ['계란', '돼지고기'] + Desired recipe '얼큰한 국물 요리'
+    dual_candidates = await agent.recommend_by_intent(
+        query="얼큰한 국물 요리",
+        context_ingredients=["계란", "돼지고기"]
+    )
+    assert len(dual_candidates) >= 1
+    assert dual_candidates[0].id == "pork-kimchi-jjigae"
+    assert "돼지고기" in dual_candidates[0].ai_reasoning
+
 
 @pytest.mark.asyncio
 async def test_agent3_synthesizer():

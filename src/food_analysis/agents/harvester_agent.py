@@ -55,9 +55,13 @@ class RecipeHarvesterAgent(BaseAgent):
         """Analyze natural language intent and recommend top recipes with AI reasoning."""
         self.log_step(f"Discovering recipes by natural query: '{query}', context ingredients: {context_ingredients}")
 
-        # 1. Analyze intent via Gemini Adapter
+        # 1. Analyze intent via Gemini Adapter (taking both query and context ingredients)
         all_recipes = self.search_client.recipe_database
-        intent_data = await self.gemini_client.analyze_cooking_intent(query, all_recipes)
+        intent_data = await self.gemini_client.analyze_cooking_intent(
+            query=query,
+            recipe_catalogue=all_recipes,
+            context_ingredients=context_ingredients
+        )
 
         # Merge ingredients from query and context
         merged_ingredients = list(set(context_ingredients + intent_data.get("extracted_ingredients", [])))

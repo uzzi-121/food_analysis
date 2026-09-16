@@ -46,6 +46,22 @@ def test_discover_recipes_by_intent_endpoint(client):
     assert candidates[0]["intent_score"] >= 80
 
 
+def test_dual_input_recipe_discovery_endpoint(client):
+    """Test dual input: Refrigerator ingredients + Desired recipe style."""
+    response = client.post(
+        "/api/v1/recipes/discover",
+        json={
+            "query": "맥주 안주로 먹을 부드러운 고단백 요리",
+            "context_ingredients": ["계란", "대파"]
+        }
+    )
+    assert response.status_code == 200
+    candidates = response.json()
+    assert len(candidates) >= 1
+    assert candidates[0]["id"] == "rolled-omelet"
+    assert "계란" in candidates[0]["ai_reasoning"]
+
+
 def test_synthesize_recipe_endpoint(client):
     response = client.post(
         "/api/v1/recipes/synthesize",

@@ -154,6 +154,63 @@ class SearchClient:
                     {"target": "굴소스", "substitute": "진간장 1큰술 + 설탕 한 꼬집 또는 치킨스톡"},
                     {"target": "대파", "substitute": "쪽파"}
                 ]
+            },
+            {
+                "id": "spam-tofu-kimchi",
+                "title": "백종원식 스팸 두부김치",
+                "subtitle": "노릇하게 구운 스팸과 들기름에 달달 볶은 신김치를 따뜻한 두부에 곁들인 10분 완성 황금 안주",
+                "primary_ingredients": ["김치", "신김치", "두부", "스팸"],
+                "optional_ingredients": ["대파", "양파", "참기름", "들기름", "설탕", "고춧가루", "통깨"],
+                "prep_time_min": 3,
+                "cook_time_min": 7,
+                "difficulty": "쉬움",
+                "tags": ["#10분안주", "#맥주안주", "#야식", "#초간단", "#백종원레시피", "#두부요리"],
+                "thumbnail_emoji": "🥓",
+                "chef_secrets": [
+                    "스팸을 도톰하게 썰어 노릇노릇하게 구워내면 자체 기름이 배어 나와 김치와 환상의 궁합을 이룹니다.",
+                    "신김치는 들기름이나 참기름에 설탕 반 스푼을 넣고 센 불에서 수분을 날리며 볶아 감칠맛을 극대화하세요.",
+                    "두부는 끓는 물에 1분 데치거나 전자레인지에 1분 30초 돌려 따끈따끈하게 곁들이면 훨씬 부드럽습니다."
+                ],
+                "sources": [
+                    {"title": "백종원의 요리비책 - 술이 술술 들어가는 초간단 두부김치", "url": "https://youtube.com/watch?v=sample_tofu_kimchi1"}
+                ],
+                "default_seasoning": [
+                    {"name": "설탕", "ratio": "0.5 큰술", "tip": "신김치의 신맛 중화 및 감칠맛 폭발"},
+                    {"name": "참기름(또는 들기름)", "ratio": "1 큰술", "tip": "김치 볶을 때 고소한 풍미"},
+                    {"name": "고춧가루", "ratio": "0.5 큰술", "tip": "먹음직스러운 색감"},
+                    {"name": "통깨", "ratio": "약간", "tip": "플레이팅 마무리"}
+                ],
+                "substitutions": [
+                    {"target": "스팸", "substitute": "돼지고기 삼겹살/앞다리살, 베이컨, 참치캔"},
+                    {"target": "두부", "substitute": "계란말이 또는 어묵"}
+                ]
+            },
+            {
+                "id": "kimchi-pancake",
+                "title": "바삭한 스팸 김치전",
+                "subtitle": "신김치와 스팸을 쫑쫑 썰어 겉바속촉으로 부쳐내는 실패 없는 야식 안주",
+                "primary_ingredients": ["김치", "신김치", "스팸"],
+                "optional_ingredients": ["대파", "양파", "부침가루", "고춧가루", "설탕"],
+                "prep_time_min": 5,
+                "cook_time_min": 8,
+                "difficulty": "쉬움",
+                "tags": ["#야식", "#맥주안주", "#비오는날", "#초간단", "#10분완성"],
+                "thumbnail_emoji": "🥞",
+                "chef_secrets": [
+                    "반죽에 차가운 탄산수나 얼음물을 섞어주면 글루텐 형성이 억제되어 바삭함이 오래 유지됩니다.",
+                    "기름을 넉넉히 두르고 센 불에서 가장자리부터 튀기듯이 부쳐주는 것이 바삭한 식감의 비결입니다."
+                ],
+                "sources": [
+                    {"title": "백종원의 요리비책 - 전집보다 바삭한 김치전 황금비법", "url": "https://youtube.com/watch?v=sample_kimchi_pancake"}
+                ],
+                "default_seasoning": [
+                    {"name": "설탕", "ratio": "0.3 큰술", "tip": "김치 신맛 제거"},
+                    {"name": "고춧가루", "ratio": "1 큰술", "tip": "먹음직스러운 붉은 색감"},
+                    {"name": "부침가루", "ratio": "1 컵", "tip": "바삭한 반죽 베이스"}
+                ],
+                "substitutions": [
+                    {"target": "스팸", "substitute": "참치캔, 오징어, 돼지고기 다짐육"}
+                ]
             }
         ]
 
@@ -172,14 +229,21 @@ class SearchClient:
                         if r_ing not in matched:
                             matched.append(r_ing)
 
-            # Match score weighting: primary ingredients weigh heavily
+            # Match score weighting: primary ingredients are essential
             primary_matched = [r for r in recipe["primary_ingredients"] if any(u in r.lower() or r.lower() in u for u in normalized_user_ings)]
             primary_rate = len(primary_matched) / max(len(recipe["primary_ingredients"]), 1)
 
-            # Base match rate
-            match_percentage = min(100, int((primary_rate * 70) + (len(matched) / max(len(all_recipe_ings), 1) * 30)))
-            if match_percentage < 30 and len(matched) > 0:
-                match_percentage = 45  # minimum boost if at least one key ingredient matches
+            # Calculate base match rate
+            if len(primary_matched) == 0:
+                # If user lacks ALL primary ingredients, they CANNOT realistically cook this dish
+                match_percentage = min(20, int((len(matched) / max(len(all_recipe_ings), 1)) * 30))
+            else:
+                match_percentage = min(100, int((primary_rate * 70) + (len(matched) / max(len(all_recipe_ings), 1) * 30)))
+                # Boost if multiple primary ingredients match
+                if len(primary_matched) >= 2:
+                    match_percentage = max(match_percentage, 75)
+                elif len(primary_matched) == 1:
+                    match_percentage = max(match_percentage, 50)
 
             # Missing primary ingredients
             missing = [r for r in recipe["primary_ingredients"] if r not in matched]
@@ -188,7 +252,8 @@ class SearchClient:
                 "recipe": recipe,
                 "match_rate": match_percentage,
                 "matched_ingredients": matched,
-                "missing_ingredients": missing
+                "missing_ingredients": missing,
+                "primary_matched_count": len(primary_matched)
             })
 
         # Sort by highest match rate

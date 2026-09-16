@@ -73,26 +73,38 @@ class GeminiClient:
             ]
         }
 
-    async def analyze_cooking_intent(self, query: str, recipe_catalogue: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Analyze natural language cooking query (mood, weather, situation, craving, ingredients)."""
-        logger.info(f"Analyzing cooking intent for query: '{query}'")
+    async def analyze_cooking_intent(
+        self,
+        query: str,
+        recipe_catalogue: List[Dict[str, Any]],
+        context_ingredients: List[str] = []
+    ) -> Dict[str, Any]:
+        """Analyze natural language cooking query alongside refrigerator ingredients."""
+        logger.info(f"Analyzing cooking intent for query: '{query}', ingredients: {context_ingredients}")
 
         if self.client:
             try:
+                ings_text = ", ".join(context_ingredients) if context_ingredients else "없음 (자유 제안)"
                 recipe_names = ", ".join([f"{r['id']}({r['title']})" for r in recipe_catalogue])
-                prompt = f"""당신은 사용자의 기분, 날씨, 식사 상황, 취향을 꿰뚫어보는 최고 수준의 AI 소믈리에 셰프입니다.
-사용자의 요리 요청 문장을 읽고, 다음 레시피 목록 중 가장 잘 어울리는 최적의 요리와 이유를 JSON으로 답변하세요.
+                prompt = f"""당신은 사용자의 냉장고 보유 식재료와 원하는 요리/레시피 취향을 모두 꿰뚫어보는 최고 수준의 AI 소믈리에 셰프입니다.
+다음 레시피 목록 중, 사용자의 [냉장고 보유 식재료]를 가장 잘 활용하면서 [원하는 요리 스타일]에 부합하는 최적의 요리와 이유를 JSON으로 답변하세요.
+
+★ 매우 중요한 원칙 ★
+1. 사용자가 보유하지 않은 필수 주재료(예: 계란이 없는데 계란말이, 된장이 없는데 된장찌개 등)가 필요한 요리는 절대로 1순위(best_recipe_id)로 추천하지 마세요.
+2. 추천 이유(reasoning)에 사용자가 실제로 갖지 않은 재료를 '보유하신 ~'이라고 거짓으로 언급하지 마세요. 반드시 사용자가 실제로 가진 재료만을 언급해야 합니다.
+
 레시피 목록: [{recipe_names}]
 
-사용자 요청: "{query}"
+사용자 보유 식재료: [{ings_text}]
+사용자가 원하는 요리/레시피: "{query if query else '보유 재료로 만들 수 있는 가장 맛있는 요리'}"
 
 JSON 형식으로만 답변하세요:
 {{
   "intent_summary": "사용자가 원하는 요리 무드와 핵심 의도 한 줄 요약",
   "mood": "얼큰한/든든한/야식/초간단/다이어트 등 핵심 키워드",
-  "extracted_ingredients": ["문장에서 언급된 식재료 목록"],
-  "best_recipe_id": "가장 부합하는 레시피 id",
-  "reasoning": "사용자 맞춤형 추천 이유 1~2문장 (친절하고 감각적인 어조)"
+  "extracted_ingredients": ["문장이나 보유 재료에서 언급된 핵심 식재료 목록"],
+  "best_recipe_id": "보유 식재료와 원하는 요리에 가장 부합하는 레시피 id",
+  "reasoning": "보유 식재료와 원하는 요리 스타일이 어떻게 조화를 이루는지 맞춤 추천 이유 1~2문장 (실제 보유 재료만 언급)"
 }}
 """
                 response = self.client.models.generate_content(
@@ -108,61 +120,131 @@ JSON 형식으로만 답변하세요:
             except Exception as e:
                 logger.error(f"Gemini Intent Analysis API error: {e}. Falling back to heuristic analyzer.")
 
-        # High-precision heuristic fallback engine
-        q = query.lower()
-        extracted_ings = []
-        possible_ings = ["김치", "신김치", "스팸", "계란", "달걀", "돼지고기", "두부", "대파", "양파", "된장", "밥"]
-        for ing in possible_ings:
-            if ing in q:
-                extracted_ings.append(ing)
+        # High-precision ingredient-aware heuristic fallback engine
+        q = (query or "").lower()
+        user_ings = [i.strip().lower() for i in context_ingredients]
+        has_pork = any("돼지" in i or "삼겹" in i or "목살" in i or "고기" in i for i in user_ings)
+        has_egg = any("계란" in i or "달걀" in i for i in user_ings)
+        has_kimchi = any("김치" in i for i in user_ings)
+        has_spam = any("스팸" in i or "햄" in i for i in user_ings)
+        has_tofu = any("두부" in i for i in user_ings)
+        has_doenjang = any("된장" in i for i in user_ings)
+        has_rice = any("밥" in i for i in user_ings)
 
-        # 1. Hot spicy soup / rainy day
-        if any(k in q for k in ["국물", "찌개", "얼큰", "비", "쌀쌀", "칼칼", "탕", "뜨끈", "소주"]):
+        # 1. Beer snack / Late night quick snack
+        if any(k in q for k in ["맥주", "안주", "야식", "술안주", "초간단 안주", "간단한 안주"]):
+            # Case A: Tofu + Kimchi (with/without Spam) -> Ultimate 10-min Beer Snack
+            if has_tofu and has_kimchi:
+                highlight = "신김치와 두부" + (", 스팸" if has_spam else "")
+                return {
+                    "intent_summary": "야식과 맥주 한잔에 환상 궁합인 10분 완성 든든한 두부김치 안주",
+                    "mood": "감칠맛 폭발 10분 안주",
+                    "extracted_ingredients": ["두부", "김치"] + (["스팸"] if has_spam else []),
+                    "best_recipe_id": "spam-tofu-kimchi",
+                    "reasoning": f"🍺 보유하신 {highlight}를 100% 활용하여 노릇하게 구운 스팸과 볶음김치를 곁들인 최고의 10분 맥주 안주입니다!"
+                }
+            # Case B: Kimchi + Spam -> Crispy Kimchi Pancake or Kimchi Fried Rice
+            elif has_kimchi and has_spam:
+                return {
+                    "intent_summary": "야식으로 맥주와 곁들이기 좋은 짭조름하고 바삭한 스팸 김치 안주",
+                    "mood": "바삭하고 짭조름한 안주",
+                    "extracted_ingredients": ["김치", "스팸"],
+                    "best_recipe_id": "kimchi-pancake",
+                    "reasoning": "🍺 보유하신 신김치와 스팸을 쫑쫑 썰어 겉바속촉으로 부쳐내는 실패 없는 10분 맥주 안주 김치전입니다!"
+                }
+            # Case C: Egg is available -> Rolled Omelet
+            elif has_egg:
+                return {
+                    "intent_summary": "야식이나 맥주 한잔에 부담 없이 곁들이는 고단백 부드러운 영양 안주",
+                    "mood": "폭신하고 고소한 영양 안주",
+                    "extracted_ingredients": ["계란"],
+                    "best_recipe_id": "rolled-omelet",
+                    "reasoning": "🍺 보유하신 신선한 계란으로 부담 없는 칼로리와 맥주 한잔의 꿀조합, 호텔식 계란말이를 추천합니다!"
+                }
+
+        # 2. Hot spicy soup / stew intent
+        if any(k in q for k in ["국물", "찌개", "얼큰", "비", "쌀쌀", "칼칼", "탕", "뜨끈", "소주", "시원한"]):
+            if has_doenjang and not has_kimchi:
+                return {
+                    "intent_summary": "구수하고 속이 편안한 전통 집밥 뚝배기 찌개",
+                    "mood": "구수하고 편안함",
+                    "extracted_ingredients": ["된장", "두부"],
+                    "best_recipe_id": "soybean-paste-stew",
+                    "reasoning": "🥘 자극적이지 않고 속 편안한 구수한 뚝배기 된장찌개로 든든한 한 끼를 즐겨보세요!"
+                }
+            highlight = "돼지고기와 김치" if (has_pork and has_kimchi) else ("보유하신 김치와 두부" if (has_kimchi and has_tofu) else ("보유하신 돼지고기" if has_pork else "얼큰한 김치"))
             return {
-                "intent_summary": "비 오는 날이나 쌀쌀할 때 속을 든든하게 채워줄 얼큰한 국물 요리",
+                "intent_summary": "비 오거나 쌀쌀할 때 속을 든든하게 채워줄 얼큰하고 칼칼한 국물 요리",
                 "mood": "얼큰하고 진한 국물",
-                "extracted_ingredients": extracted_ings or ["김치", "돼지고기"],
+                "extracted_ingredients": ["김치"] + (["돼지고기"] if has_pork else (["두부"] if has_tofu else [])),
                 "best_recipe_id": "pork-kimchi-jjigae",
-                "reasoning": "🌧️ 쌀쌀한 날씨에 어울리는 얼큰하고 깊은 돼지기름 김치찌개로 따뜻한 온기를 채워보세요!"
+                "reasoning": f"🌧️ {highlight}를 활용하여 원하시는 얼큰하고 깊은 국물 맛의 김치찌개로 따뜻한 온기를 채워보세요!"
             }
 
-        # 2. Savory hearty stew / traditional
-        if any(k in q for k in ["된장", "구수", "집밥", "정석", "뚝배기", "할머니"]):
+        # 3. Soft diet / protein / egg roll (requires egg)
+        if any(k in q for k in ["부드러운", "단백질", "다이어트", "계란말이", "달걀말이", "아이반찬"]) and has_egg:
             return {
-                "intent_summary": "구수하고 속이 편안한 전통 집밥 뚝배기 찌개",
-                "mood": "구수하고 편안함",
-                "extracted_ingredients": extracted_ings or ["된장", "두부", "대파"],
-                "best_recipe_id": "soybean-paste-stew",
-                "reasoning": "🥘 자극적이지 않고 속 편안한 구수한 뚝배기 된장찌개로 든든한 한 끼를 즐겨보세요!"
-            }
-
-        # 3. Late-night beer snack / soft protein / diet
-        if any(k in q for k in ["맥주", "안주", "야식", "부드러운", "단백질", "다이어트", "계란말이", "달걀말이", "간단한 반찬"]):
-            return {
-                "intent_summary": "야식이나 맥주 한잔에 부담 없이 곁들이는 고단백 부드러운 영양 안주",
-                "mood": "폭신하고 고소한 야식 안주",
-                "extracted_ingredients": extracted_ings or ["계란", "대파"],
+                "intent_summary": "부담 없는 칼로리와 영양을 챙길 수 있는 부드러운 고단백 반찬",
+                "mood": "부드러운 영양 반찬",
+                "extracted_ingredients": ["계란"],
                 "best_recipe_id": "rolled-omelet",
-                "reasoning": "🍺 부담 없는 칼로리로 맥주 한잔과 환상 궁합을 자랑하는 호텔식 폭신폭신 계란말이입니다!"
+                "reasoning": "🍳 보유하신 신선한 계란으로 부드럽고 폭신하게 말아낸 영양 만점 계란말이를 추천합니다!"
             }
 
-        # 4. Chinese takeout / 10-minute quick meal
-        if any(k in q for k in ["중국집", "중화", "굴소스", "초스피드", "10분", "초간단", "가볍게"]):
+        # 4. Chinese takeout / 10-minute quick meal / fried rice
+        if any(k in q for k in ["중국집", "중화", "굴소스", "초스피드", "10분", "초간단", "가볍게", "볶음밥", "밥"]):
+            if has_kimchi and has_spam:
+                return {
+                    "intent_summary": "단짠 매콤한 감칠맛과 불맛으로 실패 없는 자취생 1등 한 그릇 요리",
+                    "mood": "실패 없는 감칠맛",
+                    "extracted_ingredients": ["김치", "스팸"],
+                    "best_recipe_id": "spam-kimchi-fried-rice",
+                    "reasoning": "🍳 보유하신 신김치와 스팸의 감칠맛을 살린 절대 실패 없는 15분 황금 볶음밥입니다!"
+                }
+            elif has_egg:
+                return {
+                    "intent_summary": "바쁜 시간에 10분 만에 중화풍 파기름 향을 살린 초스피드 볶음밥",
+                    "mood": "중화풍 초스피드",
+                    "extracted_ingredients": ["계란"],
+                    "best_recipe_id": "egg-fried-rice",
+                    "reasoning": "🍚 보유하신 계란과 파로 10분 만에 중화풍 파기름 향이 솔솔 나는 황금 계란 볶음밥을 만들어보세요!"
+                }
+
+        # 5. Fallback strictly based on available ingredients
+        if has_tofu and has_kimchi:
+            highlight = "신김치와 두부" + (", 스팸" if has_spam else "")
             return {
-                "intent_summary": "바쁜 시간에 10분 만에 중화풍 파기름 향을 살린 초스피드 볶음밥",
-                "mood": "중화풍 초스피드",
-                "extracted_ingredients": extracted_ings or ["계란", "대파", "밥"],
-                "best_recipe_id": "egg-fried-rice",
-                "reasoning": "🍚 불맛 파기름과 굴소스 향이 솔솔 나는 10분 중국집 스타일 황금 계란 볶음밥을 추천합니다!"
+                "intent_summary": "보유 식재료를 100% 살린 감칠맛 가득한 10분 두부김치",
+                "mood": "감칠맛 10분 요리",
+                "extracted_ingredients": ["두부", "김치"],
+                "best_recipe_id": "spam-tofu-kimchi",
+                "reasoning": f"🥓 보유하신 {highlight}로 빠르고 푸짐하게 즐길 수 있는 추천 요리입니다!"
+            }
+        if has_kimchi and has_spam:
+            return {
+                "intent_summary": "단짠 매콤한 감칠맛과 불맛으로 실패 없는 자취생 1등 한 그릇 요리",
+                "mood": "실패 없는 감칠맛",
+                "extracted_ingredients": ["김치", "스팸"],
+                "best_recipe_id": "spam-kimchi-fried-rice",
+                "reasoning": "🍳 보유 식재료 신김치와 스팸을 활용한 15분 완성 황금 김치볶음밥입니다!"
+            }
+        if has_egg:
+            return {
+                "intent_summary": "신선한 계란으로 빠르고 부드럽게 완성하는 영양 요리",
+                "mood": "고소한 영양 요리",
+                "extracted_ingredients": ["계란"],
+                "best_recipe_id": "rolled-omelet",
+                "reasoning": "🥚 보유하신 계란으로 폭신폭신하고 부드럽게 즐길 수 있는 요리입니다!"
             }
 
-        # 5. Default / Spiciness & savory spam combo
+        # Default fallback
+        first_recipe = recipe_catalogue[0] if recipe_catalogue else {"id": "spam-kimchi-fried-rice"}
         return {
-            "intent_summary": "단짠 매콤한 감칠맛과 불맛으로 실패 없는 자취생 1등 한 그릇 요리",
-            "mood": "실패 없는 감칠맛",
-            "extracted_ingredients": extracted_ings or ["김치", "스팸"],
-            "best_recipe_id": "spam-kimchi-fried-rice",
-            "reasoning": "🍳 스팸의 짭조름한 고소함과 신김치의 산뜻한 매콤함이 어우러진 절대 실패 없는 황금 볶음밥입니다!"
+            "intent_summary": "보유 재료를 가장 맛있게 활용하는 맞춤 큐레이션 요리",
+            "mood": "맞춤 요리",
+            "extracted_ingredients": context_ingredients[:2],
+            "best_recipe_id": first_recipe["id"],
+            "reasoning": "🍳 보유하신 재료를 최대한 활용하여 맛있게 완성할 수 있는 추천 요리입니다!"
         }
 
     async def generate_script_enhancement(self, prompt: str) -> Optional[str]:

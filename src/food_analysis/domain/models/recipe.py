@@ -20,9 +20,9 @@ class RecipeCandidate(BaseModel):
 
 
 class NaturalRecipeQueryRequest(BaseModel):
-    """Request payload for natural language cooking intent discovery."""
-    query: str = Field(..., description="자연어 요리 요청 (예: '오늘 비 오는데 얼큰한 국물 요리 먹고 싶어')")
-    context_ingredients: List[str] = Field(default_factory=list, description="이미 감지되거나 보유 중인 추가 재료 리스트")
+    """Request payload for natural language cooking intent discovery with optional context ingredients."""
+    query: str = Field(default="", description="원하는 요리 스타일 또는 자연어 요리 요청 (예: '비 오는 날 얼큰한 국물 요리')")
+    context_ingredients: List[str] = Field(default_factory=list, description="냉장고 보유 식재료 리스트 (예: ['계란', '돼지고기'])")
 
 
 class CookingStep(BaseModel):

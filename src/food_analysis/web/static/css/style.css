@@ -438,6 +438,231 @@ body::before {
     to { transform: scale(1); opacity: 1; }
 }
 
+/* Prompt Card Dual-Section Layout (재료 + 원하는 레시피) */
+.prompt-section-block {
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+}
+
+.prompt-section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+}
+
+.prompt-section-title {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--text-pure);
+}
+
+.badge-count {
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: var(--radius-full);
+    background: rgba(139, 92, 246, 0.25);
+    color: #DDD6FE;
+    border: 1px solid rgba(139, 92, 246, 0.4);
+}
+
+.badge-optional {
+    font-size: 0.68rem;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: var(--radius-full);
+    background: rgba(16, 185, 129, 0.15);
+    color: #6EE7B7;
+    border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.prompt-section-hint {
+    font-size: 0.74rem;
+    color: var(--text-muted);
+}
+
+/* Inline Ingredient Input Row */
+.ingredient-input-row {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.ingredient-input-box {
+    display: flex;
+    align-items: center;
+    flex: 1;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: var(--radius-md);
+    padding: 0.4rem 0.6rem 0.4rem 0.8rem;
+    transition: var(--transition);
+}
+
+.ingredient-input-box:focus-within {
+    border-color: rgba(139, 92, 246, 0.6);
+    background: rgba(255, 255, 255, 0.06);
+    box-shadow: 0 0 12px rgba(139, 92, 246, 0.25);
+}
+
+.ingredient-input-icon {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    margin-right: 0.5rem;
+}
+
+.ingredient-input-field {
+    flex: 1;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: var(--text-pure);
+    font-family: var(--font-body);
+    font-size: 0.88rem;
+}
+
+.ingredient-input-field::placeholder {
+    color: var(--text-muted);
+    font-size: 0.84rem;
+}
+
+.btn-add-ingredient {
+    background: linear-gradient(135deg, var(--neon-violet), #7C3AED);
+    color: #FFFFFF;
+    border: none;
+    border-radius: var(--radius-sm);
+    padding: 0.28rem 0.75rem;
+    font-size: 0.76rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.btn-add-ingredient:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(139, 92, 246, 0.4);
+}
+
+/* Quick Ingredient Preset Pills */
+.quick-ingredient-presets {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    margin-top: 0.15rem;
+}
+
+.quick-ingredient-presets .preset-label {
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    margin-right: 0.2rem;
+}
+
+.ingredient-preset-pill {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: var(--radius-full);
+    color: var(--text-secondary);
+    font-size: 0.74rem;
+    font-weight: 500;
+    padding: 0.2rem 0.55rem;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.ingredient-preset-pill:hover {
+    background: rgba(139, 92, 246, 0.15);
+    border-color: rgba(139, 92, 246, 0.35);
+    color: #DDD6FE;
+    transform: translateY(-1px);
+}
+
+.ingredient-preset-pill.active {
+    background: rgba(139, 92, 246, 0.28);
+    border-color: rgba(139, 92, 246, 0.5);
+    color: #FFFFFF;
+}
+
+/* Section Connector / Divider */
+.prompt-section-divider {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    margin: 0.85rem 0 0.65rem 0;
+}
+
+.prompt-section-divider .divider-line {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+}
+
+.prompt-section-divider .divider-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.2rem 0.75rem;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: var(--radius-full);
+    font-size: 0.72rem;
+    color: var(--text-muted);
+}
+
+.prompt-section-divider .divider-badge i {
+    color: var(--neon-violet);
+    font-size: 0.68rem;
+}
+
+.toolbar-status-badge {
+    font-size: 0.78rem;
+    color: var(--text-secondary);
+}
+
+/* Search Summary Banner on Step 2 View */
+.search-summary-banner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    background: linear-gradient(135deg, rgba(139, 92, 246, 0.12), rgba(56, 189, 248, 0.08));
+    border: 1px solid rgba(139, 92, 246, 0.3);
+    border-radius: var(--radius-lg);
+    padding: 0.85rem 1.25rem;
+    margin-bottom: 2rem;
+    backdrop-filter: blur(16px);
+}
+
+.summary-banner-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.86rem;
+    color: #DDD6FE;
+}
+
+.summary-banner-item strong {
+    color: #FFFFFF;
+    font-weight: 600;
+}
+
+.summary-pill {
+    display: inline-flex;
+    align-items: center;
+    padding: 2px 8px;
+    background: rgba(139, 92, 246, 0.25);
+    border-radius: var(--radius-full);
+    font-size: 0.78rem;
+    color: #EDE9FE;
+}
+
 /* Bottom Toolbar (Stitch Style: +, Mode pill, Style Dropdown, Mic, Arrow Button) */
 .prompt-bottom-toolbar {
     display: flex;

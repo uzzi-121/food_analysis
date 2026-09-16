@@ -24,16 +24,18 @@ document.addEventListener('DOMContentLoaded', () => {
     const previewImg = document.getElementById('previewImg');
     const btnRemovePhoto = document.getElementById('btnRemovePhoto');
     const btnTriggerPhoto = document.getElementById('btnTriggerPhoto');
-    const modePhotoBtn = document.getElementById('modePhotoBtn');
-    const modeTextBtn = document.getElementById('modeTextBtn');
-
-    const textIngredientInput = document.getElementById('textIngredientInput');
-    const btnAddTextIngredient = document.getElementById('btnAddTextIngredient');
+    const ingredientTextInput = document.getElementById('ingredientTextInput');
+    const btnAddIngredientTag = document.getElementById('btnAddIngredientTag');
+    const desiredRecipeInput = document.getElementById('desiredRecipeInput');
     const ingredientTagContainer = document.getElementById('ingredientTagContainer');
     const tagCount = document.getElementById('tagCount');
+    const ingredientCountBadge = document.getElementById('ingredientCountBadge');
     const btnClearAllTags = document.getElementById('btnClearAllTags');
     const btnFindRecipes = document.getElementById('btnFindRecipes');
     const recipeCardsContainer = document.getElementById('recipeCardsContainer');
+    const recipeSearchSummaryBanner = document.getElementById('recipeSearchSummaryBanner');
+    const styleSelectorPill = document.getElementById('styleSelectorPill');
+    const currentStyleLabel = document.getElementById('currentStyleLabel');
     const btnBackToInput = document.getElementById('btnBackToInput');
     const btnBackToRecipes = document.getElementById('btnBackToRecipes');
 
@@ -157,7 +159,19 @@ document.addEventListener('DOMContentLoaded', () => {
     function renderTags() {
         if (!ingredientTagContainer) return;
         ingredientTagContainer.innerHTML = '';
-        if (tagCount) tagCount.textContent = state.ingredients.length;
+        const count = state.ingredients.length;
+        if (tagCount) tagCount.textContent = count;
+        if (ingredientCountBadge) ingredientCountBadge.textContent = `${count}개`;
+
+        // Update active class on quick ingredient preset pills
+        document.querySelectorAll('.ingredient-preset-pill').forEach(pill => {
+            const name = pill.textContent.replace('+', '').trim();
+            if (state.ingredients.some(i => i.name === name)) {
+                pill.classList.add('active');
+            } else {
+                pill.classList.remove('active');
+            }
+        });
 
         state.ingredients.forEach((item, idx) => {
             const chip = document.createElement('div');
@@ -178,7 +192,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function addIngredient(name, category = "기타", quantity = "적당량") {
         const trimmed = name.trim();
         if (!trimmed) return;
-        if (state.ingredients.some(i => i.name === trimmed)) return;
+        if (state.ingredients.some(i => i.name.toLowerCase() === trimmed.toLowerCase())) return;
 
         state.ingredients.push({
             name: trimmed,
@@ -194,24 +208,72 @@ document.addEventListener('DOMContentLoaded', () => {
         renderTags();
     }
 
-    // Global quick intent preset handler (One-click natural language execution)
-    window.applyIntentPreset = function(queryText) {
-        if (textIngredientInput) {
-            textIngredientInput.value = queryText;
-        }
-        if (btnFindRecipes) {
-            btnFindRecipes.click();
+    // Toggle quick preset ingredient
+    window.toggleIngredientPreset = function(name) {
+        const existsIndex = state.ingredients.findIndex(i => i.name === name);
+        if (existsIndex >= 0) {
+            removeIngredient(existsIndex);
+            window.showToast(`🗑️ '${name}' 재료가 제외되었습니다.`);
+        } else {
+            addIngredient(name);
+            window.showToast(`🥬 '${name}' 재료가 추가되었습니다.`);
         }
     };
 
-    // ----------------------------------------------------
-    // Input Event Listeners
-    // ----------------------------------------------------
-    if (textIngredientInput) {
-        textIngredientInput.addEventListener('keydown', (e) => {
+    // Apply recipe / dish preference preset
+    window.applyRecipePreset = function(queryText) {
+        if (desiredRecipeInput) {
+            desiredRecipeInput.value = queryText;
+            desiredRecipeInput.focus();
+        }
+        window.showToast(`✨ 원하는 요리 스타일: "${queryText}"`);
+    };
+
+    // Global quick intent preset handler (backward compatible)
+    window.applyIntentPreset = function(queryText) {
+        window.applyRecipePreset(queryText);
+    };
+
+    // Add ingredient from text input field
+    function handleAddIngredientFromInput() {
+        if (!ingredientTextInput) return;
+        const val = ingredientTextInput.value.trim();
+        if (!val) return;
+
+        const items = val.split(/[,+/]+/);
+        items.forEach(it => {
+            const clean = it.trim();
+            if (clean) {
+                // Check if user entered quantity like '계란 2개'
+                const match = clean.match(/^([^\d]+)\s*(\d+.*)?$/);
+                if (match && match[2]) {
+                    addIngredient(match[1].trim(), "기타", match[2].trim());
+                } else {
+                    addIngredient(clean);
+                }
+            }
+        });
+        ingredientTextInput.value = '';
+    }
+
+    if (btnAddIngredientTag) {
+        btnAddIngredientTag.addEventListener('click', handleAddIngredientFromInput);
+    }
+
+    if (ingredientTextInput) {
+        ingredientTextInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                handleAddIngredientFromInput();
+            }
+        });
+    }
+
+    if (desiredRecipeInput) {
+        desiredRecipeInput.addEventListener('keydown', (e) => {
             if (e.key === 'Enter' && !e.shiftKey) {
                 e.preventDefault();
-                btnFindRecipes.click();
+                if (btnFindRecipes) btnFindRecipes.click();
             }
         });
     }
@@ -220,21 +282,9 @@ document.addEventListener('DOMContentLoaded', () => {
         btnClearAllTags.addEventListener('click', () => {
             state.ingredients = [];
             renderTags();
-            if (textIngredientInput) textIngredientInput.value = '';
-        });
-    }
-
-    // Mode toggles
-    if (modePhotoBtn && modeTextBtn) {
-        modePhotoBtn.addEventListener('click', () => {
-            modePhotoBtn.classList.add('active');
-            modeTextBtn.classList.remove('active');
-            photoInput.click();
-        });
-        modeTextBtn.addEventListener('click', () => {
-            modeTextBtn.classList.add('active');
-            modePhotoBtn.classList.remove('active');
-            textIngredientInput.focus();
+            if (ingredientTextInput) ingredientTextInput.value = '';
+            if (desiredRecipeInput) desiredRecipeInput.value = '';
+            window.showToast("모든 재료와 레시피 입력이 초기화되었습니다.");
         });
     }
 
@@ -242,6 +292,18 @@ document.addEventListener('DOMContentLoaded', () => {
     if (btnTriggerPhoto) {
         btnTriggerPhoto.addEventListener('click', () => {
             photoInput.click();
+        });
+    }
+
+    // Style dropdown cycle
+    const recipeStyles = ["황금비율", "초간단 10분", "백종원 스타일", "다이어트/고단백"];
+    let currentStyleIdx = 0;
+    if (styleSelectorPill) {
+        styleSelectorPill.addEventListener('click', () => {
+            currentStyleIdx = (currentStyleIdx + 1) % recipeStyles.length;
+            const newStyle = recipeStyles[currentStyleIdx];
+            if (currentStyleLabel) currentStyleLabel.textContent = newStyle;
+            window.showToast(`🎯 레시피 추천 모드: '${newStyle}' 적용`);
         });
     }
 
@@ -320,12 +382,17 @@ document.addEventListener('DOMContentLoaded', () => {
     // ----------------------------------------------------
     if (btnFindRecipes) {
         btnFindRecipes.addEventListener('click', async () => {
-            const query = textIngredientInput ? textIngredientInput.value.trim() : '';
+            // Auto-add any pending text typed in ingredient field
+            if (ingredientTextInput && ingredientTextInput.value.trim()) {
+                handleAddIngredientFromInput();
+            }
+
+            const query = desiredRecipeInput ? desiredRecipeInput.value.trim() : '';
             const hasIngredients = state.ingredients.length > 0;
 
             if (!query && !hasIngredients) {
-                window.showToast("만들고 싶은 요리나 식재료를 입력해 주세요 (예: 비 오는 날 얼큰한 국물)");
-                if (textIngredientInput) textIngredientInput.focus();
+                window.showToast("보유 식재료나 원하는 요리 스타일을 입력해 주세요!");
+                if (ingredientTextInput) ingredientTextInput.focus();
                 return;
             }
 
@@ -335,26 +402,16 @@ document.addEventListener('DOMContentLoaded', () => {
             const contextIngs = state.ingredients.map(i => i.name);
 
             try {
-                let candidates = [];
-                if (query) {
-                    window.showToast("🧠 AI가 사용자의 요리 의도와 취향을 분석하고 있습니다...");
-                    const res = await fetch('/api/v1/recipes/discover', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({
-                            query: query,
-                            context_ingredients: contextIngs
-                        })
-                    });
-                    candidates = await res.json();
-                } else {
-                    const res = await fetch('/api/v1/recipes/recommend', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ ingredients: contextIngs })
-                    });
-                    candidates = await res.json();
-                }
+                window.showToast("🧠 AI가 보유 재료와 원하는 레시피 스타일을 종합 분석하고 있습니다...");
+                const res = await fetch('/api/v1/recipes/discover', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        query: query,
+                        context_ingredients: contextIngs
+                    })
+                });
+                const candidates = await res.json();
 
                 state.candidateRecipes = candidates;
                 renderRecipeCards(candidates, query);
@@ -381,6 +438,24 @@ document.addEventListener('DOMContentLoaded', () => {
     function renderRecipeCards(candidates, userQuery = '') {
         if (!recipeCardsContainer) return;
         recipeCardsContainer.innerHTML = '';
+
+        // Render Search Summary Banner (Ingredients + Desired Recipe)
+        if (recipeSearchSummaryBanner) {
+            const ingList = state.ingredients.map(i => i.name);
+            const ingsText = ingList.length > 0 ? ingList.join(', ') : '전체 식재료';
+            const recipeText = userQuery ? `"${userQuery}"` : '최적의 맞춤 요리';
+            recipeSearchSummaryBanner.innerHTML = `
+                <div class="summary-banner-item">
+                    <i class="fa-solid fa-basket-shopping" style="color: #F97316;"></i>
+                    <span>보유 재료: <span class="summary-pill">${ingsText} (${ingList.length}개)</span></span>
+                </div>
+                <div class="summary-banner-item">
+                    <i class="fa-solid fa-wand-magic-sparkles" style="color: #A855F7;"></i>
+                    <span>원하는 레시피: <strong style="color: #DDD6FE;">${recipeText}</strong></span>
+                </div>
+            `;
+            recipeSearchSummaryBanner.style.display = 'flex';
+        }
 
         candidates.forEach((c, idx) => {
             const card = document.createElement('div');
@@ -555,6 +630,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Initialize Default Tags (Empty by default for natural prompt first experience)
-    renderTags();
+    // Initialize Default Sample Ingredients (Matching user refrigerator context from screenshot)
+    addIngredient("계란", "단백질", "4개");
+    addIngredient("돼지고기", "육류", "적당량");
+    addIngredient("대파", "채소", "1대");
 });

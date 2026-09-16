@@ -152,6 +152,75 @@ class GoldenRecipeSynthesizerAgent(BaseAgent):
                     heat_level="불끄기",
                     tips="뜨거울 때 바로 썰면 모양이 찌그러지므로 꼭 식힌 후 썰어주세요."
                 )
+            ],
+            "spam-tofu-kimchi": [
+                CookingStep(
+                    step_number=1,
+                    title="두부 데치기 및 스팸 썰기",
+                    guide_text="두부는 끓는 물에 1분간 데쳐 따뜻하게 건져두고, 스팸은 0.7cm 두께로 널찍하게 썰어줍니다.",
+                    audio_script="첫 번째 단계, 두부 데치기와 스팸 썰기입니다. 냄비에 물을 끓이고 두부를 통째로 넣어 1분간 따뜻하게 데쳐 건져내주세요. 그 사이 스팸은 먹음직스럽게 도톰한 크기로 썰어둡니다.",
+                    pause_seconds=3,
+                    timer_seconds=60,
+                    heat_level="강불",
+                    tips="두부를 따뜻하게 데쳐내야 스팸, 볶음김치와 어우러질 때 부드러운 식감이 극대화됩니다."
+                ),
+                CookingStep(
+                    step_number=2,
+                    title="스팸 노릇하게 굽기",
+                    guide_text="팬을 달군 뒤 기름 없이 스팸을 올려 앞뒤로 노릇노릇하게 2분간 구워 접시에 덜어냅니다.",
+                    audio_script="두 번째 단계, 스팸 굽기입니다. 달궈진 팬에 기름 없이 썰어둔 스팸을 올려주세요. 스팸 자체의 기름이 배어 나오며 겉면이 바삭하고 노릇해질 때까지 앞뒤로 2분간 구워 접시에 덜어둡니다.",
+                    pause_seconds=3,
+                    timer_seconds=120,
+                    heat_level="중불",
+                    tips="스팸을 굽고 남은 고소한 기름에 그대로 김치를 볶을 거예요!"
+                ),
+                CookingStep(
+                    step_number=3,
+                    title="스팸 기름에 신김치 달달 볶기",
+                    guide_text="스팸 기름이 남은 팬에 신김치, 설탕 반 스푼, 고춧가루 반 스푼, 참기름 1스푼을 넣고 3분간 달달 볶아줍니다.",
+                    audio_script="세 번째 단계, 마성의 김치 볶기입니다! 스팸 기름이 남은 팬에 쫑쫑 썬 신김치를 넣고, 설탕 반 스푼과 참기름 한 스푼을 둘러주세요. 중불에서 3분간 달달 볶아 김치가 투명해지고 윤기가 흐르면 불을 끕니다.",
+                    pause_seconds=3,
+                    timer_seconds=180,
+                    heat_level="중불",
+                    tips="설탕이 신김치의 톡 쏘는 신맛을 잡아주고 감칠맛을 폭발시킵니다."
+                ),
+                CookingStep(
+                    step_number=4,
+                    title="플레이팅 및 완성",
+                    guide_text="데친 두부를 한 입 크기로 썰어 접시 한쪽에 돌려 담고, 구운 스팸과 볶은 김치를 올려 통깨를 뿌려 완성합니다.",
+                    audio_script="마지막 단계, 플레이팅입니다. 따뜻한 두부를 먹기 좋게 썰어 접시 가장자리에 빙 둘러 담고, 가운데에 볶음김치와 노릇한 스팸을 담아주세요. 통깨를 솔솔 뿌려주면 완벽한 10분 완성 맥주 안주 두부김치 완성입니다!",
+                    pause_seconds=2,
+                    heat_level="불끄기",
+                    tips="두부 한 조각에 스팸, 김치를 삼합으로 얹어 드시면 기가 막힙니다."
+                )
+            ],
+            "kimchi-pancake": [
+                CookingStep(
+                    step_number=1,
+                    title="김치와 스팸 잘게 썰기",
+                    guide_text="신김치와 스팸을 가위나 칼로 잘게 깍둑썰기해 볼에 담습니다.",
+                    audio_script="첫 번째 단계, 재료 썰기입니다. 신김치와 스팸을 씹는 맛이 살아있도록 잘게 썰어 큰 볼에 담아주세요.",
+                    pause_seconds=3,
+                    heat_level="없음"
+                ),
+                CookingStep(
+                    step_number=2,
+                    title="바삭한 반죽 만들기",
+                    guide_text="부침가루 1컵, 차가운 물 1컵, 고춧가루 1스푼, 설탕 0.3스푼을 넣고 날가루가 보이지 않을 정도로만 살살 섞습니다.",
+                    audio_script="두 번째 단계, 바삭한 반죽 만들기입니다. 부침가루 한 컵과 차가운 물 한 컵, 고춧가루 한 스푼을 넣고 가볍게 섞어주세요. 너무 많이 저으면 바삭함이 줄어드니 날가루만 없애주세요.",
+                    pause_seconds=3,
+                    heat_level="없음",
+                    tips="차가운 얼음물이나 탄산수를 쓰면 훨씬 바삭해집니다."
+                ),
+                CookingStep(
+                    step_number=3,
+                    title="센 불에서 바삭하게 부치기",
+                    guide_text="팬에 식용유를 넉넉히 두르고 반죽을 얇게 편 뒤 센 불에서 앞뒤로 바삭하게 3분씩 부쳐 완성합니다.",
+                    audio_script="마지막 단계, 부치기입니다! 팬에 기름을 넉넉히 두르고 센 불에서 반죽을 얇게 펴주세요. 가장자리가 바삭하게 튀겨지듯 익으면 뒤집어 3분간 노릇하게 부쳐내면 완성입니다!",
+                    pause_seconds=2,
+                    timer_seconds=180,
+                    heat_level="중강불"
+                )
             ]
         }
 
