@@ -49,6 +49,8 @@ src/food_analysis/storage/audio/*
 !src/food_analysis/storage/audio/.gitkeep
 src/food_analysis/storage/cache/*
 !src/food_analysis/storage/cache/.gitkeep
+src/food_analysis/storage/community/*
+!src/food_analysis/storage/community/.gitkeep
 app/storage/uploads/*
 !app/storage/uploads/.gitkeep
 app/storage/audio/*

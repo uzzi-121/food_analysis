@@ -118,7 +118,20 @@ JSON 형식으로만 답변하세요:
                     text = text[:-3]
                 return json.loads(text.strip())
             except Exception as e:
-                logger.error(f"Gemini Intent Analysis API error: {e}. Falling back to heuristic analyzer.")
+                logger.warning(f"Gemini model '{settings.GEMINI_TEXT_MODEL}' temporarily unavailable ({e}). Attempting fallback to 'gemini-2.0-flash'...")
+                try:
+                    fallback_res = self.client.models.generate_content(
+                        model="gemini-2.0-flash",
+                        contents=prompt
+                    )
+                    f_text = fallback_res.text.strip()
+                    if f_text.startswith("```json"):
+                        f_text = f_text[7:]
+                    if f_text.endswith("```"):
+                        f_text = f_text[:-3]
+                    return json.loads(f_text.strip())
+                except Exception as e2:
+                    logger.error(f"Gemini API capacity fallback error: {e2}. Seamlessly utilizing high-precision heuristic analyzer.")
 
         # High-precision ingredient-aware heuristic fallback engine
         q = (query or "").lower()

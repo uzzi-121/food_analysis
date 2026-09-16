@@ -17,6 +17,12 @@ from .audio import (
     StepAudioInfo,
     TTSGenerationResponse,
 )
+from .community import (
+    CommunityComment,
+    CommentCreateRequest,
+    VoteRequest,
+    FirebaseConfigResponse,
+)
 
 __all__ = [
     "IngredientItem",
@@ -32,4 +38,8 @@ __all__ = [
     "TTSGenerationRequest",
     "StepAudioInfo",
     "TTSGenerationResponse",
+    "CommunityComment",
+    "CommentCreateRequest",
+    "VoteRequest",
+    "FirebaseConfigResponse",
 ]

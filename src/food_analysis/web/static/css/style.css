@@ -2337,3 +2337,1625 @@ body::before {
     }
 }
 
+/* ==========================================================================
+   Google Login & Navbar User Profile
+   ========================================================================== */
+.btn-google-login {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: var(--radius-full);
+    padding: 0.45rem 0.95rem;
+    color: #F3F4F6;
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.btn-google-login:hover {
+    background: rgba(255, 255, 255, 0.16);
+    border-color: rgba(255, 255, 255, 0.35);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 14px rgba(255, 255, 255, 0.1);
+}
+
+.google-icon {
+    flex-shrink: 0;
+}
+
+.nav-user-profile {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: var(--radius-full);
+    padding: 0.25rem 0.75rem 0.25rem 0.35rem;
+    transition: all 0.2s ease;
+}
+
+.nav-avatar-img {
+    width: 26px;
+    height: 26px;
+    border-radius: var(--radius-full);
+    object-fit: cover;
+    border: 1.5px solid var(--neon-emerald);
+}
+
+.nav-user-name {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #F3F4F6;
+    max-width: 90px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.btn-nav-logout {
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    cursor: pointer;
+    font-size: 0.8rem;
+    padding: 0.2rem;
+    border-radius: 4px;
+    transition: color 0.2s ease;
+}
+
+.btn-nav-logout:hover {
+    color: #F87171;
+}
+
+/* ==========================================================================
+   Recipe Completion Celebration Banner
+   ========================================================================== */
+.completion-banner {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    margin-bottom: 2rem;
+    padding: 1.5rem 1.75rem;
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.15) 0%, rgba(139, 92, 246, 0.12) 100%);
+    border: 1px solid rgba(16, 185, 129, 0.4);
+    border-radius: var(--radius-lg);
+    box-shadow: 0 8px 32px rgba(16, 185, 129, 0.15);
+    overflow: hidden;
+}
+
+.completion-banner-glow {
+    position: absolute;
+    top: -50%;
+    left: -20%;
+    width: 140%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(16, 185, 129, 0.25) 0%, transparent 70%);
+    pointer-events: none;
+}
+
+.completion-badge-icon {
+    width: 52px;
+    height: 52px;
+    flex-shrink: 0;
+    border-radius: var(--radius-full);
+    background: linear-gradient(135deg, #10B981, #059669);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    color: #FFFFFF;
+    box-shadow: 0 4px 16px rgba(16, 185, 129, 0.4);
+}
+
+.completion-text-col {
+    position: relative;
+    z-index: 1;
+}
+
+.completion-title {
+    font-size: 1.2rem;
+    font-weight: 800;
+    color: #FFFFFF;
+    margin-bottom: 0.35rem;
+    letter-spacing: -0.02em;
+}
+
+.completion-sub {
+    font-size: 0.88rem;
+    color: #D1D5DB;
+    line-height: 1.45;
+}
+
+@keyframes pulse-glow {
+    0%, 100% {
+        box-shadow: 0 8px 32px rgba(16, 185, 129, 0.15);
+        border-color: rgba(16, 185, 129, 0.4);
+    }
+    50% {
+        box-shadow: 0 12px 40px rgba(16, 185, 129, 0.35);
+        border-color: rgba(16, 185, 129, 0.7);
+    }
+}
+
+.pulse-celebrate {
+    animation: pulse-glow 2.5s infinite ease-in-out;
+}
+
+/* ==========================================================================
+   Community Section & Best Know-How Curation
+   ========================================================================== */
+.community-section {
+    margin-top: 3.5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    padding-top: 2.5rem;
+}
+
+.community-header-row {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    margin-bottom: 1.75rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.community-kicker {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.76rem;
+    font-weight: 700;
+    color: var(--neon-blue);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 0.35rem;
+}
+
+.community-heading-title {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: #FFFFFF;
+    letter-spacing: -0.02em;
+}
+
+.community-heading-sub {
+    font-size: 0.88rem;
+    color: var(--text-secondary);
+    margin-top: 0.25rem;
+}
+
+.community-comments-count-badge {
+    padding: 0.35rem 0.85rem;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: var(--radius-full);
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #E2E8F0;
+}
+
+/* 👑 Spotlight Best Know-How Card */
+.knowhow-spotlight-card {
+    background: linear-gradient(135deg, rgba(245, 158, 11, 0.1) 0%, rgba(17, 24, 39, 0.75) 100%);
+    border: 1.5px solid rgba(245, 158, 11, 0.5);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 8px 30px rgba(245, 158, 11, 0.15);
+    position: relative;
+    overflow: hidden;
+}
+
+.knowhow-badge-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.knowhow-crown-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    background: rgba(245, 158, 11, 0.2);
+    border: 1px solid rgba(245, 158, 11, 0.6);
+    border-radius: var(--radius-full);
+    padding: 0.35rem 0.85rem;
+    font-size: 0.82rem;
+    font-weight: 800;
+    color: #FBBF24;
+    letter-spacing: 0.02em;
+}
+
+.knowhow-rank-sub {
+    font-size: 0.78rem;
+    color: #FCD34D;
+    font-weight: 500;
+}
+
+.knowhow-author-info {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    margin-bottom: 0.85rem;
+}
+
+.knowhow-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: var(--radius-full);
+    object-fit: cover;
+    border: 2px solid #F59E0B;
+}
+
+.knowhow-author-name {
+    display: block;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #F9FAFB;
+}
+
+.knowhow-date {
+    display: block;
+    font-size: 0.72rem;
+    color: #9CA3AF;
+}
+
+.knowhow-body-text {
+    font-size: 0.98rem;
+    color: #F3F4F6;
+    line-height: 1.6;
+    margin-bottom: 1.25rem;
+    background: rgba(0, 0, 0, 0.25);
+    padding: 1rem 1.15rem;
+    border-radius: var(--radius-md);
+    border-left: 3px solid #F59E0B;
+}
+
+.knowhow-footer-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+}
+
+.knowhow-vote-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.btn-vote-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.4rem 0.85rem;
+    border-radius: var(--radius-full);
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    color: #E2E8F0;
+    transition: all 0.2s ease;
+}
+
+.btn-vote-chip.btn-vote-up:hover, .btn-vote-chip.btn-vote-up.active {
+    background: rgba(16, 185, 129, 0.25);
+    border-color: rgba(16, 185, 129, 0.6);
+    color: #34D399;
+}
+
+.btn-vote-chip.btn-vote-down:hover, .btn-vote-chip.btn-vote-down.active {
+    background: rgba(239, 68, 68, 0.2);
+    border-color: rgba(239, 68, 68, 0.5);
+    color: #F87171;
+}
+
+.knowhow-verified-stamp {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.78rem;
+    color: #A7F3D0;
+    font-weight: 600;
+}
+
+/* ==========================================================================
+   Community Form & Gate Cards
+   ========================================================================== */
+.community-form-card {
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.community-gate-prompt {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.25rem;
+    flex-wrap: wrap;
+}
+
+.gate-icon-circle {
+    width: 44px;
+    height: 44px;
+    flex-shrink: 0;
+    border-radius: var(--radius-full);
+    background: rgba(255, 255, 255, 0.08);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+    color: #F3F4F6;
+}
+
+.gate-cook-icon {
+    background: rgba(245, 158, 11, 0.15);
+    color: #F59E0B;
+}
+
+.gate-text-col {
+    flex: 1;
+    min-width: 240px;
+}
+
+.gate-text-col h4 {
+    font-size: 0.96rem;
+    font-weight: 700;
+    color: #FFFFFF;
+    margin-bottom: 0.25rem;
+}
+
+.gate-text-col p {
+    font-size: 0.82rem;
+    color: var(--text-secondary);
+    line-height: 1.4;
+}
+
+.btn-gate-action {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.65rem 1.15rem;
+    background: #FFFFFF;
+    color: #111827;
+    font-size: 0.85rem;
+    font-weight: 700;
+    border: none;
+    border-radius: var(--radius-full);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 14px rgba(255, 255, 255, 0.2);
+}
+
+.btn-gate-action:hover {
+    background: #F3F4F6;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 18px rgba(255, 255, 255, 0.3);
+}
+
+.btn-gate-cook {
+    background: linear-gradient(135deg, rgba(245, 158, 11, 0.25), rgba(249, 115, 22, 0.25));
+    border: 1px solid rgba(245, 158, 11, 0.5);
+    color: #FDE68A;
+}
+
+.btn-gate-cook:hover {
+    background: linear-gradient(135deg, rgba(245, 158, 11, 0.4), rgba(249, 115, 22, 0.4));
+    color: #FFFFFF;
+}
+
+/* Comment Input Active Form */
+.community-input-form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+}
+
+.writer-badge-row {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-size: 0.85rem;
+    color: #E2E8F0;
+}
+
+.writer-avatar {
+    width: 28px;
+    height: 28px;
+    border-radius: var(--radius-full);
+    object-fit: cover;
+    border: 1.5px solid var(--neon-blue);
+}
+
+.comment-textarea-wrapper {
+    position: relative;
+}
+
+.comment-textarea {
+    width: 100%;
+    background: rgba(15, 23, 42, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: var(--radius-md);
+    padding: 0.85rem 1rem;
+    color: #F3F4F6;
+    font-family: inherit;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    resize: vertical;
+    transition: all 0.2s ease;
+    box-sizing: border-box;
+}
+
+.comment-textarea:focus {
+    outline: none;
+    border-color: var(--neon-blue);
+    box-shadow: 0 0 16px rgba(56, 189, 248, 0.25);
+}
+
+.comment-form-actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+}
+
+.comment-guide-tip {
+    font-size: 0.78rem;
+    color: #34D399;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+}
+
+.btn-comment-submit {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.6rem 1.25rem;
+    background: linear-gradient(135deg, var(--neon-blue), var(--neon-violet));
+    border: none;
+    border-radius: var(--radius-full);
+    color: #FFFFFF;
+    font-size: 0.85rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 4px 14px rgba(56, 189, 248, 0.3);
+}
+
+.btn-comment-submit:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(56, 189, 248, 0.45);
+}
+
+/* ==========================================================================
+   Comment Cards Feed
+   ========================================================================== */
+.community-comments-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.comment-card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: var(--radius-lg);
+    padding: 1.25rem 1.4rem;
+    transition: all 0.2s ease;
+}
+
+.comment-card:hover {
+    border-color: rgba(255, 255, 255, 0.15);
+    background: rgba(255, 255, 255, 0.045);
+}
+
+.comment-card.is-knowhow-card {
+    border-color: rgba(245, 158, 11, 0.3);
+    background: linear-gradient(135deg, rgba(245, 158, 11, 0.04), rgba(255, 255, 255, 0.02));
+}
+
+.comment-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.75rem;
+}
+
+.comment-user {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+}
+
+.comment-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: var(--radius-full);
+    object-fit: cover;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.comment-user-title-row {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    flex-wrap: wrap;
+}
+
+.comment-username {
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: #F9FAFB;
+}
+
+.mini-knowhow-tag {
+    font-size: 0.68rem;
+    padding: 0.15rem 0.45rem;
+    background: rgba(245, 158, 11, 0.2);
+    border: 1px solid rgba(245, 158, 11, 0.5);
+    border-radius: var(--radius-full);
+    color: #FBBF24;
+    font-weight: 700;
+}
+
+.comment-badge-completed {
+    font-size: 0.68rem;
+    padding: 0.15rem 0.45rem;
+    background: rgba(16, 185, 129, 0.15);
+    border: 1px solid rgba(16, 185, 129, 0.4);
+    border-radius: var(--radius-full);
+    color: #34D399;
+    font-weight: 600;
+}
+
+.comment-time {
+    display: block;
+    font-size: 0.72rem;
+    color: var(--text-muted);
+}
+
+.comment-body {
+    font-size: 0.9rem;
+    color: #E2E8F0;
+    line-height: 1.55;
+    margin-bottom: 0.85rem;
+    white-space: pre-line;
+}
+
+.comment-footer {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.comment-vote-group {
+    display: inline-flex;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.09);
+    border-radius: var(--radius-full);
+    padding: 0.15rem 0.25rem;
+}
+
+.btn-vote-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.3rem 0.65rem;
+    background: transparent;
+    border: none;
+    border-radius: var(--radius-full);
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: all 0.18s ease;
+}
+
+.btn-vote-btn:hover {
+    color: #FFFFFF;
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.btn-vote-btn.btn-up.active {
+    color: #34D399;
+    background: rgba(16, 185, 129, 0.2);
+}
+
+.btn-vote-btn.btn-down.active {
+    color: #F87171;
+    background: rgba(239, 68, 68, 0.2);
+}
+
+.community-empty-box {
+    text-align: center;
+    padding: 3rem 1.5rem;
+    background: rgba(255, 255, 255, 0.02);
+    border-radius: var(--radius-lg);
+    border: 1px dashed rgba(255, 255, 255, 0.1);
+}
+
+.community-loading-spinner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.65rem;
+    padding: 2.5rem;
+    color: var(--text-muted);
+    font-size: 0.88rem;
+}
+
+/* ==========================================================================
+   Refrigerator Pantry Box (재료 보관함) & Gemini 3.8 Flash Prompt Box
+   ========================================================================== */
+.ingredient-pantry-box {
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(168, 85, 247, 0.3);
+    border-radius: var(--radius-lg);
+    padding: 1.35rem 1.5rem;
+    margin: 1.25rem 0 1.5rem 0;
+    box-shadow: 0 4px 24px rgba(168, 85, 247, 0.08);
+    transition: border-color 0.25s ease;
+}
+
+.ingredient-pantry-box:hover {
+    border-color: rgba(168, 85, 247, 0.5);
+}
+
+.pantry-header-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.pantry-title-group {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+}
+
+.pantry-icon {
+    font-size: 1.15rem;
+    color: #C084FC;
+}
+
+.pantry-box-title {
+    font-size: 1.05rem;
+    font-weight: 800;
+    color: #FFFFFF;
+    letter-spacing: -0.01em;
+}
+
+.btn-clear-pantry {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: var(--radius-full);
+    padding: 0.25rem 0.65rem;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-clear-pantry:hover {
+    color: #F87171;
+    border-color: rgba(239, 68, 68, 0.4);
+    background: rgba(239, 68, 68, 0.08);
+}
+
+.pantry-empty-notice {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 1.5rem 1rem;
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    background: rgba(0, 0, 0, 0.15);
+    border-radius: var(--radius-md);
+    border: 1px dashed rgba(255, 255, 255, 0.08);
+    margin-bottom: 0.85rem;
+}
+
+.btn-photo-upload-inline {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: var(--radius-full);
+    padding: 0.4rem 0.85rem;
+    color: #E2E8F0;
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.2s ease;
+}
+
+.btn-photo-upload-inline:hover {
+    background: rgba(255, 255, 255, 0.16);
+    border-color: rgba(255, 255, 255, 0.3);
+    color: #FFFFFF;
+}
+
+/* 🍽️ Dish Prompt Box (어떤 음식을 드시고 싶으신가요?) */
+.dish-prompt-box {
+    background: rgba(15, 23, 42, 0.4);
+    border: 1px solid rgba(56, 189, 248, 0.25);
+    border-radius: var(--radius-lg);
+    padding: 1.35rem 1.5rem;
+    margin-top: 1rem;
+    box-shadow: 0 4px 20px rgba(56, 189, 248, 0.06);
+}
+
+.dish-prompt-guide {
+    font-size: 0.82rem;
+    color: var(--text-secondary);
+    margin: 0.35rem 0 0.85rem 0;
+    line-height: 1.45;
+}
+
+.badge-gemini-model {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.25rem 0.65rem;
+    background: linear-gradient(135deg, rgba(56, 189, 248, 0.18), rgba(168, 85, 247, 0.18));
+    border: 1px solid rgba(56, 189, 248, 0.45);
+    border-radius: var(--radius-full);
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #7DD3FC;
+    letter-spacing: 0.02em;
+    box-shadow: 0 2px 8px rgba(56, 189, 248, 0.15);
+}
+
+.curation-kicker {
+    margin-bottom: 0.45rem;
+}
+
+.btn-prompt-submit span {
+    font-size: 0.82rem;
+    font-weight: 700;
+    margin-right: 0.25rem;
+}
+
+/* ==========================================================================
+   '냉장고를 부탁해' Culinary Hero & Frame Typography
+   ========================================================================== */
+.fridge-book-hero {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin-bottom: 2.25rem;
+}
+
+.fridge-book-frame {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    border: 3.5px solid #FFFFFF;
+    border-radius: 6px;
+    padding: 1.5rem 2.75rem;
+    background: linear-gradient(135deg, rgba(15, 23, 42, 0.7) 0%, rgba(20, 10, 5, 0.7) 100%);
+    backdrop-filter: blur(14px);
+    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.6), inset 0 0 24px rgba(255, 255, 255, 0.05);
+    margin-bottom: 1rem;
+    position: relative;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.fridge-book-frame:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 20px 56px rgba(245, 158, 11, 0.2), inset 0 0 30px rgba(255, 255, 255, 0.08);
+}
+
+.fridge-book-kicker {
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 800;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: #FBBF24;
+    margin-bottom: 0.35rem;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
+}
+
+.fridge-book-title {
+    font-family: 'Pretendard', sans-serif;
+    font-size: 3.2rem;
+    font-weight: 900;
+    line-height: 1.08;
+    color: #FFFFFF;
+    letter-spacing: -0.03em;
+    margin: 0.2rem 0;
+    text-shadow: 0 4px 20px rgba(0, 0, 0, 0.8);
+}
+
+.fridge-book-particle {
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: #FCD34D;
+    display: inline-block;
+    margin: 0 0.15rem;
+}
+
+.fridge-book-badge {
+    margin-top: 0.85rem;
+    padding: 0.35rem 1.15rem;
+    background: linear-gradient(135deg, #E11D48, #BE123C);
+    border-radius: var(--radius-full);
+    font-size: 0.82rem;
+    font-weight: 800;
+    color: #FFFFFF;
+    letter-spacing: 0.02em;
+    box-shadow: 0 4px 14px rgba(225, 29, 72, 0.4);
+}
+
+.culinary-dishes-showcase {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    margin-top: 1.25rem;
+}
+
+.culinary-dish-chip {
+    padding: 0.35rem 0.85rem;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: var(--radius-full);
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: #E2E8F0;
+    transition: all 0.2s ease;
+}
+
+.culinary-dish-chip:hover {
+    background: rgba(245, 158, 11, 0.15);
+    border-color: rgba(245, 158, 11, 0.4);
+    color: #FDE68A;
+    transform: translateY(-1px);
+}
+
+/* ==========================================================================
+   Modals Common Backdrop & Animation
+   ========================================================================== */
+.modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.75);
+    backdrop-filter: blur(8px);
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+    animation: modal-fade-in 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes modal-fade-in {
+    from { opacity: 0; transform: scale(0.97); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+.modal-card {
+    background: #11141D;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 20px;
+    box-shadow: 0 24px 64px rgba(0, 0, 0, 0.8), 0 0 32px rgba(139, 92, 246, 0.12);
+    width: 100%;
+    max-width: 460px;
+    overflow: hidden;
+    position: relative;
+}
+
+/* ==========================================================================
+   Google Account Selector Modal
+   ========================================================================== */
+.google-account-card {
+    padding: 2rem;
+}
+
+.google-modal-header {
+    text-align: center;
+    margin-bottom: 1.75rem;
+}
+
+.google-logo-big {
+    margin-bottom: 0.85rem;
+}
+
+.google-modal-title {
+    font-size: 1.35rem;
+    font-weight: 800;
+    color: #FFFFFF;
+    margin-bottom: 0.35rem;
+    letter-spacing: -0.02em;
+}
+
+.google-modal-sub {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    line-height: 1.45;
+}
+
+.google-account-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+    margin-bottom: 1.75rem;
+}
+
+.google-account-item {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    padding: 0.85rem 1rem;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.google-account-item:hover {
+    background: rgba(255, 255, 255, 0.09);
+    border-color: rgba(255, 255, 255, 0.2);
+    transform: translateY(-1px);
+}
+
+.google-avatar-circle {
+    width: 40px;
+    height: 40px;
+    border-radius: var(--radius-full);
+    overflow: hidden;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #3B82F6;
+    color: #FFFFFF;
+}
+
+.google-avatar-circle.alt-avatar {
+    background: #8B5CF6;
+}
+
+.google-avatar-circle.plus-avatar {
+    background: rgba(255, 255, 255, 0.08);
+    color: var(--text-muted);
+}
+
+.google-item-avatar {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.google-item-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.google-item-name {
+    display: block;
+    font-size: 0.92rem;
+    font-weight: 700;
+    color: #F3F4F6;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.google-item-email {
+    display: block;
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.google-item-arrow {
+    color: var(--text-muted);
+    font-size: 0.85rem;
+}
+
+.google-modal-footer {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.btn-modal-cancel {
+    padding: 0.55rem 1.25rem;
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: var(--radius-full);
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-modal-cancel:hover {
+    color: #FFFFFF;
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
+/* ==========================================================================
+   Profile & Community Anonymity Modal
+   ========================================================================== */
+.profile-edit-card {
+    padding: 1.75rem 2rem;
+    max-width: 520px;
+}
+
+.modal-header-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.65rem;
+}
+
+.modal-title-group {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+}
+
+.modal-main-title {
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: #FFFFFF;
+    letter-spacing: -0.02em;
+}
+
+.btn-modal-close {
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    font-size: 1.15rem;
+    cursor: pointer;
+    padding: 0.35rem;
+    border-radius: var(--radius-full);
+    transition: color 0.2s ease;
+}
+
+.btn-modal-close:hover {
+    color: #FFFFFF;
+}
+
+.modal-desc-text {
+    font-size: 0.82rem;
+    color: var(--text-secondary);
+    line-height: 1.5;
+    margin-bottom: 1.35rem;
+}
+
+.profile-current-preview-row {
+    display: flex;
+    align-items: center;
+    gap: 1.15rem;
+    padding: 1rem 1.25rem;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: var(--radius-md);
+    margin-bottom: 1.35rem;
+}
+
+.profile-avatar-preview-box {
+    position: relative;
+    width: 56px;
+    height: 56px;
+    border-radius: var(--radius-full);
+    border: 2px solid #8B5CF6;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+.preview-avatar-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.avatar-edit-badge {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 18px;
+    height: 18px;
+    background: #8B5CF6;
+    border-radius: var(--radius-full);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.6rem;
+    color: #FFFFFF;
+}
+
+.profile-badge-anonymity {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: #34D399;
+    margin-bottom: 0.25rem;
+}
+
+.profile-linked-email {
+    display: block;
+    font-size: 0.78rem;
+    color: var(--text-muted);
+}
+
+.profile-form-group {
+    margin-bottom: 1.25rem;
+}
+
+.profile-form-label {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #E2E8F0;
+    margin-bottom: 0.45rem;
+}
+
+.profile-text-input {
+    width: 100%;
+    background: rgba(15, 23, 42, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: var(--radius-md);
+    padding: 0.75rem 1rem;
+    color: #F3F4F6;
+    font-size: 0.9rem;
+    font-family: inherit;
+    box-sizing: border-box;
+    transition: all 0.2s ease;
+}
+
+.profile-text-input:focus {
+    outline: none;
+    border-color: #8B5CF6;
+    box-shadow: 0 0 16px rgba(139, 92, 246, 0.25);
+}
+
+.form-sub-hint {
+    display: block;
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    margin-top: 0.35rem;
+}
+
+/* 8 Chef Avatar Grid */
+.chef-avatar-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.65rem;
+}
+
+.chef-avatar-option {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.55rem 0.35rem;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1.5px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.chef-avatar-option:hover {
+    background: rgba(255, 255, 255, 0.08);
+    transform: translateY(-2px);
+}
+
+.chef-avatar-option.selected {
+    border-color: #8B5CF6;
+    background: rgba(139, 92, 246, 0.15);
+    box-shadow: 0 0 16px rgba(139, 92, 246, 0.3);
+    transform: scale(1.03);
+}
+
+.chef-avatar-thumb {
+    width: 44px;
+    height: 44px;
+    border-radius: var(--radius-full);
+    object-fit: cover;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.chef-avatar-label {
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: #CBD5E1;
+    text-align: center;
+    white-space: nowrap;
+}
+
+.modal-action-footer {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.btn-modal-save {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.6rem 1.4rem;
+    background: linear-gradient(135deg, #8B5CF6, #3B82F6);
+    border: none;
+    border-radius: var(--radius-full);
+    color: #FFFFFF;
+    font-size: 0.85rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    box-shadow: 0 4px 14px rgba(139, 92, 246, 0.35);
+}
+
+.btn-modal-save:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(139, 92, 246, 0.5);
+}
+
+.btn-nav-action-icon {
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    cursor: pointer;
+    padding: 0.25rem;
+    transition: color 0.2s ease;
+}
+
+.btn-nav-action-icon:hover {
+    color: #A855F7;
+}
+
+/* ==========================================================================
+   THEME 1: REFRIGERATOR THEME (처음 입력 페이지 - 냉장고 연상 배경)
+   ========================================================================== */
+body.theme-fridge {
+    background-color: #080D15;
+    transition: background-color 0.5s ease;
+}
+
+body.theme-fridge::before {
+    background-image: radial-gradient(rgba(56, 189, 248, 0.15) 1px, transparent 1px);
+}
+
+body.theme-fridge .glow-violet {
+    background: radial-gradient(circle, rgba(56, 189, 248, 0.35) 0%, rgba(14, 165, 233, 0.12) 70%, transparent 100%);
+}
+
+body.theme-fridge .glow-blue {
+    background: radial-gradient(circle, rgba(224, 242, 254, 0.25) 0%, rgba(56, 189, 248, 0.08) 70%, transparent 100%);
+}
+
+/* Refrigerator Interior Station Container */
+.fridge-theme-view {
+    position: relative;
+    border-radius: 28px;
+    padding: 2.5rem 2.25rem 3rem 2.25rem;
+    background: 
+        /* Cool frost mist & overhead LED interior light */
+        radial-gradient(circle at 50% -5%, rgba(56, 189, 248, 0.28) 0%, rgba(224, 242, 254, 0.08) 35%, transparent 70%),
+        radial-gradient(circle at 15% 45%, rgba(14, 165, 233, 0.08) 0%, transparent 50%),
+        /* Refrigerator interior tempered glass shelf horizontal accents */
+        repeating-linear-gradient(180deg, 
+            transparent 0px, 
+            transparent 135px, 
+            rgba(56, 189, 248, 0.08) 136px, 
+            rgba(224, 242, 254, 0.15) 137px, 
+            transparent 138px
+        ),
+        /* Brushed stainless steel metallic & frost chamber gradient */
+        linear-gradient(175deg, #0C1522 0%, #111E30 30%, #0A131F 70%, #060B12 100%);
+    border: 2.5px solid rgba(148, 163, 184, 0.3);
+    box-shadow: 
+        inset 0 2px 4px rgba(255, 255, 255, 0.2),
+        inset 0 0 80px rgba(56, 189, 248, 0.12),
+        0 25px 65px -15px rgba(0, 0, 0, 0.85),
+        0 0 50px -10px rgba(56, 189, 248, 0.25);
+    overflow: hidden;
+}
+
+/* Subtle Frosted Ice Edge Overlay */
+.fridge-theme-view::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 6px;
+    background: linear-gradient(90deg, #38BDF8, #E0F2FE, #38BDF8);
+    opacity: 0.85;
+    box-shadow: 0 0 20px rgba(56, 189, 248, 0.8);
+}
+
+/* Refrigerator Chill & Status Indicator Bar */
+.fridge-chill-indicator-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    padding: 0.65rem 1.25rem;
+    margin-bottom: 2rem;
+    background: rgba(15, 23, 42, 0.75);
+    backdrop-filter: blur(14px);
+    border: 1px solid rgba(56, 189, 248, 0.25);
+    border-radius: var(--radius-full);
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(224, 242, 254, 0.15);
+}
+
+.fridge-temp-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: #BAE6FD;
+}
+
+.fridge-door-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    font-size: 0.78rem;
+    font-weight: 500;
+    color: #94A3B8;
+}
+
+/* Refrigerator Interior Touch Panel (Prompt Card) */
+.fridge-theme-view .prompt-card {
+    background: rgba(12, 22, 36, 0.88);
+    backdrop-filter: blur(24px);
+    border: 1.5px solid rgba(56, 189, 248, 0.28);
+    box-shadow: 
+        0 24px 60px -10px rgba(0, 0, 0, 0.75),
+        0 0 40px -5px rgba(56, 189, 248, 0.18),
+        inset 0 1px 1px rgba(224, 242, 254, 0.2);
+}
+
+/* Crisper Refrigerator Pantry Box (신선 야채/재료 서랍) */
+.fridge-theme-view .ingredient-pantry-box {
+    background: linear-gradient(165deg, rgba(16, 34, 56, 0.85) 0%, rgba(9, 20, 36, 0.95) 100%);
+    border: 1.5px solid rgba(56, 189, 248, 0.38);
+    box-shadow: 
+        0 14px 34px rgba(0, 0, 0, 0.55),
+        inset 0 1px 2px rgba(224, 242, 254, 0.25),
+        inset 0 -3px 8px rgba(0, 0, 0, 0.5);
+}
+
+.fridge-theme-view .pantry-box-title {
+    color: #F0F9FF;
+    text-shadow: 0 0 12px rgba(56, 189, 248, 0.4);
+}
+
+.fridge-theme-view .pantry-icon {
+    color: #38BDF8;
+    filter: drop-shadow(0 0 8px rgba(56, 189, 248, 0.5));
+}
+
+.fridge-theme-view .badge-count {
+    background: rgba(56, 189, 248, 0.18);
+    border-color: rgba(56, 189, 248, 0.4);
+    color: #7DD3FC;
+}
+
+/* ==========================================================================
+   THEME 2: CUTTING BOARD THEME (레시피 & 조리 페이지 - 원목 도마 우드풍)
+   ========================================================================== */
+body.theme-cuttingboard {
+    background-color: #0E0A07;
+    transition: background-color 0.5s ease;
+}
+
+body.theme-cuttingboard::before {
+    background-image: radial-gradient(rgba(245, 158, 11, 0.12) 1px, transparent 1px);
+}
+
+body.theme-cuttingboard .glow-violet {
+    background: radial-gradient(circle, rgba(245, 158, 11, 0.35) 0%, rgba(180, 83, 9, 0.15) 70%, transparent 100%);
+}
+
+body.theme-cuttingboard .glow-blue {
+    background: radial-gradient(circle, rgba(217, 119, 6, 0.25) 0%, rgba(245, 158, 11, 0.08) 70%, transparent 100%);
+}
+
+/* Cutting Board Master Workbench Container */
+.cuttingboard-theme-view {
+    position: relative;
+    border-radius: 28px;
+    padding: 2.75rem 2.5rem 3.25rem 2.5rem;
+    background: 
+        /* Warm chef culinary downlight */
+        radial-gradient(ellipse at 50% -5%, rgba(245, 158, 11, 0.26) 0%, rgba(251, 191, 36, 0.08) 40%, transparent 70%),
+        /* Natural wood plank lines */
+        repeating-linear-gradient(90deg, 
+            rgba(0, 0, 0, 0.16) 0px, 
+            rgba(0, 0, 0, 0.16) 2px, 
+            transparent 2px, 
+            transparent 170px
+        ),
+        /* Fine artisan wood grain striations */
+        repeating-linear-gradient(0deg, 
+            rgba(255, 255, 255, 0.015) 0px, 
+            rgba(255, 255, 255, 0.015) 1px, 
+            transparent 1px, 
+            transparent 5px
+        ),
+        /* Deep organic walnut butcher block gradient */
+        linear-gradient(145deg, #26170F 0%, #301E14 30%, #22140D 65%, #180D07 100%);
+    border: 4px solid #54331E;
+    /* Crafted Juice Groove (도마 외곽 음각 테두리) */
+    box-shadow: 
+        inset 0 0 0 10px #1E120A,
+        inset 0 0 0 14px rgba(245, 158, 11, 0.25),
+        inset 0 0 45px rgba(0, 0, 0, 0.85),
+        0 28px 70px rgba(0, 0, 0, 0.9),
+        0 0 50px rgba(245, 158, 11, 0.18);
+    overflow: hidden;
+}
+
+/* Chef's Brass Rivets at 4 Corners of the Cutting Board */
+.cutting-board-corner-rivet {
+    position: absolute;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 35%, #FEF08A 0%, #D97706 55%, #78350F 100%);
+    box-shadow: inset 0 1px 1px #FFF, 0 2px 6px rgba(0, 0, 0, 0.9);
+    pointer-events: none;
+    z-index: 10;
+}
+.rivet-tl { top: 16px; left: 16px; }
+.rivet-tr { top: 16px; right: 16px; }
+.rivet-bl { bottom: 16px; left: 16px; }
+.rivet-br { bottom: 16px; right: 16px; }
+
+/* Cutting Board Stamp Bar */
+.wood-cutting-board-stamp-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    padding: 0.65rem 1.35rem;
+    margin-bottom: 2rem;
+    background: rgba(30, 18, 12, 0.85);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(245, 158, 11, 0.3);
+    border-radius: var(--radius-full);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(254, 240, 138, 0.15);
+}
+
+.wood-stamp-left {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: #FDE68A;
+    letter-spacing: 0.04em;
+}
+
+.wood-stamp-right {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: #D97706;
+}
+
+/* Artisan Wooden Recipe Cards (도마 위 특선 레시피 블록) */
+.cuttingboard-theme-view .recipe-card {
+    background: 
+        /* Subtle wood plank striations inside cards */
+        repeating-linear-gradient(90deg, transparent 0px, transparent 75px, rgba(0, 0, 0, 0.08) 76px, transparent 77px),
+        linear-gradient(160deg, #2D1D14 0%, #20130B 100%);
+    border: 2.5px solid #633C24;
+    border-radius: 20px;
+    box-shadow: 
+        inset 0 1px 2px rgba(255, 255, 255, 0.12),
+        inset 0 -2px 6px rgba(0, 0, 0, 0.7),
+        0 16px 40px rgba(0, 0, 0, 0.75);
+    transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.cuttingboard-theme-view .recipe-card:hover {
+    border-color: #F59E0B;
+    background: linear-gradient(160deg, #382419 0%, #26160D 100%);
+    transform: translateY(-6px);
+    box-shadow: 
+        inset 0 1px 3px rgba(255, 255, 255, 0.2),
+        0 22px 52px rgba(0, 0, 0, 0.85),
+        0 0 40px rgba(245, 158, 11, 0.38);
+}
+
+.cuttingboard-theme-view .recipe-title {
+    color: #FFFBEB;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
+}
+
+.cuttingboard-theme-view .recipe-desc {
+    color: #D6D3D1;
+}
+
+.cuttingboard-theme-view .btn-select-recipe {
+    background: linear-gradient(135deg, #F59E0B, #D97706);
+    color: #1A1008;
+    box-shadow: 0 6px 18px rgba(245, 158, 11, 0.35);
+}
+
+.cuttingboard-theme-view .btn-select-recipe:hover {
+    background: linear-gradient(135deg, #FBBF24, #F59E0B);
+    box-shadow: 0 8px 24px rgba(245, 158, 11, 0.5);
+}
+
+.cuttingboard-theme-view .section-title {
+    color: #FFFBEB;
+    text-shadow: 0 2px 12px rgba(0, 0, 0, 0.7);
+}
+
+.cuttingboard-theme-view .btn-back-link {
+    color: #FDE68A;
+}
+
+.cuttingboard-theme-view .btn-back-link:hover {
+    color: #F59E0B;
+}
+
+/* Sequential Cooking Step Card in Cutting Board Station */
+.cuttingboard-theme-view .single-step-card-modern {
+    background: linear-gradient(160deg, #2B1B12 0%, #1F120A 100%);
+    border: 2px solid #5A3721;
+    box-shadow: 
+        inset 0 1px 2px rgba(255, 255, 255, 0.1),
+        0 20px 48px rgba(0, 0, 0, 0.8);
+}

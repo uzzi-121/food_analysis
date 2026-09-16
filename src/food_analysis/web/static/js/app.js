@@ -134,20 +134,31 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     // ----------------------------------------------------
-    // View Navigation Logic
+    // View Navigation & Dynamic Theme Logic (Fridge vs Cutting Board)
     // ----------------------------------------------------
+    function updatePageTheme(theme) {
+        document.body.classList.remove('theme-fridge', 'theme-cuttingboard');
+        document.body.classList.add(theme);
+    }
+
+    // Default to Refrigerator theme on page load
+    updatePageTheme('theme-fridge');
+
     function goToStep(stepNumber) {
         if (sectionInput) sectionInput.classList.remove('active');
         if (sectionRecipes) sectionRecipes.classList.remove('active');
         if (sectionCooking) sectionCooking.classList.remove('active');
 
         if (stepNumber === 1) {
+            updatePageTheme('theme-fridge');
             if (sectionInput) sectionInput.classList.add('active');
             window.scrollTo({ top: 0, behavior: 'smooth' });
         } else if (stepNumber === 2) {
+            updatePageTheme('theme-cuttingboard');
             if (sectionRecipes) sectionRecipes.classList.add('active');
             window.scrollTo({ top: 0, behavior: 'smooth' });
         } else if (stepNumber === 3) {
+            updatePageTheme('theme-cuttingboard');
             if (sectionCooking) sectionCooking.classList.add('active');
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
@@ -161,7 +172,12 @@ document.addEventListener('DOMContentLoaded', () => {
         ingredientTagContainer.innerHTML = '';
         const count = state.ingredients.length;
         if (tagCount) tagCount.textContent = count;
-        if (ingredientCountBadge) ingredientCountBadge.textContent = `${count}개`;
+        if (ingredientCountBadge) ingredientCountBadge.textContent = `${count}개 보관 중`;
+
+        const emptyNotice = document.getElementById('pantryEmptyNotice');
+        if (emptyNotice) {
+            emptyNotice.style.display = count === 0 ? 'flex' : 'none';
+        }
 
         // Update active class on quick ingredient preset pills
         document.querySelectorAll('.ingredient-preset-pill').forEach(pill => {
@@ -283,8 +299,7 @@ document.addEventListener('DOMContentLoaded', () => {
             state.ingredients = [];
             renderTags();
             if (ingredientTextInput) ingredientTextInput.value = '';
-            if (desiredRecipeInput) desiredRecipeInput.value = '';
-            window.showToast("모든 재료와 레시피 입력이 초기화되었습니다.");
+            window.showToast("📦 재료 보관함이 비워졌습니다.");
         });
     }
 

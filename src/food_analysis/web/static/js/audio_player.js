@@ -93,6 +93,11 @@ class AudioChefPlayer {
         }
 
         this.renderStepPills();
+        // Notify community manager of loaded recipe
+        const rId = recipeData.id || recipeData.recipe_id;
+        if (window.communityManager && rId) {
+            window.communityManager.setCurrentRecipe(rId);
+        }
         // Start immediately on Step 0 and read speech
         this.selectStep(0, true);
     }
@@ -319,7 +324,12 @@ class AudioChefPlayer {
         if (this.currentStepIdx < this.steps.length - 1) {
             this.selectStep(this.currentStepIdx + 1, true);
         } else {
-            window.showToast("🎉 축하합니다! 모든 조리 단계를 성공적으로 마쳤습니다. 맛있게 드세요!");
+            // Recipe completed!
+            const recipeId = this.recipe ? (this.recipe.id || this.recipe.recipe_id) : 'spicy-braised-tofu';
+            if (window.communityManager) {
+                window.communityManager.markRecipeCompleted(recipeId);
+            }
+            window.showToast("🎉 축하합니다! 모든 조리 단계를 성공적으로 마쳤습니다. 하단 커뮤니티에 나만의 꿀팁을 남겨보세요!");
         }
     }
 

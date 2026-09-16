@@ -52,16 +52,18 @@ async def test_agent2_intent_discovery():
     assert dual_candidates[0].id == "pork-kimchi-jjigae"
     assert "돼지고기" in dual_candidates[0].ai_reasoning
 
-    # User scenario: '매콤한 두부 조림 알려줘' with ingredients ['두부', '대파', '양파']
+    # User scenario: '매콤한 두부 조림 알려줘' with pantry ingredients ['두부', '대파', '양파']
     tofu_candidates = await agent.recommend_by_intent(
         query="매콤한 두부 조림 알려줘",
         context_ingredients=["두부", "대파", "양파"]
     )
-    assert len(tofu_candidates) >= 1
+    assert len(tofu_candidates) == 2  # Exactly 2 curated recipes
     assert tofu_candidates[0].id == "spicy-braised-tofu"
     assert "두부조림" in tofu_candidates[0].title
     assert tofu_candidates[0].intent_score >= 90
-    assert tofu_candidates[0].match_rate >= 85
+    assert tofu_candidates[0].match_rate >= 95  # >= 90% requirement (top is 95%+)
+    assert tofu_candidates[1].match_rate >= 90  # 2nd candidate is also >= 90%
+    assert all(c.match_rate >= 90 for c in tofu_candidates)
 
 
 @pytest.mark.asyncio

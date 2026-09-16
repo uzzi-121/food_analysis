@@ -57,7 +57,27 @@
                     <span class="status-dot"></span>
                     <span id="engineBadge">Neural Voice Ready</span>
                 </div>
-                <button class="btn-try-now" id="btnNavTryNow" onclick="document.getElementById('textIngredientInput').focus()">
+                <!-- Google Login & User Profile -->
+                <button type="button" class="btn-google-login" id="btnNavGoogleLogin" onclick="window.authManager.openAccountSelectModal()" title="Google 계정으로 로그인">
+                    <svg class="google-icon" viewBox="0 0 24 24" width="15" height="15">
+                        <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                        <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                        <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
+                        <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
+                    </svg>
+                    <span>Google 로그인</span>
+                </button>
+                <div class="nav-user-profile" id="navUserProfile" style="display: none;">
+                    <img src="" alt="프로필" id="navUserAvatar" class="nav-avatar-img">
+                    <span id="navUserName" class="nav-user-name">요리사</span>
+                    <button type="button" class="btn-nav-action-icon" id="btnNavEditProfile" onclick="window.authManager.openProfileEditModal()" title="익명 닉네임 & 셰프 프로필 수정">
+                        <i class="fa-solid fa-user-pen"></i>
+                    </button>
+                    <button type="button" class="btn-nav-logout" onclick="window.authManager.logout()" title="로그아웃">
+                        <i class="fa-solid fa-right-from-bracket"></i>
+                    </button>
+                </div>
+                <button class="btn-try-now" id="btnNavTryNow" onclick="document.getElementById('ingredientTextInput').focus()">
                     Try now
                 </button>
             </div>
@@ -67,15 +87,44 @@
         <main class="main-content">
             
             <!-- ============================================================
-                 SECTION 1: HERO & STITCH FLOATING AI PROMPT CARD
+                 SECTION 1: HERO & REFRIGERATOR PANTRY & GEMINI 3.8 FLASH PROMPT
                  ============================================================ -->
-            <section id="sectionInput" class="section-view active">
-                <div class="hero-section">
-                    <h1 class="hero-main-title">Cook at the<br>speed of AI</h1>
-                    <p class="hero-sub-title">Transform refrigerator ingredients into golden recipes with hands-free audio guidance for your kitchen.</p>
+            <section id="sectionInput" class="section-view active fridge-theme-view">
+                <!-- Refrigerator Door & Chill Status Indicator -->
+                <div class="fridge-chill-indicator-bar">
+                    <div class="fridge-temp-pill">
+                        <i class="fa-solid fa-snowflake fa-spin-pulse" style="--fa-animation-duration: 4s; color: #38BDF8;"></i>
+                        <span>스마트 냉장실 <strong>2.0°C</strong> 신선 순환 모드</span>
+                    </div>
+                    <div class="fridge-door-status">
+                        <i class="fa-solid fa-door-open" style="color: #67E8F9;"></i>
+                        <span>냉장고 도어 OPEN · 식재료 신선 스캔 중</span>
+                    </div>
                 </div>
 
-                <!-- Stitch Signature: Floating Dual AI Prompt Card (재료 + 원하는 레시피) -->
+                <!-- '냉장고를 부탁해' Iconic Culinary Hero Section -->
+                <div class="hero-section fridge-book-hero">
+                    <div class="fridge-book-frame">
+                        <div class="fridge-book-kicker">Best Recipe Book</div>
+                        <h1 class="fridge-book-title">냉장고<br><span class="fridge-book-particle">를</span><br>부탁해</h1>
+                        <div class="fridge-book-badge">AI 스타 셰프 15분 황금 레시피</div>
+                    </div>
+                    <p class="hero-sub-title">
+                        '냉부' 속 화제의 특급 레시피 & 셰프들의 시크릿 팁과 함께 냉장고 속 식재료가 최고의 맞춤 요리로 탄생합니다!
+                    </p>
+
+                    <!-- Culinary Dish Mini Showcase Row -->
+                    <div class="culinary-dishes-showcase">
+                        <span class="culinary-dish-chip">🍲 얼큰 찌개</span>
+                        <span class="culinary-dish-chip">🍳 황금 볶음밥</span>
+                        <span class="culinary-dish-chip">🥘 특급 조림</span>
+                        <span class="culinary-dish-chip">🥚 계란 요리</span>
+                        <span class="culinary-dish-chip">🍺 10분 안주</span>
+                        <span class="culinary-dish-chip">🥗 고단백 요리</span>
+                    </div>
+                </div>
+
+                <!-- Main Dual AI Card (재료 입력 + 재료 보관함 + 원하는 음식 질문 프롬프트) -->
                 <div class="prompt-container">
                     <div class="prompt-card" id="dropzone">
                         <!-- Hidden Photo Input -->
@@ -93,23 +142,16 @@
                             </button>
                         </div>
 
-                        <!-- SECTION A: 보유 식재료 입력 및 관리 -->
+                        <!-- 1. 냉장고 식재료 추가 입력란 -->
                         <div class="prompt-section-block">
                             <div class="prompt-section-header">
                                 <div class="prompt-section-title">
                                     <i class="fa-solid fa-carrot" style="color: #F97316;"></i>
-                                    <span>보유 식재료</span>
-                                    <span class="badge-count" id="ingredientCountBadge">0개</span>
+                                    <span>식재료 추가하기</span>
                                 </div>
-                                <span class="prompt-section-hint">냉장고에 있는 재료를 입력하거나 빠른 태그를 눌러 추가하세요</span>
+                                <span class="prompt-section-hint">텍스트로 재료를 입력하거나 사진 버튼을 눌러 촬영/업로드하세요</span>
                             </div>
 
-                            <!-- Ingredient Tags Area -->
-                            <div class="prompt-tags-wrapper" id="ingredientTagContainer">
-                                <!-- Dynamic tags populated by JS -->
-                            </div>
-
-                            <!-- Ingredient Input Row -->
                             <div class="ingredient-input-row">
                                 <div class="ingredient-input-box">
                                     <i class="fa-solid fa-plus ingredient-input-icon"></i>
@@ -117,17 +159,44 @@
                                         type="text" 
                                         id="ingredientTextInput" 
                                         class="ingredient-input-field" 
-                                        placeholder="재료명 입력 후 Enter (예: 계란 2개, 대파, 두부, 스팸)"
+                                        placeholder="재료명 입력 후 Enter (예: 두부 1모, 대파 1대, 양파 반개, 김치)"
                                     >
                                     <button type="button" class="btn-add-ingredient" id="btnAddIngredientTag">
                                         추가
                                     </button>
+                                    <button type="button" class="btn-photo-upload-inline" id="btnTriggerPhoto" title="냉장고 사진 분석으로 추가">
+                                        <i class="fa-solid fa-camera"></i> 사진 분석
+                                    </button>
                                 </div>
+                            </div>
+                        </div>
+
+                        <!-- 2. 📦 재료 보관함 (Dedicated Pantry Box) -->
+                        <div class="ingredient-pantry-box" id="pantryBox">
+                            <div class="pantry-header-row">
+                                <div class="pantry-title-group">
+                                    <i class="fa-solid fa-box-archive pantry-icon"></i>
+                                    <span class="pantry-box-title">재료 보관함</span>
+                                    <span class="badge-count" id="ingredientCountBadge">0개 보관 중</span>
+                                </div>
+                                <button type="button" class="btn-clear-pantry" id="btnClearAllTags" title="보관함의 모든 재료 비우기">
+                                    <i class="fa-solid fa-rotate-left"></i> 보관함 비우기
+                                </button>
+                            </div>
+
+                            <!-- Ingredient Tag Pills Wrapper -->
+                            <div class="prompt-tags-wrapper" id="ingredientTagContainer">
+                                <!-- Populated dynamically by JS -->
+                            </div>
+
+                            <!-- Empty Notice -->
+                            <div class="pantry-empty-notice" id="pantryEmptyNotice" style="display: none;">
+                                <i class="fa-regular fa-snowflake"></i> 재료 보관함이 비어 있습니다. 위 입력창이나 사진으로 재료를 추가해주세요.
                             </div>
 
                             <!-- Quick Preset Ingredients Pills -->
                             <div class="quick-ingredient-presets">
-                                <span class="preset-label">자주 쓰는 재료:</span>
+                                <span class="preset-label">자주 쓰는 재료 추가:</span>
                                 <button type="button" class="ingredient-preset-pill" onclick="window.toggleIngredientPreset('신김치')">+ 신김치</button>
                                 <button type="button" class="ingredient-preset-pill" onclick="window.toggleIngredientPreset('스팸')">+ 스팸</button>
                                 <button type="button" class="ingredient-preset-pill" onclick="window.toggleIngredientPreset('계란')">+ 계란</button>
@@ -138,72 +207,49 @@
                             </div>
                         </div>
 
-                        <!-- Sleek Divider with Plus Connection Icon -->
-                        <div class="prompt-section-divider">
-                            <div class="divider-line"></div>
-                            <div class="divider-badge">
-                                <i class="fa-solid fa-wand-magic-sparkles"></i>
-                                <span>원하는 요리 스타일 결합</span>
-                            </div>
-                            <div class="divider-line"></div>
-                        </div>
-
-                        <!-- SECTION B: 원하는 레시피 / 요리 스타일 입력 -->
-                        <div class="prompt-section-block">
+                        <!-- 3. 어떤 음식을 드시고 싶으신가요? (Gemini 3.8 Flash Prompt Box) -->
+                        <div class="dish-prompt-box">
                             <div class="prompt-section-header">
                                 <div class="prompt-section-title">
                                     <i class="fa-solid fa-utensils" style="color: #A855F7;"></i>
-                                    <span>원하는 레시피 & 요리 스타일</span>
-                                    <span class="badge-optional">맞춤 AI 추천</span>
+                                    <span>어떤 음식을 드시고 싶으신가요?</span>
                                 </div>
-                                <span class="prompt-section-hint">상황, 맛의 취향, 요리 종류를 자유롭게 적어보세요</span>
+                                <span class="badge-gemini-model">
+                                    <i class="fa-solid fa-bolt"></i> Gemini 3.8 Flash AI
+                                </span>
                             </div>
+
+                            <p class="dish-prompt-guide">
+                                재료 보관함의 재료들과 질문을 조합해 <strong>관련도 90% 이상의 최적 레시피 2가지</strong>를 엄선합니다.
+                            </p>
 
                             <div class="prompt-input-row">
                                 <textarea 
                                     id="desiredRecipeInput" 
                                     class="prompt-textarea" 
-                                    placeholder="어떤 요리를 만들고 싶으신가요? (예: 비 오는 날 얼큰한 국물 요리, 기름기 적은 10분 다이어트 안주, 아이들이 좋아할 달콤한 볶음밥)" 
-                                    rows="1"
+                                    placeholder="어떤 종류의 음식을 드시고 싶으신가요? (예: 비 오는 날 얼큰한 국물 요리, 기름기 적은 10분 다이어트 안주, 매콤한 두부조림, 아이들이 좋아할 달콤한 볶음밥)" 
+                                    rows="2"
                                 ></textarea>
                             </div>
-                        </div>
 
-                        <!-- Bottom Toolbar (Stitch Signature) -->
-                        <div class="prompt-bottom-toolbar">
-                            <div class="toolbar-left">
-                                <!-- Circular Camera Button (Triggers photo upload) -->
-                                <button type="button" class="btn-prompt-icon" id="btnTriggerPhoto" title="냉장고 사진 추가">
-                                    <i class="fa-solid fa-camera"></i>
-                                </button>
-                                
-                                <span class="toolbar-status-badge">
-                                    재료 <strong id="tagCount" style="color: var(--neon-violet);">0</strong>개 등록됨
-                                </span>
-                            </div>
-
-                            <div class="toolbar-right">
-                                <!-- Clear All Button -->
-                                <button type="button" class="preset-chip" id="btnClearAllTags" style="padding: 0.25rem 0.6rem; font-size: 0.72rem;">
-                                    초기화
-                                </button>
-
-                                <!-- Style Pill (Stitch: ✨ 황금비율 ⌵) -->
-                                <div class="dropdown-pill" id="styleSelectorPill" title="레시피 추천 모드">
-                                    <i class="fa-solid fa-sparkles"></i>
-                                    <span id="currentStyleLabel">황금비율</span>
-                                    <i class="fa-solid fa-chevron-down" style="font-size: 0.65rem; color: var(--text-muted);"></i>
+                            <!-- Prompt Bottom Action Toolbar -->
+                            <div class="prompt-bottom-toolbar">
+                                <div class="toolbar-left">
+                                    <button type="button" class="btn-prompt-icon" id="btnVoiceCommandToggle" title="음성으로 질문하기">
+                                        <i class="fa-solid fa-microphone"></i>
+                                    </button>
+                                    <span class="toolbar-status-badge">
+                                        보관함 재료 <strong id="tagCount" style="color: var(--neon-violet);">0</strong>개 결합
+                                    </span>
                                 </div>
 
-                                <!-- Mic Voice Command Button -->
-                                <button type="button" class="btn-prompt-icon" id="btnVoiceCommandToggle" title="음성 인식 제어">
-                                    <i class="fa-solid fa-microphone"></i>
-                                </button>
-
-                                <!-- Circular Arrow Submit Button (Stitch: ↑ Button) -->
-                                <button type="button" class="btn-prompt-submit" id="btnFindRecipes" title="재료와 원하는 레시피로 추천받기">
-                                    <i class="fa-solid fa-arrow-up"></i>
-                                </button>
+                                <div class="toolbar-right">
+                                    <!-- Circular Arrow Submit Button -->
+                                    <button type="button" class="btn-prompt-submit" id="btnFindRecipes" title="재료 보관함과 질문으로 최적 레시피 2선 추천받기">
+                                        <span>최적 레시피 2선 추천받기</span>
+                                        <i class="fa-solid fa-arrow-up"></i>
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -221,14 +267,37 @@
             </section>
 
             <!-- ============================================================
-                 SECTION 2: RECIPE RECOMMENDATION CARDS
+                 SECTION 2: RECIPE RECOMMENDATION CARDS (TOP 2 CURATION >= 90%)
                  ============================================================ -->
-            <section id="sectionRecipes" class="section-view">
+            <section id="sectionRecipes" class="section-view cuttingboard-theme-view">
+                <!-- 4 Corner Brass Rivets for Cutting Board Aesthetic -->
+                <span class="cutting-board-corner-rivet rivet-tl"></span>
+                <span class="cutting-board-corner-rivet rivet-tr"></span>
+                <span class="cutting-board-corner-rivet rivet-bl"></span>
+                <span class="cutting-board-corner-rivet rivet-br"></span>
+
+                <!-- Chef's Wooden Cutting Board Stamp Bar -->
+                <div class="wood-cutting-board-stamp-bar">
+                    <div class="wood-stamp-left">
+                        <i class="fa-solid fa-fire-flame-curved" style="color: #F59E0B;"></i>
+                        <span>CHEF'S ARTISAN CUTTING BOARD · 스타 셰프의 원목 조리대</span>
+                    </div>
+                    <div class="wood-stamp-right">
+                        <i class="fa-solid fa-utensils"></i>
+                        <span>15분 완성 특선 황금 레시피</span>
+                    </div>
+                </div>
+
                 <div class="section-heading-row">
                     <div>
-                        <h2 class="section-title">AI Curation Results</h2>
+                        <div class="curation-kicker">
+                            <span class="badge-gemini-model" style="font-size: 0.72rem; padding: 0.2rem 0.6rem;">
+                                <i class="fa-solid fa-bolt"></i> Gemini 3.8 Flash Curation
+                            </span>
+                        </div>
+                        <h2 class="section-title">AI Curation Results (관련도 90% 이상 최적 레시피 2선)</h2>
                         <p style="font-size: 0.9rem; color: var(--text-secondary); margin-top: 0.25rem;">
-                            냉장고 보유 재료 매칭률과 셰프 시크릿 팁을 결합한 최적의 추천 요리입니다.
+                            재료 보관함의 식재료와 질문 프롬프트를 종합 분석하여 엄선한 2가지 황금 레시피입니다.
                         </p>
                     </div>
                     <button type="button" class="btn-back-link" id="btnBackToInput">
@@ -248,7 +317,24 @@
             <!-- ============================================================
                  SECTION 3: STEP-BY-STEP PROCEDURAL GUIDE (SINGLE STEP SEQUENTIAL)
                  ============================================================ -->
-            <section id="sectionCooking" class="section-view">
+            <section id="sectionCooking" class="section-view cuttingboard-theme-view">
+                <!-- 4 Corner Brass Rivets for Cutting Board Aesthetic -->
+                <span class="cutting-board-corner-rivet rivet-tl"></span>
+                <span class="cutting-board-corner-rivet rivet-tr"></span>
+                <span class="cutting-board-corner-rivet rivet-bl"></span>
+                <span class="cutting-board-corner-rivet rivet-br"></span>
+
+                <!-- Chef's Wooden Cutting Board Stamp Bar -->
+                <div class="wood-cutting-board-stamp-bar">
+                    <div class="wood-stamp-left">
+                        <i class="fa-solid fa-kitchen-set" style="color: #F59E0B;"></i>
+                        <span>CHEF'S PREP WORKBENCH · 마스터 셰프의 15분 도마 조리대</span>
+                    </div>
+                    <div class="wood-stamp-right">
+                        <i class="fa-solid fa-headphones"></i>
+                        <span>핸즈프리 실시간 음성 가이드</span>
+                    </div>
+                </div>
                 <!-- Clean Procedure Header -->
                 <div class="procedure-header-row">
                     <div class="procedure-header-info">
@@ -382,11 +468,247 @@
                         </button>
                     </div>
                 </div>
+
+                <!-- ============================================================
+                     COMMUNITY & COOKING KNOW-HOW SECTION
+                     ============================================================ -->
+                <div class="community-section" id="sectionCommunity">
+                    <!-- Recipe Completion Celebration Banner -->
+                    <div class="completion-banner" id="completionCelebrationBanner" style="display: none;">
+                        <div class="completion-banner-glow"></div>
+                        <div class="completion-banner-content">
+                            <div class="completion-badge-icon">
+                                <i class="fa-solid fa-trophy"></i>
+                            </div>
+                            <div class="completion-text-col">
+                                <h3 class="completion-title">🎉 요리 완성 축하합니다!</h3>
+                                <p class="completion-sub">핸즈프리 조리 단계를 모두 성공적으로 완료하셨습니다. 직접 만들어보신 나만의 꿀팁이나 개선점을 커뮤니티에 공유해보세요!</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Community Header Row -->
+                    <div class="community-header-row">
+                        <div>
+                            <div class="community-kicker">
+                                <i class="fa-solid fa-users"></i> 검증된 요리 꿀팁 & 후기
+                            </div>
+                            <h3 class="community-heading-title">실전 조리 커뮤니티</h3>
+                            <p class="community-heading-sub">
+                                실제 조리를 완료한 사용자들이 직접 공유한 생생한 노하우입니다.
+                            </p>
+                        </div>
+                        <div class="community-header-right">
+                            <span class="community-comments-count-badge" id="communityCommentsCount">0개의 후기</span>
+                        </div>
+                    </div>
+
+                    <!-- 👑 Best Know-How Pinned Spotlight Card (Dynamic) -->
+                    <div class="knowhow-spotlight-card" id="knowhowSpotlightCard" style="display: none;">
+                        <!-- Populated by community.js -->
+                    </div>
+
+                    <!-- Comment Input Form / State Gating Box -->
+                    <div class="community-form-card" id="communityFormWrapper">
+                        <!-- Case 1: Unauthenticated Guest -->
+                        <div class="community-gate-prompt" id="communityLoginPrompt">
+                            <div class="gate-icon-circle">
+                                <i class="fa-brands fa-google"></i>
+                            </div>
+                            <div class="gate-text-col">
+                                <h4>Google 로그인 후 나만의 노하우를 공유해보세요!</h4>
+                                <p>로그인하시면 조리 완료 후기 작성 및 유용한 꿀팁에 추천/비추천 투표를 하실 수 있습니다.</p>
+                            </div>
+                            <button type="button" class="btn-gate-action" onclick="window.authManager.loginWithGoogle()">
+                                <svg viewBox="0 0 24 24" width="16" height="16">
+                                    <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                                    <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                                    <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
+                                    <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
+                                </svg>
+                                <span>Google 계정으로 로그인</span>
+                            </button>
+                        </div>
+
+                        <!-- Case 2: Logged in but Recipe Not Yet Completed -->
+                        <div class="community-gate-prompt prompt-incomplete" id="communityCompletePrompt" style="display: none;">
+                            <div class="gate-icon-circle gate-cook-icon">
+                                <i class="fa-solid fa-utensils"></i>
+                            </div>
+                            <div class="gate-text-col">
+                                <h4>💡 조리 완료 후 꿀팁 댓글을 작성하실 수 있습니다</h4>
+                                <p>직접 만들어보지 않은 광고성 댓글을 방지하기 위해, 마지막 단계(🎉 요리 완성!)까지 진행을 마치면 작성창이 활성화됩니다.</p>
+                            </div>
+                            <button type="button" class="btn-gate-action btn-gate-cook" onclick="document.getElementById('singleStepCard').scrollIntoView({ behavior: 'smooth' })">
+                                <span>조리 계속 진행하기</span> <i class="fa-solid fa-arrow-up"></i>
+                            </button>
+                        </div>
+
+                        <!-- Case 3: Logged in AND Recipe Completed (Full Access) -->
+                        <div class="community-input-form" id="communityInputForm" style="display: none;">
+                            <div class="writer-badge-row" id="commentWriterBadge">
+                                <!-- Populated by JS -->
+                            </div>
+                            <div class="comment-textarea-wrapper">
+                                <textarea id="commentTextInput" class="comment-textarea" rows="3" placeholder="이 요리를 만들면서 발견한 나만의 팁이나 꿀조합을 공유해주세요! (예: 들기름을 살짝 두르고 두부를 부치니 풍미가 훨씬 살아납니다)"></textarea>
+                            </div>
+                            <div class="comment-form-actions">
+                                <span class="comment-guide-tip">
+                                    <i class="fa-solid fa-shield-halved"></i> 조리 완료 인증 회원의 후기입니다.
+                                </span>
+                                <button type="button" class="btn-comment-submit" id="btnSubmitComment" onclick="window.communityManager.submitComment()">
+                                    <i class="fa-solid fa-paper-plane"></i> 꿀팁 댓글 등록
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Community Comments Feed List -->
+                    <div class="community-comments-container" id="communityCommentsList">
+                        <!-- Populated by community.js -->
+                    </div>
+                </div>
             </section>
         </main>
     </div>
 
-    <!-- Scripts -->
+    <!-- ============================================================
+         MODAL 1: GOOGLE ACCOUNT SELECTOR DIALOG
+         ============================================================ -->
+    <div class="modal-backdrop" id="googleAccountSelectModal" style="display: none;">
+        <div class="modal-card google-account-card">
+            <div class="google-modal-header">
+                <svg viewBox="0 0 24 24" width="28" height="28" class="google-logo-big">
+                    <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                    <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                    <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
+                    <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
+                </svg>
+                <h3 class="google-modal-title">계정을 선택하세요</h3>
+                <p class="google-modal-sub"><strong>CookCast AI</strong>에 계속 진행할 Google 계정을 선택하세요</p>
+            </div>
+
+            <div class="google-account-list">
+                <!-- Account Option 1: Primary User Account -->
+                <div class="google-account-item" onclick="window.authManager.loginWithAccount('yeongsik0914', 'fkdlemgoej@gmail.com')">
+                    <div class="google-avatar-circle">
+                        <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100&auto=format&fit=crop&q=80" alt="yeongsik0914" class="google-item-avatar">
+                    </div>
+                    <div class="google-item-info">
+                        <span class="google-item-name">yeongsik0914</span>
+                        <span class="google-item-email">fkdlemgoej@gmail.com</span>
+                    </div>
+                    <i class="fa-solid fa-chevron-right google-item-arrow"></i>
+                </div>
+
+                <!-- Account Option 2: Alternate Account -->
+                <div class="google-account-item" onclick="window.authManager.loginWithAccount('자취요리마스터', 'cook.master@gmail.com')">
+                    <div class="google-avatar-circle alt-avatar">
+                        <i class="fa-solid fa-user"></i>
+                    </div>
+                    <div class="google-item-info">
+                        <span class="google-item-name">자취요리마스터</span>
+                        <span class="google-item-email">cook.master@gmail.com</span>
+                    </div>
+                    <i class="fa-solid fa-chevron-right google-item-arrow"></i>
+                </div>
+
+                <!-- Account Option 3: Custom Input -->
+                <div class="google-account-item add-account-item" onclick="const email = prompt('사용하실 Google 이메일 주소를 입력하세요:', 'mycook@gmail.com'); if(email) window.authManager.loginWithAccount(email.split('@')[0], email);">
+                    <div class="google-avatar-circle plus-avatar">
+                        <i class="fa-solid fa-user-plus"></i>
+                    </div>
+                    <div class="google-item-info">
+                        <span class="google-item-name">다른 계정 사용</span>
+                        <span class="google-item-email">새로운 Google 계정으로 로그인</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="google-modal-footer">
+                <button type="button" class="btn-modal-cancel" onclick="window.authManager.closeAccountSelectModal()">
+                    취소
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================
+         MODAL 2: PROFILE & COMMUNITY ANONYMITY EDITOR MODAL
+         ============================================================ -->
+    <div class="modal-backdrop" id="profileEditModal" style="display: none;">
+        <div class="modal-card profile-edit-card">
+            <div class="modal-header-row">
+                <div class="modal-title-group">
+                    <i class="fa-solid fa-user-ninja" style="color: #A855F7; font-size: 1.25rem;"></i>
+                    <h3 class="modal-main-title">셰프 프로필 & 커뮤니티 익명 설정</h3>
+                </div>
+                <button type="button" class="btn-modal-close" onclick="window.authManager.closeProfileEditModal()">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <p class="modal-desc-text">
+                커뮤니티 댓글 및 꿀팁 공유 시 구글 본명 대신 사용할 <strong>익명 닉네임과 셰프 아바타</strong>를 설정하세요. 개인 정보가 안전하게 보호됩니다.
+            </p>
+
+            <div class="profile-current-preview-row">
+                <div class="profile-avatar-preview-box">
+                    <img src="" id="profilePreviewAvatar" alt="프로필 아바타" class="preview-avatar-img">
+                    <span class="avatar-edit-badge"><i class="fa-solid fa-camera"></i></span>
+                </div>
+                <div class="profile-account-details">
+                    <span class="profile-badge-anonymity">
+                        <i class="fa-solid fa-shield-halved"></i> 익명성 보호 모드
+                    </span>
+                    <span class="profile-linked-email" id="profileAccountEmail">Google 연동 계정</span>
+                </div>
+            </div>
+
+            <!-- Nickname Input -->
+            <div class="profile-form-group">
+                <label for="profileNicknameInput" class="profile-form-label">
+                    <i class="fa-solid fa-signature"></i> 커뮤니티 활동 닉네임
+                </label>
+                <input 
+                    type="text" 
+                    id="profileNicknameInput" 
+                    class="profile-text-input" 
+                    placeholder="예: 15분요리왕, 들기름마스터, 흑백요리사" 
+                    maxlength="20"
+                >
+                <span class="form-sub-hint">커뮤니티에서 이 닉네임으로 노하우와 댓글이 등록됩니다.</span>
+            </div>
+
+            <!-- 8 Chef Avatar Picker Grid -->
+            <div class="profile-form-group">
+                <label class="profile-form-label">
+                    <i class="fa-solid fa-hat-chef"></i> 셰프 아바타 선택 (8종)
+                </label>
+                <div class="chef-avatar-grid" id="chefAvatarGrid">
+                    <!-- Populated dynamically by JS -->
+                </div>
+            </div>
+
+            <!-- Modal Action Buttons -->
+            <div class="modal-action-footer">
+                <button type="button" class="btn-modal-cancel" onclick="window.authManager.closeProfileEditModal()">
+                    취소
+                </button>
+                <button type="button" class="btn-modal-save" onclick="window.authManager.updateProfile(document.getElementById('profileNicknameInput').value, document.getElementById('profilePreviewAvatar').src)">
+                    <i class="fa-solid fa-check"></i> 프로필 저장
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase Compatibility SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+
+    <!-- Application Scripts -->
+    <script src="/static/js/firebase_auth.js"></script>
+    <script src="/static/js/community.js"></script>
     <script src="/static/js/speech.js"></script>
     <script src="/static/js/audio_player.js"></script>
     <script src="/static/js/app.js"></script>
