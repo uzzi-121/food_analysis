@@ -1,0 +1,51 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "food-analysis"
+version = "1.0.0"
+description = "냉장고 재료를 기반으로 음식 레시피 추천 및 핸즈프리 오디오 가이드 AI 멀티 에이전트 시스템"
+readme = "README.md"
+requires-python = ">=3.10"
+license = {text = "MIT"}
+authors = [
+    {name = "CookCast Team"}
+]
+keywords = ["ai-agent", "recipe", "fastapi", "gemini-2.0", "tts", "hands-free"]
+dependencies = [
+    "fastapi>=0.115.0",
+    "uvicorn[standard]>=0.30.0",
+    "pydantic>=2.9.0",
+    "pydantic-settings>=2.4.0",
+    "python-multipart>=0.0.12",
+    "jinja2>=3.1.4",
+    "edge-tts>=6.1.0",
+    "httpx>=0.27.0",
+    "pillow>=10.4.0",
+    "python-dotenv>=1.0.1",
+    "google-genai>=0.1.0",
+    "aiofiles>=24.1.0"
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0.0",
+    "pytest-asyncio>=0.23.0"
+]
+
+[project.scripts]
+food-analysis = "food_analysis.cli:main"
+cookcast = "food_analysis.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["food_analysis*"]
+
+[tool.setuptools.package-data]
+"food_analysis" = ["web/templates/*", "web/static/css/*", "web/static/js/*"]
+
+[tool.pytest.ini_options]
+asyncio_mode = "strict"
+testpaths = ["tests"]
+pythonpath = ["src"]

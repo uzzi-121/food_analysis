@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CookCast AI — Cook at the speed of AI</title>
+    <meta name="description" content="냉장고 식재료를 황금 레시피와 핸즈프리 오디오 가이드로 변환하는 AI 멀티 에이전트 시스템">
+    
+    <!-- Google Fonts: Outfit & Inter & Pretendard -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Pretendard:wght@300;400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome 6 Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Cybernetic Glassmorphic Style -->
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <!-- Hidden Audio Element for Player Engine -->
+    <audio id="audioElement" preload="auto"></audio>
+
+    <!-- Stitch Signature: Atmospheric Neon Aurora Glow Waves -->
+    <div class="aurora-container">
+        <div class="aurora-glow glow-violet"></div>
+        <div class="aurora-glow glow-blue"></div>
+        <div class="aurora-glow glow-magenta"></div>
+    </div>
+
+    <!-- Hidden compatibility elements for legacy DOM checks -->
+    <div style="display: none;">
+        <span id="stepIndicator1" class="active"></span>
+        <span id="stepIndicator2"></span>
+        <span id="stepIndicator3"></span>
+        <button id="themeToggleBtn"></button>
+        <span id="stepTipBadge"></span>
+        <span id="stepTipText"></span>
+        <div id="stepBulletsContainer"></div>
+        <div id="dropzoneContent"></div>
+        <span id="playStatusText">재생</span>
+        <div id="stepBadge"></div>
+        <div id="stepTitle"></div>
+        <div id="stepAudioScript"></div>
+        <div id="stepGuideText"></div>
+        <div id="heatBadge"></div>
+    </div>
+
+    <div class="app-wrapper">
+        <!-- Stitch Minimalist Top Navigation -->
+        <header class="navbar">
+            <a href="/" class="nav-brand">
+                <span class="brand-logo-text">CookCast</span>
+                <span class="brand-beta-pill">BETA</span>
+            </a>
+            <div class="nav-actions">
+                <div class="status-indicator">
+                    <span class="status-dot"></span>
+                    <span id="engineBadge">Neural Voice Ready</span>
+                </div>
+                <button class="btn-try-now" id="btnNavTryNow" onclick="document.getElementById('textIngredientInput').focus()">
+                    Try now
+                </button>
+            </div>
+        </header>
+
+        <!-- Main Content View Container -->
+        <main class="main-content">
+            
+            <!-- ============================================================
+                 SECTION 1: HERO & STITCH FLOATING AI PROMPT CARD
+                 ============================================================ -->
+            <section id="sectionInput" class="section-view active">
+                <div class="hero-section">
+                    <h1 class="hero-main-title">Cook at the<br>speed of AI</h1>
+                    <p class="hero-sub-title">Transform refrigerator ingredients into golden recipes with hands-free audio guidance for your kitchen.</p>
+                </div>
+
+                <!-- Stitch Signature: Floating AI Prompt Card -->
+                <div class="prompt-container">
+                    <div class="prompt-card" id="dropzone">
+                        <!-- Upper Area: Input, Preview Thumbnail, and Tags -->
+                        <div class="prompt-upper">
+                            <!-- Hidden Photo Input -->
+                            <input type="file" id="photoInput" accept="image/*" class="file-input-hidden">
+
+                            <!-- Image Preview Chip (When Photo is attached) -->
+                            <div class="prompt-preview-chip hidden" id="dropzonePreview" style="display: none;">
+                                <img id="previewImg" src="" alt="냉장고 사진">
+                                <div class="prompt-preview-info">
+                                    <span style="font-weight: 500; color: #F3F4F6;">냉장고 사진 감지됨</span>
+                                    <span style="display: block; font-size: 0.72rem; color: #94A3B8;">Gemini Vision 분석 준비 완료</span>
+                                </div>
+                                <button type="button" class="btn-remove-chip" id="btnRemovePhoto" title="사진 제거">
+                                    <i class="fa-solid fa-xmark"></i>
+                                </button>
+                            </div>
+
+                            <!-- Text Input Area -->
+                            <div class="prompt-input-row">
+                                <textarea 
+                                    id="textIngredientInput" 
+                                    class="prompt-textarea" 
+                                    placeholder="어떤 재료로 요리해 볼까요? (예: 신김치, 스팸, 계란, 대파)" 
+                                    rows="1"
+                                ></textarea>
+                                <button id="btnAddTextIngredient" style="display: none;"></button>
+                            </div>
+
+                            <!-- Active Ingredient Chips -->
+                            <div class="prompt-tags-wrapper" id="ingredientTagContainer">
+                                <!-- Dynamic tags populated by JS -->
+                            </div>
+                        </div>
+
+                        <!-- Bottom Toolbar (Stitch Style) -->
+                        <div class="prompt-bottom-toolbar">
+                            <div class="toolbar-left">
+                                <!-- Circular Plus Attachment Button (Triggers photo upload) -->
+                                <button type="button" class="btn-prompt-icon" id="btnTriggerPhoto" title="냉장고 사진 추가">
+                                    <i class="fa-solid fa-plus"></i>
+                                </button>
+                                
+                                <!-- Mode Selector Pills (Stitch: 📱 앱 / 🖥️ 웹) -->
+                                <div class="mode-pill-group">
+                                    <button type="button" class="mode-pill active" id="modePhotoBtn">
+                                        <i class="fa-solid fa-camera"></i> 사진 인식
+                                    </button>
+                                    <button type="button" class="mode-pill" id="modeTextBtn">
+                                        <i class="fa-solid fa-pen-nib"></i> 텍스트
+                                    </button>
+                                </div>
+
+                                <span style="font-size: 0.76rem; color: var(--text-muted); margin-left: 0.25rem;">
+                                    재료 <strong id="tagCount" style="color: var(--neon-violet);">4</strong>개 감지됨
+                                </span>
+                            </div>
+
+                            <div class="toolbar-right">
+                                <!-- Clear All Button -->
+                                <button type="button" class="preset-chip" id="btnClearAllTags" style="padding: 0.25rem 0.6rem; font-size: 0.72rem;">
+                                    초기화
+                                </button>
+
+                                <!-- Style Pill (Stitch: ✨ 균형 ⌵) -->
+                                <div class="dropdown-pill" id="styleSelectorPill" title="레시피 추천 모드">
+                                    <i class="fa-solid fa-sparkles"></i>
+                                    <span>황금비율</span>
+                                    <i class="fa-solid fa-chevron-down" style="font-size: 0.65rem; color: var(--text-muted);"></i>
+                                </div>
+
+                                <!-- Mic Voice Command Button -->
+                                <button type="button" class="btn-prompt-icon" id="btnVoiceCommandToggle" title="음성 인식 제어">
+                                    <i class="fa-solid fa-microphone"></i>
+                                </button>
+
+                                <!-- Circular Arrow Submit Button (Stitch: ↑ Button) -->
+                                <button type="button" class="btn-prompt-submit" id="btnFindRecipes" title="레시피 탐색 실행">
+                                    <i class="fa-solid fa-arrow-up"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Quick Preset Ingredient Suggestions -->
+                    <div class="quick-presets-row">
+                        <span style="font-size: 0.75rem; color: var(--text-muted); margin-right: 0.2rem;">인기 재료 추가:</span>
+                        <button type="button" class="preset-chip" onclick="window.addQuickPreset('신김치')">🥬 신김치</button>
+                        <button type="button" class="preset-chip" onclick="window.addQuickPreset('스팸')">🥓 스팸</button>
+                        <button type="button" class="preset-chip" onclick="window.addQuickPreset('계란')">🥚 계란</button>
+                        <button type="button" class="preset-chip" onclick="window.addQuickPreset('대파')">🧅 대파</button>
+                        <button type="button" class="preset-chip" onclick="window.addQuickPreset('돼지고기')">🥩 돼지고기</button>
+                        <button type="button" class="preset-chip" onclick="window.addQuickPreset('두부')">🧊 두부</button>
+                        <button type="button" class="preset-chip" onclick="window.addQuickPreset('양파')">🧅 양파</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ============================================================
+                 SECTION 2: RECIPE RECOMMENDATION CARDS
+                 ============================================================ -->
+            <section id="sectionRecipes" class="section-view">
+                <div class="section-heading-row">
+                    <div>
+                        <h2 class="section-title">AI Curation Results</h2>
+                        <p style="font-size: 0.9rem; color: var(--text-secondary); margin-top: 0.25rem;">
+                            냉장고 보유 재료 매칭률과 셰프 시크릿 팁을 결합한 최적의 추천 요리입니다.
+                        </p>
+                    </div>
+                    <button type="button" class="btn-back-link" id="btnBackToInput">
+                        <i class="fa-solid fa-arrow-left"></i> 재료 다시 수정하기
+                    </button>
+                </div>
+
+                <!-- Dynamic Recipe Cards Grid -->
+                <div class="recipes-grid" id="recipeCardsContainer">
+                    <!-- Populated by JS -->
+                </div>
+            </section>
+
+            <!-- ============================================================
+                 SECTION 3: HANDS-FREE AUDIO CHEF MODE
+                 ============================================================ -->
+            <section id="sectionCooking" class="section-view">
+                <div class="section-heading-row">
+                    <div>
+                        <h2 class="section-title">Hands-Free Audio Chef</h2>
+                        <p style="font-size: 0.9rem; color: var(--text-secondary); margin-top: 0.25rem;">
+                            양념이 묻은 손은 그대로 두세요. AI 셰프가 단계별로 친절하게 읽어드립니다.
+                        </p>
+                    </div>
+                    <button type="button" class="btn-back-link" id="btnBackToRecipes">
+                        <i class="fa-solid fa-arrow-left"></i> 레시피 목록으로
+                    </button>
+                </div>
+
+                <!-- 2-Column Audio Layout -->
+                <div class="cooking-view-layout">
+                    <!-- Main Audio Stage -->
+                    <div class="audio-stage-card">
+                        <!-- Step Pills Navigation -->
+                        <div style="display: flex; flex-wrap: wrap; gap: 0.45rem; margin-bottom: 1.25rem;" id="stepPillsContainer">
+                            <!-- Populated by audio_player.js -->
+                        </div>
+
+                        <div class="stage-step-indicator">
+                            <span class="heat-badge" id="currentHeatBadge">중불</span>
+                            <div id="currentStepTipBox" style="display: none; align-items: center; gap: 0.4rem; font-size: 0.8rem; color: #FCD34D;">
+                                <i class="fa-solid fa-lightbulb"></i>
+                                <span id="currentStepTipText"></span>
+                            </div>
+                        </div>
+
+                        <h3 class="stage-step-title" id="currentStepTitle">1단계: 재료 손질하기</h3>
+
+                        <!-- Teleprompter Box -->
+                        <div class="script-teleprompter-box">
+                            <p class="script-speech-text" id="currentSpokenScript">
+                                "첫 번째 단계, 재료 썰기입니다. 대파는 얇게 송송 썰어주시고, 스팸은 옥수수알 크기로 잘게 깍둑썰기 해주세요."
+                            </p>
+                        </div>
+
+                        <!-- Waveform Audio Visualizer -->
+                        <div class="waveform-container" id="waveformVisualizer">
+                            <div class="waveform-bar"></div>
+                            <div class="waveform-bar"></div>
+                            <div class="waveform-bar"></div>
+                            <div class="waveform-bar"></div>
+                            <div class="waveform-bar"></div>
+                            <div class="waveform-bar"></div>
+                            <div class="waveform-bar"></div>
+                            <div class="waveform-bar"></div>
+                            <div class="waveform-bar"></div>
+                            <div class="waveform-bar"></div>
+                            <div class="waveform-bar"></div>
+                            <div class="waveform-bar"></div>
+                            <div class="waveform-bar"></div>
+                            <div class="waveform-bar"></div>
+                            <div class="waveform-bar"></div>
+                        </div>
+
+                        <!-- Big Hands-Free Controls -->
+                        <div class="player-controls-row">
+                            <button type="button" class="btn-ctrl btn-ctrl-secondary" id="btnPrevStep" title="이전 단계" onclick="window.audioPlayer.prevStep()">
+                                <i class="fa-solid fa-backward-step"></i>
+                            </button>
+                            <button type="button" class="btn-ctrl btn-ctrl-secondary" id="btnReplayStep" title="다시 듣기" onclick="window.audioPlayer.replayStep()">
+                                <i class="fa-solid fa-rotate-right"></i>
+                            </button>
+                            <button type="button" class="btn-ctrl btn-ctrl-primary" id="btnPlayPause" title="재생 / 일시정지" onclick="window.audioPlayer.togglePlay()">
+                                <i class="fa-solid fa-play" id="playIcon"></i>
+                            </button>
+                            <button type="button" class="btn-ctrl btn-ctrl-secondary" id="btnNextStep" title="다음 단계" onclick="window.audioPlayer.nextStep()">
+                                <i class="fa-solid fa-forward-step"></i>
+                            </button>
+                        </div>
+
+                        <!-- Voice Command Status Banner -->
+                        <div class="voice-banner" id="voiceFeedbackBanner">
+                            <i class="fa-solid fa-microphone-lines" style="color: var(--neon-violet);"></i>
+                            <span id="voiceCommandStatus">음성 명령 대기 중 ("다음", "이전", "다시", "정지")</span>
+                        </div>
+                    </div>
+
+                    <!-- Sidebar: Timer & Recipe Info & Seasoning Ratios -->
+                    <div class="cooking-sidebar">
+                        <!-- Step Timer Card -->
+                        <div class="sidebar-card">
+                            <h4><i class="fa-regular fa-clock" style="color: var(--neon-blue);"></i> 조리 타이머</h4>
+                            <div class="timer-box">
+                                <div class="timer-digits" id="timerDisplay">--:--</div>
+                                <button type="button" class="btn-timer-action" id="btnTimerStartPause" onclick="window.audioPlayer.toggleTimer()">
+                                    타이머 시작
+                                </button>
+                                <svg style="display: none;"><circle id="timerProgressCircle"></circle></svg>
+                            </div>
+                        </div>
+
+                        <!-- Summary Card -->
+                        <div class="sidebar-card">
+                            <div style="display: flex; align-items: center; gap: 0.65rem; margin-bottom: 0.75rem;">
+                                <span style="font-size: 1.8rem;" id="heroEmoji">🍳</span>
+                                <div>
+                                    <h4 style="margin: 0;" id="heroTitle">스팸 김치볶음밥</h4>
+                                    <span style="font-size: 0.75rem; color: var(--text-muted);" id="heroSubtitle">15분 완성 황금 레시피</span>
+                                </div>
+                            </div>
+                            <div style="display: flex; gap: 0.5rem; font-size: 0.75rem; color: var(--text-secondary); margin-bottom: 0.75rem;">
+                                <span>매칭 <strong id="heroMatchRate" style="color: var(--neon-emerald);">70%</strong></span>
+                                <span>•</span>
+                                <span id="heroTotalTime">15분</span>
+                                <span>•</span>
+                                <span id="heroServings">1~2인분</span>
+                            </div>
+                        </div>
+
+                        <!-- Seasoning Ratios -->
+                        <div class="sidebar-card">
+                            <h4><i class="fa-solid fa-scale-balanced" style="color: var(--neon-violet);"></i> 양념 황금비율</h4>
+                            <ul class="spec-list" id="seasoningRatioList">
+                                <!-- Populated by JS -->
+                            </ul>
+                        </div>
+
+                        <!-- Required Ingredients with Substitutes -->
+                        <div class="sidebar-card">
+                            <h4><i class="fa-solid fa-basket-shopping" style="color: var(--neon-pink);"></i> 재료 & 대체재</h4>
+                            <ul class="spec-list" id="requiredIngList">
+                                <!-- Populated by JS -->
+                            </ul>
+                        </div>
+
+                        <!-- Chef Secret Tips -->
+                        <div class="sidebar-card">
+                            <h4><i class="fa-solid fa-wand-magic-sparkles" style="color: var(--neon-amber);"></i> 셰프 시크릿 팁</h4>
+                            <ul class="spec-list" id="chefSecretList">
+                                <!-- Populated by JS -->
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Scripts -->
+    <script src="/static/js/speech.js"></script>
+    <script src="/static/js/audio_player.js"></script>
+    <script src="/static/js/app.js"></script>
+</body>
+</html>

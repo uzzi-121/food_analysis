@@ -1,0 +1,1086 @@
+/* ==========================================================================
+   CookCast AI — Stitch Inspired AI-Native Cybernetic Design System
+   ========================================================================== */
+
+:root {
+    --font-heading: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-body: 'Pretendard', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+
+    /* Stitch Core Palette - Deep Obsidian Dark & Neon Cybernetic Accents */
+    --bg-space: #07080E;
+    --bg-surface: #0E1019;
+    --bg-card: rgba(18, 20, 31, 0.72);
+    --bg-card-hover: rgba(24, 27, 42, 0.85);
+    --bg-card-elevated: #151824;
+
+    /* Neon Cybernetic Gradient Colors */
+    --neon-violet: #8B5CF6;
+    --neon-violet-glow: rgba(139, 92, 246, 0.4);
+    --neon-blue: #38BDF8;
+    --neon-blue-glow: rgba(56, 189, 248, 0.35);
+    --neon-pink: #EC4899;
+    --neon-pink-glow: rgba(236, 72, 153, 0.25);
+    --neon-emerald: #10B981;
+    --neon-amber: #F59E0B;
+
+    /* Glassmorphism Borders & Shadows */
+    --border-subtle: rgba(255, 255, 255, 0.08);
+    --border-hover: rgba(139, 92, 246, 0.35);
+    --border-focus: rgba(56, 189, 248, 0.5);
+    --shadow-prompt: 0 20px 50px -10px rgba(0, 0, 0, 0.7), 0 0 40px -10px rgba(139, 92, 246, 0.2);
+    --shadow-card: 0 16px 36px -8px rgba(0, 0, 0, 0.6);
+    --shadow-glow: 0 0 30px rgba(139, 92, 246, 0.35);
+
+    /* Typography Colors */
+    --text-pure: #FFFFFF;
+    --text-primary: #F3F4F6;
+    --text-secondary: #94A3B8;
+    --text-muted: #64748B;
+
+    /* Radii */
+    --radius-sm: 8px;
+    --radius-md: 14px;
+    --radius-lg: 20px;
+    --radius-prompt: 24px;
+    --radius-full: 9999px;
+
+    --transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Base Reset & Background Setup */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: var(--font-body);
+    background-color: var(--bg-space);
+    color: var(--text-primary);
+    min-height: 100vh;
+    overflow-x: hidden;
+    position: relative;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* Stitch Signature: Dot Matrix Grid Background */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-image: radial-gradient(rgba(255, 255, 255, 0.12) 1px, transparent 1px);
+    background-size: 24px 24px;
+    pointer-events: none;
+    z-index: 0;
+    mask-image: radial-gradient(ellipse 70% 70% at 50% 40%, black 40%, transparent 100%);
+    -webkit-mask-image: radial-gradient(ellipse 70% 70% at 50% 40%, black 40%, transparent 100%);
+}
+
+/* Stitch Signature: Atmospheric Neon Aurora Glow Waves */
+.aurora-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.aurora-glow {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(90px);
+    mix-blend-mode: screen;
+    opacity: 0.65;
+    will-change: transform, opacity;
+}
+
+.glow-violet {
+    width: 700px;
+    height: 350px;
+    background: radial-gradient(circle, rgba(139, 92, 246, 0.45) 0%, rgba(99, 102, 241, 0.15) 70%, transparent 100%);
+    top: -80px;
+    left: 20%;
+    animation: aurora-drift 16s ease-in-out infinite alternate;
+}
+
+.glow-blue {
+    width: 650px;
+    height: 380px;
+    background: radial-gradient(circle, rgba(56, 189, 248, 0.35) 0%, rgba(14, 165, 233, 0.1) 70%, transparent 100%);
+    top: 15%;
+    right: 5%;
+    animation: aurora-float 20s ease-in-out infinite alternate-reverse;
+}
+
+.glow-magenta {
+    width: 500px;
+    height: 300px;
+    background: radial-gradient(circle, rgba(236, 72, 153, 0.25) 0%, transparent 70%);
+    top: 30%;
+    left: -100px;
+    animation: aurora-drift 22s ease-in-out infinite alternate;
+}
+
+@keyframes aurora-drift {
+    0% { transform: translate(0, 0) scale(1); }
+    50% { transform: translate(60px, 40px) scale(1.15); }
+    100% { transform: translate(-40px, 60px) scale(0.95); }
+}
+
+@keyframes aurora-float {
+    0% { transform: translate(0, 0) scale(1); }
+    50% { transform: translate(-70px, -30px) scale(1.1); }
+    100% { transform: translate(40px, -50px) scale(0.9); }
+}
+
+/* App Layout Wrapper */
+.app-wrapper {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    padding: 0 1.5rem;
+    max-width: 1240px;
+    margin: 0 auto;
+}
+
+/* ==========================================================================
+   Navigation Bar (Stitch Minimalist Pill Style)
+   ========================================================================== */
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.25rem 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.nav-brand {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    text-decoration: none;
+}
+
+.brand-logo-text {
+    font-family: var(--font-heading);
+    font-size: 1.45rem;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    color: var(--text-pure);
+}
+
+.brand-beta-pill {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.15rem 0.55rem;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: var(--radius-full);
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+}
+
+.nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.status-indicator {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.35rem 0.85rem;
+    background: rgba(18, 20, 31, 0.6);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-full);
+    font-size: 0.78rem;
+    color: var(--text-secondary);
+    backdrop-filter: blur(12px);
+}
+
+.status-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--neon-emerald);
+    box-shadow: 0 0 10px var(--neon-emerald);
+    animation: pulse-dot 2s infinite;
+}
+
+@keyframes pulse-dot {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(0.85); }
+}
+
+.btn-try-now {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.55rem 1.25rem;
+    background: #FFFFFF;
+    color: #07080E;
+    font-size: 0.85rem;
+    font-weight: 600;
+    border: none;
+    border-radius: var(--radius-full);
+    cursor: pointer;
+    transition: var(--transition);
+    box-shadow: 0 4px 14px rgba(255, 255, 255, 0.2);
+}
+
+.btn-try-now:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(255, 255, 255, 0.35);
+    background: #F8FAFC;
+}
+
+/* ==========================================================================
+   Hero Section (Stitch Impactful Typography)
+   ========================================================================== */
+.hero-section {
+    text-align: center;
+    padding: 4.5rem 1rem 2rem 1rem;
+    max-width: 860px;
+    margin: 0 auto;
+}
+
+.hero-main-title {
+    font-family: var(--font-heading);
+    font-size: 3.6rem;
+    font-weight: 800;
+    line-height: 1.12;
+    letter-spacing: -0.04em;
+    color: var(--text-pure);
+    margin-bottom: 1.2rem;
+}
+
+.hero-sub-title {
+    font-size: 1.15rem;
+    font-weight: 400;
+    color: var(--text-secondary);
+    max-width: 640px;
+    margin: 0 auto;
+    letter-spacing: -0.01em;
+}
+
+/* ==========================================================================
+   Stitch Signature: Floating Multi-functional AI Prompt Card
+   ========================================================================== */
+.prompt-container {
+    max-width: 780px;
+    width: 100%;
+    margin: 2.5rem auto 3rem auto;
+    position: relative;
+}
+
+.prompt-card {
+    background: var(--bg-card);
+    backdrop-filter: blur(28px);
+    -webkit-backdrop-filter: blur(28px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: var(--radius-prompt);
+    padding: 1.25rem 1.4rem 1rem 1.4rem;
+    box-shadow: var(--shadow-prompt);
+    transition: var(--transition);
+    position: relative;
+    overflow: hidden;
+}
+
+.prompt-card:focus-within {
+    border-color: rgba(139, 92, 246, 0.45);
+    box-shadow: 0 20px 60px -10px rgba(0, 0, 0, 0.8), 0 0 45px -5px rgba(139, 92, 246, 0.3);
+}
+
+/* Subtle Rim Glow on Prompt Top */
+.prompt-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 20%;
+    right: 20%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(139, 92, 246, 0.6), rgba(56, 189, 248, 0.6), transparent);
+}
+
+/* Upper Area: Input & Tags & Preview */
+.prompt-upper {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.prompt-input-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+}
+
+.prompt-textarea {
+    flex: 1;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: var(--text-pure);
+    font-family: var(--font-body);
+    font-size: 1.05rem;
+    line-height: 1.5;
+    resize: none;
+    min-height: 48px;
+    max-height: 120px;
+}
+
+.prompt-textarea::placeholder {
+    color: var(--text-muted);
+    font-size: 1.05rem;
+    font-weight: 400;
+}
+
+/* Uploaded Image Preview Thumbnail inside Prompt */
+.prompt-preview-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.65rem;
+    padding: 0.35rem 0.65rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: var(--radius-md);
+    margin-bottom: 0.5rem;
+    max-width: fit-content;
+}
+
+.prompt-preview-chip img {
+    width: 36px;
+    height: 36px;
+    border-radius: 6px;
+    object-fit: cover;
+}
+
+.prompt-preview-info {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+}
+
+.btn-remove-chip {
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    cursor: pointer;
+    font-size: 0.9rem;
+    padding: 2px 4px;
+    border-radius: 4px;
+    transition: var(--transition);
+}
+
+.btn-remove-chip:hover {
+    color: #EF4444;
+}
+
+/* Ingredient Tags Container */
+.prompt-tags-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+    margin-top: 0.25rem;
+}
+
+.ingredient-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.28rem 0.65rem;
+    background: rgba(139, 92, 246, 0.14);
+    border: 1px solid rgba(139, 92, 246, 0.28);
+    border-radius: var(--radius-full);
+    font-size: 0.82rem;
+    font-weight: 500;
+    color: #DDD6FE;
+    transition: var(--transition);
+    animation: pop-in 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.ingredient-chip:hover {
+    border-color: rgba(139, 92, 246, 0.5);
+    background: rgba(139, 92, 246, 0.22);
+}
+
+.ingredient-chip .chip-qty {
+    font-size: 0.72rem;
+    color: var(--text-muted);
+}
+
+.ingredient-chip .chip-delete {
+    cursor: pointer;
+    color: var(--text-muted);
+    transition: color 0.15s;
+    font-size: 0.75rem;
+}
+
+.ingredient-chip .chip-delete:hover {
+    color: #F87171;
+}
+
+@keyframes pop-in {
+    from { transform: scale(0.85); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+/* Bottom Toolbar (Stitch Style: +, Mode pill, Style Dropdown, Mic, Arrow Button) */
+.prompt-bottom-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 1rem;
+    padding-top: 0.75rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.toolbar-left {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+}
+
+.toolbar-right {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+}
+
+/* Circular Plus Attachment Button */
+.btn-prompt-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.btn-prompt-icon:hover {
+    background: rgba(255, 255, 255, 0.12);
+    color: var(--text-pure);
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Stitch Style: Pill Mode Selectors (e.g. 📱 앱 / 🖥️ 웹 -> 📸 사진 / ✍️ 텍스트) */
+.mode-pill-group {
+    display: flex;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: var(--radius-full);
+    padding: 2px;
+}
+
+.mode-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.25rem 0.65rem;
+    border-radius: var(--radius-full);
+    font-size: 0.76rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.mode-pill.active {
+    background: rgba(255, 255, 255, 0.12);
+    color: var(--text-pure);
+}
+
+/* Dropdown Pill (Stitch: ✨ 균형 ⌵) */
+.dropdown-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.3rem 0.75rem;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.09);
+    border-radius: var(--radius-full);
+    font-size: 0.78rem;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.dropdown-pill:hover {
+    border-color: rgba(255, 255, 255, 0.2);
+    color: var(--text-pure);
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.dropdown-pill i.fa-sparkles {
+    color: var(--neon-violet);
+}
+
+/* Circular Arrow Submit Button (Stitch: ↑ Button) */
+.btn-prompt-submit {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: #FFFFFF;
+    color: #07080E;
+    font-size: 0.95rem;
+    border: none;
+    cursor: pointer;
+    transition: var(--transition);
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+}
+
+.btn-prompt-submit:hover {
+    transform: translateY(-2px) scale(1.05);
+    background: #F8FAFC;
+    box-shadow: 0 0 25px rgba(255, 255, 255, 0.45);
+}
+
+.btn-prompt-submit:active {
+    transform: translateY(0) scale(0.96);
+}
+
+/* Quick Suggestion Pills underneath Prompt */
+.quick-presets-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 1.25rem;
+}
+
+.preset-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.3rem 0.75rem;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-radius: var(--radius-full);
+    font-size: 0.78rem;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.preset-chip:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.18);
+    color: var(--text-pure);
+    transform: translateY(-1px);
+}
+
+/* Hidden File Input */
+.file-input-hidden {
+    display: none;
+}
+
+/* ==========================================================================
+   Section 2: Recipe Recommendations (Neon Tech Cards)
+   ========================================================================== */
+.section-view {
+    display: none;
+    animation: fade-in-up 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.section-view.active {
+    display: block;
+}
+
+@keyframes fade-in-up {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.section-heading-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.75rem;
+}
+
+.section-title {
+    font-family: var(--font-heading);
+    font-size: 1.65rem;
+    font-weight: 700;
+    color: var(--text-pure);
+    letter-spacing: -0.03em;
+}
+
+.btn-back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    background: transparent;
+    border: none;
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.btn-back-link:hover {
+    color: var(--neon-violet);
+}
+
+/* Recipe Grid */
+.recipes-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.recipe-card {
+    background: var(--bg-card);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem;
+    transition: var(--transition);
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.recipe-card::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--neon-violet), var(--neon-blue));
+    opacity: 0;
+    transition: opacity 0.25s ease;
+}
+
+.recipe-card:hover {
+    background: var(--bg-card-hover);
+    border-color: rgba(139, 92, 246, 0.4);
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-card), 0 0 30px rgba(139, 92, 246, 0.2);
+}
+
+.recipe-card:hover::after {
+    opacity: 1;
+}
+
+.recipe-card-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+}
+
+.recipe-emoji-badge {
+    font-size: 2.2rem;
+    background: rgba(255, 255, 255, 0.04);
+    width: 54px;
+    height: 54px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-md);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.match-gauge-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.25rem 0.65rem;
+    background: rgba(16, 185, 129, 0.12);
+    border: 1px solid rgba(16, 185, 129, 0.25);
+    border-radius: var(--radius-full);
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: #34D399;
+}
+
+.recipe-title {
+    font-family: var(--font-heading);
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--text-pure);
+    margin-bottom: 0.4rem;
+    letter-spacing: -0.02em;
+}
+
+.recipe-desc {
+    font-size: 0.88rem;
+    color: var(--text-secondary);
+    margin-bottom: 1.1rem;
+    line-height: 1.45;
+}
+
+.recipe-meta-row {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    margin-bottom: 1.2rem;
+}
+
+.recipe-meta-item {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+}
+
+.btn-select-recipe {
+    width: 100%;
+    padding: 0.65rem;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: var(--radius-md);
+    color: var(--text-primary);
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.recipe-card:hover .btn-select-recipe {
+    background: var(--neon-violet);
+    border-color: var(--neon-violet);
+    color: #FFFFFF;
+    box-shadow: 0 4px 15px rgba(139, 92, 246, 0.4);
+}
+
+/* ==========================================================================
+   Section 3: Audio Chef Mode (Cybernetic Hands-Free Player)
+   ========================================================================== */
+.cooking-view-layout {
+    display: grid;
+    grid-template-columns: 1fr 340px;
+    gap: 1.75rem;
+    margin-bottom: 3rem;
+}
+
+@media (max-width: 900px) {
+    .cooking-view-layout {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Main Audio Stage */
+.audio-stage-card {
+    background: var(--bg-card);
+    backdrop-filter: blur(28px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: var(--radius-prompt);
+    padding: 2rem;
+    box-shadow: var(--shadow-prompt);
+}
+
+.stage-step-indicator {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+}
+
+.step-badge {
+    padding: 0.3rem 0.85rem;
+    background: rgba(139, 92, 246, 0.15);
+    border: 1px solid rgba(139, 92, 246, 0.3);
+    border-radius: var(--radius-full);
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #DDD6FE;
+}
+
+.heat-badge {
+    padding: 0.25rem 0.65rem;
+    background: rgba(239, 68, 68, 0.12);
+    border: 1px solid rgba(239, 68, 68, 0.25);
+    border-radius: var(--radius-full);
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: #F87171;
+}
+
+.stage-step-title {
+    font-family: var(--font-heading);
+    font-size: 1.85rem;
+    font-weight: 800;
+    color: var(--text-pure);
+    margin-bottom: 1rem;
+    letter-spacing: -0.03em;
+}
+
+/* Teleprompter Style Audio Script Highlight Box */
+.script-teleprompter-box {
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: var(--radius-lg);
+    padding: 1.4rem;
+    margin-bottom: 1.5rem;
+    position: relative;
+}
+
+.script-speech-text {
+    font-size: 1.15rem;
+    line-height: 1.7;
+    color: #E2E8F0;
+    font-weight: 400;
+}
+
+.script-guide-sub {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-top: 0.75rem;
+}
+
+/* Waveform Visualizer Simulation */
+.waveform-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    height: 36px;
+    margin: 1.25rem 0;
+}
+
+.waveform-bar {
+    width: 3px;
+    height: 8px;
+    background: rgba(139, 92, 246, 0.4);
+    border-radius: 2px;
+    transition: height 0.15s ease;
+}
+
+.waveform-container.playing .waveform-bar {
+    animation: wave-bar 1.2s ease-in-out infinite alternate;
+    background: linear-gradient(180deg, var(--neon-blue), var(--neon-violet));
+}
+
+.waveform-bar:nth-child(2n) { animation-delay: 0.15s; }
+.waveform-bar:nth-child(3n) { animation-delay: 0.3s; }
+.waveform-bar:nth-child(4n) { animation-delay: 0.45s; }
+
+@keyframes wave-bar {
+    0% { height: 6px; }
+    50% { height: 28px; }
+    100% { height: 10px; }
+}
+
+/* Big Controller Buttons */
+.player-controls-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.25rem;
+    margin-top: 1.5rem;
+}
+
+.btn-ctrl {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    color: var(--text-primary);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.btn-ctrl:hover {
+    background: rgba(255, 255, 255, 0.14);
+    color: var(--text-pure);
+    transform: scale(1.05);
+}
+
+.btn-ctrl-secondary {
+    width: 46px;
+    height: 46px;
+    font-size: 1.05rem;
+}
+
+.btn-ctrl-primary {
+    width: 64px;
+    height: 64px;
+    font-size: 1.45rem;
+    background: #FFFFFF;
+    color: #07080E;
+    border: none;
+    box-shadow: 0 0 25px rgba(255, 255, 255, 0.3);
+}
+
+.btn-ctrl-primary:hover {
+    background: #F8FAFC;
+    transform: scale(1.08);
+    box-shadow: 0 0 35px rgba(255, 255, 255, 0.5);
+}
+
+/* Audio Progress Bar */
+.progress-row {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    margin-top: 1rem;
+}
+
+.progress-track {
+    flex: 1;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 2px;
+    overflow: hidden;
+    position: relative;
+    cursor: pointer;
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--neon-violet), var(--neon-blue));
+    width: 0%;
+    border-radius: 2px;
+    transition: width 0.1s linear;
+}
+
+/* Sidebar Recipe Specs & Timer */
+.cooking-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.sidebar-card {
+    background: var(--bg-card);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: var(--radius-lg);
+    padding: 1.25rem;
+}
+
+.sidebar-card h4 {
+    font-family: var(--font-heading);
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--text-pure);
+    margin-bottom: 0.75rem;
+    letter-spacing: -0.02em;
+}
+
+/* Timer Ring Gauge */
+.timer-box {
+    text-align: center;
+    padding: 0.5rem 0;
+}
+
+.timer-digits {
+    font-family: var(--font-heading);
+    font-size: 2.2rem;
+    font-weight: 800;
+    color: var(--neon-blue);
+    letter-spacing: 0.02em;
+    margin: 0.5rem 0;
+}
+
+.btn-timer-action {
+    padding: 0.45rem 1rem;
+    background: rgba(56, 189, 248, 0.15);
+    border: 1px solid rgba(56, 189, 248, 0.3);
+    border-radius: var(--radius-full);
+    color: #7DD3FC;
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.btn-timer-action:hover {
+    background: rgba(56, 189, 248, 0.25);
+}
+
+/* Ingredient & Seasoning List */
+.spec-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    font-size: 0.82rem;
+}
+
+.spec-list-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.35rem 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.spec-list-item span:first-child {
+    color: var(--text-secondary);
+}
+
+.spec-list-item span:last-child {
+    font-weight: 600;
+    color: var(--text-pure);
+}
+
+/* Voice Command Feedback Banner */
+.voice-banner {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    padding: 0.65rem 1rem;
+    background: rgba(18, 20, 31, 0.85);
+    border: 1px solid rgba(139, 92, 246, 0.3);
+    border-radius: var(--radius-md);
+    margin-top: 1rem;
+    font-size: 0.82rem;
+    color: var(--text-secondary);
+    transition: background-color 0.3s;
+}
+
+/* Responsive Breakpoints */
+@media (max-width: 768px) {
+    .hero-main-title {
+        font-size: 2.5rem;
+    }
+    .prompt-container {
+        margin: 1.5rem auto 2rem auto;
+    }
+    .prompt-card {
+        padding: 1rem;
+    }
+    .prompt-bottom-toolbar {
+        flex-wrap: wrap;
+        gap: 0.75rem;
+    }
+}

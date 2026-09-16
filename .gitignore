@@ -1,0 +1,57 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual Environments
+venv/
+.venv/
+env/
+ENV/
+
+# Environment Variables
+.env
+!.env.example
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+.obsidian/
+
+# Testing & Coverage
+.pytest_cache/
+.coverage
+htmlcov/
+
+# CookCast AI App Storage & Cache
+src/food_analysis/storage/uploads/*
+!src/food_analysis/storage/uploads/.gitkeep
+src/food_analysis/storage/audio/*
+!src/food_analysis/storage/audio/.gitkeep
+src/food_analysis/storage/cache/*
+!src/food_analysis/storage/cache/.gitkeep
+app/storage/uploads/*
+!app/storage/uploads/.gitkeep
+app/storage/audio/*
+!app/storage/audio/.gitkeep
+app/storage/cache/*
+!app/storage/cache/.gitkeep
