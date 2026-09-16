@@ -393,7 +393,90 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ----------------------------------------------------
-    // Step 1 ➡️ Step 2: Natural Language Intent Discovery
+    // External Web Food Image Retriever & 3D Refrigerator Animation
+    // ----------------------------------------------------
+    async function fetchIngredientImageUrl(ingredientName) {
+        try {
+            const res = await fetch(`/api/v1/ingredients/image?name=${encodeURIComponent(ingredientName)}`);
+            if (res.ok) {
+                const data = await res.json();
+                if (data && data.image_url) return data.image_url;
+            }
+        } catch (e) {
+            console.warn("Ingredient image fetch failed, fallback used:", e);
+        }
+        return "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=300&auto=format&fit=crop&q=80";
+    }
+
+    // Interactive Manual Refrigerator Door Click Toggle
+    window.toggleFridgeDoorsManual = function () {
+        const cabinet = document.getElementById('fridgeCabinet');
+        if (!cabinet) return;
+        const isNowOpen = cabinet.classList.toggle('open');
+        if (window.showToast) {
+            window.showToast(isNowOpen ? "❄️ 스마트 냉장고 문이 열렸습니다! 신선한 냉기가 감돕니다." : "🚪 스마트 냉장고 문이 닫혔습니다.");
+        }
+    };
+
+    // 2.5-Second Refrigerator Door Opening & Flying Food Ingredients Animation Sequence
+    async function triggerFridgeOpeningSequence(ingredients) {
+        const cabinet = document.getElementById('fridgeCabinet');
+        const arena = document.getElementById('fridgeFlyingArena');
+        if (!cabinet || !arena) return;
+
+        // Smooth scroll to refrigerator center stage
+        const centerStage = document.getElementById('fridgeCenterStage');
+        if (centerStage) {
+            centerStage.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+
+        // 1. Swing open doors in 3D
+        cabinet.classList.add('open');
+
+        // 2. Concurrently fetch web food photos for all ingredients
+        const ingNames = ingredients.length > 0 ? ingredients : ['두부', '대파', '양파'];
+        const ingList = await Promise.all(ingNames.map(async name => {
+            const url = await fetchIngredientImageUrl(name);
+            return { name, url };
+        }));
+
+        // 3. Populate flying ingredients into arena
+        arena.innerHTML = '';
+        const total = ingList.length;
+        ingList.forEach((item, idx) => {
+            const el = document.createElement('div');
+            el.className = 'flying-ingredient-item';
+            
+            // Spread items outward from center of fridge
+            const spreadX = (idx - (total - 1) / 2) * (total > 4 ? 75 : 105);
+            const spreadY = -120 + ((idx % 2) * 50);
+            el.style.setProperty('--target-x', `${spreadX}px`);
+            el.style.setProperty('--target-y', `${spreadY}px`);
+            el.style.animationDelay = `${0.2 + idx * 0.12}s`;
+
+            el.innerHTML = `
+                <div class="flying-ing-card">
+                    <div class="flying-ing-img-wrap">
+                        <img src="${item.url}" alt="${item.name}">
+                    </div>
+                    <span class="flying-ing-label">${item.name}</span>
+                </div>
+            `;
+            arena.appendChild(el);
+        });
+
+        // 4. Exact 2.5s duration as requested by user
+        await new Promise(resolve => setTimeout(resolve, 2500));
+
+        // Reset after transition
+        setTimeout(() => {
+            cabinet.classList.remove('open');
+            arena.innerHTML = '';
+        }, 700);
+    }
+
+    // ----------------------------------------------------
+    // Step 1 ➡️ Step 2: Natural Language Intent Discovery with Refrigerator 2.5s Animation
     // ----------------------------------------------------
     if (btnFindRecipes) {
         btnFindRecipes.addEventListener('click', async () => {
@@ -415,22 +498,27 @@ document.addEventListener('DOMContentLoaded', () => {
             btnFindRecipes.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i>`;
 
             const contextIngs = state.ingredients.map(i => i.name);
+            window.showToast("❄️ 냉장고가 열리며 식재료가 밖으로 준비됩니다 (2.5초)...");
 
             try {
-                window.showToast("🧠 AI가 보유 재료와 원하는 레시피 스타일을 종합 분석하고 있습니다...");
-                const res = await fetch('/api/v1/recipes/discover', {
+                // Run 2.5s Refrigerator door opening & flying ingredient animation concurrently with API
+                const animPromise = triggerFridgeOpeningSequence(contextIngs);
+                const apiPromise = fetch('/api/v1/recipes/discover', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
                         query: query,
                         context_ingredients: contextIngs
                     })
-                });
-                const candidates = await res.json();
+                }).then(res => res.json());
+
+                // Await both the 2.5s animation and the recipe discovery response
+                const [_, candidates] = await Promise.all([animPromise, apiPromise]);
 
                 state.candidateRecipes = candidates;
                 renderRecipeCards(candidates, query);
                 goToStep(2);
+                window.showToast("✨ 식재료가 셰프의 원목 도마에 도착했습니다! 최적 레시피 2선을 확인하세요.");
             } catch (err) {
                 console.error("Discovery error:", err);
                 window.showToast("레시피 분석 중 오류가 발생했습니다.");

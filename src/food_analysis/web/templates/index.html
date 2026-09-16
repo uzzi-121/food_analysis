@@ -124,6 +124,60 @@
                     </div>
                 </div>
 
+                <!-- ============================================================
+                     CENTERED REFRIGERATOR 3D UI & FLYING INGREDIENTS ANIMATION
+                     ============================================================ -->
+                <div class="fridge-center-stage" id="fridgeCenterStage">
+                    <div class="fridge-stage-glow"></div>
+                    
+                    <!-- Refrigerator Status Capsule -->
+                    <div class="fridge-model-capsule">
+                        <span class="fridge-badge-pulse"></span>
+                        <span class="fridge-capsule-text">스마트 더블도어 메탈 냉장고 (Grundig Edition)</span>
+                        <span class="fridge-capsule-temp">2.0°C</span>
+                    </div>
+
+                    <!-- 3D Refrigerator Cabinet -->
+                    <div class="fridge-3d-cabinet" id="fridgeCabinet" onclick="window.toggleFridgeDoorsManual && window.toggleFridgeDoorsManual()">
+                        <!-- Cold Frost Vapor Mist -->
+                        <div class="fridge-frost-mist" id="fridgeFrostMist">
+                            <span class="mist-particle p1"></span>
+                            <span class="mist-particle p2"></span>
+                            <span class="mist-particle p3"></span>
+                        </div>
+
+                        <!-- Interior Shelves Chamber (revealed when doors open) -->
+                        <div class="fridge-interior-chamber">
+                            <img src="/static/images/fridge_shelves_interior.png" alt="냉장고 내부 선반" class="fridge-interior-img">
+                            <div class="fridge-interior-led-glow"></div>
+                        </div>
+
+                        <!-- Left Door (Dispenser + Left Handle) -->
+                        <div class="fridge-door-wing fridge-door-left" id="fridgeDoorLeft" title="클릭하여 냉장고 문 열기/닫기">
+                            <img src="/static/images/fridge_door_left.png" alt="냉장고 좌측 도어" class="fridge-door-img">
+                            <div class="fridge-door-bevel-edge"></div>
+                        </div>
+
+                        <!-- Right Door (Logo + Right Handle) -->
+                        <div class="fridge-door-wing fridge-door-right" id="fridgeDoorRight" title="클릭하여 냉장고 문 열기/닫기">
+                            <img src="/static/images/fridge_door_right.png" alt="냉장고 우측 도어" class="fridge-door-img">
+                            <div class="fridge-door-bevel-edge"></div>
+                        </div>
+
+                        <!-- Flying Ingredients Flight Arena -->
+                        <div class="fridge-flying-arena" id="fridgeFlyingArena"></div>
+                    </div>
+
+                    <!-- Realistic Floor Shadow -->
+                    <div class="fridge-floor-shadow"></div>
+
+                    <!-- Interactive Guide Pill -->
+                    <div class="fridge-interactive-guidance">
+                        <i class="fa-solid fa-sparkles" style="color: #0284C7;"></i>
+                        <span>아래에 재료를 보관하고 레시피를 요청하면, <strong>냉장고 문이 열리며 식재료들이 도마로 전달됩니다!</strong></span>
+                    </div>
+                </div>
+
                 <!-- Main Dual AI Card (재료 입력 + 재료 보관함 + 원하는 음식 질문 프롬프트) -->
                 <div class="prompt-container">
                     <div class="prompt-card" id="dropzone">
